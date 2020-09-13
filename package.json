@@ -28,5 +28,10 @@
     "@types/webpack-env": "^1.15.2",
     "razzle": "^3.3.0-canary.5",
     "typescript": "^3.8.3"
+  },
+  "jest": {
+    "testMatch": [
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ]
   }
 }
