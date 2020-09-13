@@ -1,12 +1,12 @@
 import express from "express";
 
-let app = require("./server").default;
+let app = require("./server/server").default;
 
 if (module.hot) {
-  module.hot.accept("./server", () => {
-    console.log("🔁  HMR Reloading `./server`...");
+  module.hot.accept("./server/server", () => {
+    console.log("🔁  HMR Reloading `./server/server`...");
     try {
-      app = require("./server").default;
+      app = require("./server/server").default;
     } catch (error) {
       console.error(error);
     }
