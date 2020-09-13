@@ -30,7 +30,8 @@
     "@types/react-router-dom": "^5.1.4",
     "@types/webpack-env": "^1.15.2",
     "razzle": "^3.3.0-canary.5",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "typescript-plugin-css-modules": "^2.5.0"
   },
   "jest": {
     "testMatch": [
