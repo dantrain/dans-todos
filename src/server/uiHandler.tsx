@@ -1,21 +1,21 @@
-import { Router } from "express";
+import { RequestHandler } from "express";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 
-import App from "../../client/app/App";
+import App from "../client/app/App";
 
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
-const router = Router();
-
-router.get("/*", (req, res) => {
+const uiHandler: RequestHandler = (req, res) => {
   const context = {};
+
   const markup = renderToString(
     <StaticRouter context={context} location={req.url}>
       <App />
     </StaticRouter>
   );
+
   res.send(
     `<!doctype html>
 <html lang="">
@@ -40,6 +40,6 @@ router.get("/*", (req, res) => {
   </body>
 </html>`
   );
-});
+};
 
-export default router;
+export default uiHandler;
