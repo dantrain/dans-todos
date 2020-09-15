@@ -10,7 +10,6 @@ datasource db {
 model Todo {
   id         Int      @default(autoincrement()) @id
   created_at DateTime @default(now())
-  updated_at DateTime @default(now())
   text       String
   completed  Boolean
 }

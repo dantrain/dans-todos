@@ -13,15 +13,20 @@ const Todo = objectType({
 const Query = queryType({
   definition: (t) => {
     t.crud.todo();
-    t.crud.todos({ ordering: true, filtering: { completed: true } });
+    t.crud.todos({
+      ordering: { created_at: true },
+      filtering: { completed: true },
+    });
   },
 });
 
 const Mutation = mutationType({
   definition: (t) => {
     t.crud.createOneTodo();
-    t.crud.deleteOneTodo();
     t.crud.updateOneTodo();
+    t.crud.updateManyTodo();
+    t.crud.deleteOneTodo();
+    t.crud.deleteManyTodo();
   },
 });
 

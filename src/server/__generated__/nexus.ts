@@ -29,9 +29,65 @@ export interface NexusGenInputs {
   DateTimeFieldUpdateOperationsInput: { // input type
     set?: NexusGenScalars['DateTime'] | null; // DateTime
   }
+  DateTimeFilter: { // input type
+    equals?: NexusGenScalars['DateTime'] | null; // DateTime
+    gt?: NexusGenScalars['DateTime'] | null; // DateTime
+    gte?: NexusGenScalars['DateTime'] | null; // DateTime
+    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+    lt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lte?: NexusGenScalars['DateTime'] | null; // DateTime
+    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
+    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+  }
+  IntFilter: { // input type
+    equals?: number | null; // Int
+    gt?: number | null; // Int
+    gte?: number | null; // Int
+    in?: number[] | null; // [Int!]
+    lt?: number | null; // Int
+    lte?: number | null; // Int
+    not?: NexusGenInputs['NestedIntFilter'] | null; // NestedIntFilter
+    notIn?: number[] | null; // [Int!]
+  }
   NestedBoolFilter: { // input type
     equals?: boolean | null; // Boolean
     not?: NexusGenInputs['NestedBoolFilter'] | null; // NestedBoolFilter
+  }
+  NestedDateTimeFilter: { // input type
+    equals?: NexusGenScalars['DateTime'] | null; // DateTime
+    gt?: NexusGenScalars['DateTime'] | null; // DateTime
+    gte?: NexusGenScalars['DateTime'] | null; // DateTime
+    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+    lt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lte?: NexusGenScalars['DateTime'] | null; // DateTime
+    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
+    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+  }
+  NestedIntFilter: { // input type
+    equals?: number | null; // Int
+    gt?: number | null; // Int
+    gte?: number | null; // Int
+    in?: number[] | null; // [Int!]
+    lt?: number | null; // Int
+    lte?: number | null; // Int
+    not?: NexusGenInputs['NestedIntFilter'] | null; // NestedIntFilter
+    notIn?: number[] | null; // [Int!]
+  }
+  NestedStringFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: NexusGenInputs['NestedStringFilter'] | null; // NestedStringFilter
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
+  }
+  QueryTodosOrderByInput: { // input type
+    created_at?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   QueryTodosWhereInput: { // input type
     completed?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
@@ -39,24 +95,42 @@ export interface NexusGenInputs {
   StringFieldUpdateOperationsInput: { // input type
     set?: string | null; // String
   }
+  StringFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: NexusGenInputs['NestedStringFilter'] | null; // NestedStringFilter
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
+  }
   TodoCreateInput: { // input type
     completed: boolean; // Boolean!
     created_at?: NexusGenScalars['DateTime'] | null; // DateTime
     text: string; // String!
-    updated_at?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  TodoOrderByInput: { // input type
-    completed?: NexusGenEnums['SortOrder'] | null; // SortOrder
-    created_at?: NexusGenEnums['SortOrder'] | null; // SortOrder
-    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
-    text?: NexusGenEnums['SortOrder'] | null; // SortOrder
-    updated_at?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   TodoUpdateInput: { // input type
     completed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     created_at?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     text?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    updated_at?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+  }
+  TodoUpdateManyMutationInput: { // input type
+    completed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    created_at?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    text?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+  }
+  TodoWhereInput: { // input type
+    AND?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
+    completed?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
+    created_at?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    NOT?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
+    OR?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
+    text?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
   TodoWhereUniqueInput: { // input type
     id?: number | null; // Int
@@ -77,6 +151,9 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenRootTypes {
+  BatchPayload: { // root type
+    count: number; // Int!
+  }
   Mutation: {};
   Query: {};
   Todo: { // root type
@@ -90,12 +167,20 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   BoolFieldUpdateOperationsInput: NexusGenInputs['BoolFieldUpdateOperationsInput'];
   BoolFilter: NexusGenInputs['BoolFilter'];
   DateTimeFieldUpdateOperationsInput: NexusGenInputs['DateTimeFieldUpdateOperationsInput'];
+  DateTimeFilter: NexusGenInputs['DateTimeFilter'];
+  IntFilter: NexusGenInputs['IntFilter'];
   NestedBoolFilter: NexusGenInputs['NestedBoolFilter'];
+  NestedDateTimeFilter: NexusGenInputs['NestedDateTimeFilter'];
+  NestedIntFilter: NexusGenInputs['NestedIntFilter'];
+  NestedStringFilter: NexusGenInputs['NestedStringFilter'];
+  QueryTodosOrderByInput: NexusGenInputs['QueryTodosOrderByInput'];
   QueryTodosWhereInput: NexusGenInputs['QueryTodosWhereInput'];
   StringFieldUpdateOperationsInput: NexusGenInputs['StringFieldUpdateOperationsInput'];
+  StringFilter: NexusGenInputs['StringFilter'];
   TodoCreateInput: NexusGenInputs['TodoCreateInput'];
-  TodoOrderByInput: NexusGenInputs['TodoOrderByInput'];
   TodoUpdateInput: NexusGenInputs['TodoUpdateInput'];
+  TodoUpdateManyMutationInput: NexusGenInputs['TodoUpdateManyMutationInput'];
+  TodoWhereInput: NexusGenInputs['TodoWhereInput'];
   TodoWhereUniqueInput: NexusGenInputs['TodoWhereUniqueInput'];
   SortOrder: NexusGenEnums['SortOrder'];
   String: NexusGenScalars['String'];
@@ -107,9 +192,14 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
+  BatchPayload: { // field return type
+    count: number; // Int!
+  }
   Mutation: { // field return type
     createOneTodo: NexusGenRootTypes['Todo']; // Todo!
+    deleteManyTodo: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteOneTodo: NexusGenRootTypes['Todo'] | null; // Todo
+    updateManyTodo: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateOneTodo: NexusGenRootTypes['Todo'] | null; // Todo
   }
   Query: { // field return type
@@ -128,8 +218,15 @@ export interface NexusGenArgTypes {
     createOneTodo: { // args
       data: NexusGenInputs['TodoCreateInput']; // TodoCreateInput!
     }
+    deleteManyTodo: { // args
+      where?: NexusGenInputs['TodoWhereInput'] | null; // TodoWhereInput
+    }
     deleteOneTodo: { // args
       where: NexusGenInputs['TodoWhereUniqueInput']; // TodoWhereUniqueInput!
+    }
+    updateManyTodo: { // args
+      data: NexusGenInputs['TodoUpdateManyMutationInput']; // TodoUpdateManyMutationInput!
+      where?: NexusGenInputs['TodoWhereInput'] | null; // TodoWhereInput
     }
     updateOneTodo: { // args
       data: NexusGenInputs['TodoUpdateInput']; // TodoUpdateInput!
@@ -145,7 +242,7 @@ export interface NexusGenArgTypes {
       before?: NexusGenInputs['TodoWhereUniqueInput'] | null; // TodoWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
-      orderBy?: NexusGenInputs['TodoOrderByInput'][] | null; // [TodoOrderByInput!]
+      orderBy?: NexusGenInputs['QueryTodosOrderByInput'][] | null; // [QueryTodosOrderByInput!]
       where?: NexusGenInputs['QueryTodosWhereInput'] | null; // QueryTodosWhereInput
     }
   }
@@ -156,9 +253,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Query" | "Todo";
+export type NexusGenObjectNames = "BatchPayload" | "Mutation" | "Query" | "Todo";
 
-export type NexusGenInputNames = "BoolFieldUpdateOperationsInput" | "BoolFilter" | "DateTimeFieldUpdateOperationsInput" | "NestedBoolFilter" | "QueryTodosWhereInput" | "StringFieldUpdateOperationsInput" | "TodoCreateInput" | "TodoOrderByInput" | "TodoUpdateInput" | "TodoWhereUniqueInput";
+export type NexusGenInputNames = "BoolFieldUpdateOperationsInput" | "BoolFilter" | "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "IntFilter" | "NestedBoolFilter" | "NestedDateTimeFilter" | "NestedIntFilter" | "NestedStringFilter" | "QueryTodosOrderByInput" | "QueryTodosWhereInput" | "StringFieldUpdateOperationsInput" | "StringFilter" | "TodoCreateInput" | "TodoUpdateInput" | "TodoUpdateManyMutationInput" | "TodoWhereInput" | "TodoWhereUniqueInput";
 
 export type NexusGenEnumNames = "SortOrder";
 
