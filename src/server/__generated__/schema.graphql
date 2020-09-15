@@ -2,14 +2,48 @@
 ### Do not make changes to this file directly
 
 
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+scalar DateTime
+
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
+type Mutation {
+  createOneTodo(data: TodoCreateInput!): Todo!
+  deleteOneTodo(where: TodoWhereUniqueInput!): Todo
+  updateOneTodo(data: TodoUpdateInput!, where: TodoWhereUniqueInput!): Todo
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
 type Query {
   todo(where: TodoWhereUniqueInput!): Todo
-  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: [TodoOrderByInput!]): [Todo!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: [TodoOrderByInput!], where: QueryTodosWhereInput): [Todo!]!
+}
+
+input QueryTodosWhereInput {
+  completed: BoolFilter
 }
 
 enum SortOrder {
   asc
   desc
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
 }
 
 type Todo {
@@ -18,12 +52,26 @@ type Todo {
   text: String!
 }
 
+input TodoCreateInput {
+  completed: Boolean!
+  created_at: DateTime
+  text: String!
+  updated_at: DateTime
+}
+
 input TodoOrderByInput {
   completed: SortOrder
   created_at: SortOrder
   id: SortOrder
   text: SortOrder
   updated_at: SortOrder
+}
+
+input TodoUpdateInput {
+  completed: BoolFieldUpdateOperationsInput
+  created_at: DateTimeFieldUpdateOperationsInput
+  text: StringFieldUpdateOperationsInput
+  updated_at: DateTimeFieldUpdateOperationsInput
 }
 
 input TodoWhereUniqueInput {
