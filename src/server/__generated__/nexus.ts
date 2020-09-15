@@ -19,26 +19,20 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  PostCreateManyWithoutAuthorInput: { // input type
-    connect?: NexusGenInputs['PostWhereUniqueInput'][] | null; // [PostWhereUniqueInput!]
-    create?: NexusGenInputs['PostCreateWithoutAuthorInput'][] | null; // [PostCreateWithoutAuthorInput!]
+  TodoOrderByInput: { // input type
+    completed?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    created_at?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    text?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    updated_at?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
-  PostCreateWithoutAuthorInput: { // input type
-    content?: string | null; // String
-    published?: boolean | null; // Boolean
-    title: string; // String!
-  }
-  PostWhereUniqueInput: { // input type
+  TodoWhereUniqueInput: { // input type
     id?: number | null; // Int
-  }
-  UserCreateInput: { // input type
-    email: string; // String!
-    name?: string | null; // String
-    posts?: NexusGenInputs['PostCreateManyWithoutAuthorInput'] | null; // PostCreateManyWithoutAuthorInput
   }
 }
 
 export interface NexusGenEnums {
+  SortOrder: "asc" | "desc"
 }
 
 export interface NexusGenScalars {
@@ -50,27 +44,18 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenRootTypes {
-  Mutation: {};
-  Post: { // root type
-    authorId?: number | null; // Int
-    content?: string | null; // String
-    id: number; // Int!
-    published: boolean; // Boolean!
-    title: string; // String!
-  }
   Query: {};
-  User: { // root type
-    email: string; // String!
+  Todo: { // root type
+    completed: boolean; // Boolean!
     id: number; // Int!
-    name?: string | null; // String
+    text: string; // String!
   }
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
-  PostCreateManyWithoutAuthorInput: NexusGenInputs['PostCreateManyWithoutAuthorInput'];
-  PostCreateWithoutAuthorInput: NexusGenInputs['PostCreateWithoutAuthorInput'];
-  PostWhereUniqueInput: NexusGenInputs['PostWhereUniqueInput'];
-  UserCreateInput: NexusGenInputs['UserCreateInput'];
+  TodoOrderByInput: NexusGenInputs['TodoOrderByInput'];
+  TodoWhereUniqueInput: NexusGenInputs['TodoWhereUniqueInput'];
+  SortOrder: NexusGenEnums['SortOrder'];
   String: NexusGenScalars['String'];
   Int: NexusGenScalars['Int'];
   Float: NexusGenScalars['Float'];
@@ -79,56 +64,28 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
-  Mutation: { // field return type
-    createDraft: NexusGenRootTypes['Post']; // Post!
-    deleteOnePost: NexusGenRootTypes['Post'] | null; // Post
-    publish: NexusGenRootTypes['Post'] | null; // Post
-    signupUser: NexusGenRootTypes['User']; // User!
-  }
-  Post: { // field return type
-    author: NexusGenRootTypes['User'] | null; // User
-    authorId: number | null; // Int
-    content: string | null; // String
-    id: number; // Int!
-    published: boolean; // Boolean!
-    title: string; // String!
-  }
   Query: { // field return type
-    feed: NexusGenRootTypes['Post'][]; // [Post!]!
-    filterPosts: NexusGenRootTypes['Post'][]; // [Post!]!
-    post: NexusGenRootTypes['Post'] | null; // Post
+    todo: NexusGenRootTypes['Todo'] | null; // Todo
+    todos: NexusGenRootTypes['Todo'][]; // [Todo!]!
   }
-  User: { // field return type
-    email: string; // String!
+  Todo: { // field return type
+    completed: boolean; // Boolean!
     id: number; // Int!
-    name: string | null; // String
-    posts: NexusGenRootTypes['Post'][]; // [Post!]!
+    text: string; // String!
   }
 }
 
 export interface NexusGenArgTypes {
-  Mutation: {
-    createDraft: { // args
-      authorEmail: string; // String!
-      content?: string | null; // String
-      title: string; // String!
-    }
-    deleteOnePost: { // args
-      where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
-    }
-    publish: { // args
-      id?: number | null; // Int
-    }
-    signupUser: { // args
-      data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
-    }
-  }
   Query: {
-    filterPosts: { // args
-      searchString?: string | null; // String
+    todo: { // args
+      where: NexusGenInputs['TodoWhereUniqueInput']; // TodoWhereUniqueInput!
     }
-    post: { // args
-      where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
+    todos: { // args
+      after?: NexusGenInputs['TodoWhereUniqueInput'] | null; // TodoWhereUniqueInput
+      before?: NexusGenInputs['TodoWhereUniqueInput'] | null; // TodoWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenInputs['TodoOrderByInput'][] | null; // [TodoOrderByInput!]
     }
   }
 }
@@ -138,11 +95,11 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Post" | "Query" | "User";
+export type NexusGenObjectNames = "Query" | "Todo";
 
-export type NexusGenInputNames = "PostCreateManyWithoutAuthorInput" | "PostCreateWithoutAuthorInput" | "PostWhereUniqueInput" | "UserCreateInput";
+export type NexusGenInputNames = "TodoOrderByInput" | "TodoWhereUniqueInput";
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "SortOrder";
 
 export type NexusGenInterfaceNames = never;
 

@@ -7,7 +7,7 @@
   "scripts": {
     "start:tsc": "tsc -b -w --preserveWatchOutput",
     "start": "yarn start:tsc & razzle start",
-    "build": "tsc -b && razzle build",
+    "build": "yarn run generate && tsc -b && razzle build",
     "test": "razzle test --env=jsdom",
     "start:prod": "NODE_ENV=production node build/server.js",
     "generate:prisma": "prisma generate",

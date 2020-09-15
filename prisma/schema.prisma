@@ -4,21 +4,13 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = "file:./todo.db"
 }
 
-model User {
-  email String  @unique
-  id    Int     @default(autoincrement()) @id
-  name  String?
-  posts Post[]
-}
-
-model Post {
-  authorId  Int?
-  content   String?
-  id        Int     @default(autoincrement()) @id
-  published Boolean @default(false)
-  title     String
-  author    User?   @relation(fields: [authorId], references: [id])
+model Todo {
+  id         Int      @default(autoincrement()) @id
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  text       String
+  completed  Boolean
 }
