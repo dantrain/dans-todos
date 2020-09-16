@@ -12,7 +12,8 @@
     "start:prod": "NODE_ENV=production node build/server.js",
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only src/server/schema",
-    "generate": "yarn run generate:prisma && yarn run generate:nexus"
+    "generate:relay": "relay-compiler",
+    "generate": "yarn run generate:prisma && yarn run generate:nexus && yarn run generate:relay"
   },
   "dependencies": {
     "@nexus/schema": "^0.15.0",
@@ -37,11 +38,15 @@
     "@types/node": "^14.10.2",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "@types/react-relay": "^7.0.9",
     "@types/react-router-dom": "^5.1.4",
+    "@types/relay-runtime": "^10.0.3",
     "@types/webpack-env": "^1.15.2",
     "babel-plugin-relay": "^10.0.1",
     "razzle": "^3.3.0-canary.5",
     "relay-compiler": "^10.0.1",
+    "relay-compiler-language-typescript": "^13.0.1",
+    "relay-config": "^10.0.1",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2",
     "typescript-plugin-css-modules": "^2.5.0"
