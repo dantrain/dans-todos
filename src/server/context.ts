@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
-
 export interface Context {
   prisma: PrismaClient;
 }
 
-const context: Context = { prisma };
+const context: Context = {
+  prisma: new PrismaClient(),
+};
 
 export default context;
