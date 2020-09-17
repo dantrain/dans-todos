@@ -4,7 +4,9 @@ import { makeSchema, mutationType, objectType, queryType } from "@nexus/schema";
 const Todo = objectType({
   name: "Todo",
   definition: (t) => {
-    t.model.id();
+    t.id("id", {
+      resolve: ({ id }: any) => Buffer.from(`Todo${id}`).toString("base64"),
+    });
     t.model.text();
     t.model.completed();
   },

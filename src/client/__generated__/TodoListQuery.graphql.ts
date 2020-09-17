@@ -6,6 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 export type TodoListQueryVariables = {};
 export type TodoListQueryResponse = {
     readonly todos: ReadonlyArray<{
+        readonly id: string;
         readonly text: string;
         readonly completed: boolean;
     }>;
@@ -20,6 +21,7 @@ export type TodoListQuery = {
 /*
 query TodoListQuery {
   todos(orderBy: {created_at: asc}) {
+    id
     text
     completed
   }
@@ -44,6 +46,13 @@ var v0 = [
     "name": "todos",
     "plural": true,
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "id",
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -80,14 +89,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "3fcd97fca1dfc41bf337d8a04855e720",
+    "cacheID": "19364221ff3e83c1466f8da5e0991339",
     "id": null,
     "metadata": {},
     "name": "TodoListQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery {\n  todos(orderBy: {created_at: asc}) {\n    text\n    completed\n  }\n}\n"
+    "text": "query TodoListQuery {\n  todos(orderBy: {created_at: asc}) {\n    id\n    text\n    completed\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '36ff7c67bdb45acd1651fed9c379f0fe';
+(node as any).hash = 'b26b20b345b4942576ed2a8eddb92f26';
 export default node;

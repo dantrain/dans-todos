@@ -5,6 +5,7 @@ import { TodoListQuery } from "../../../__generated__/TodoListQuery.graphql";
 const query = graphql`
   query TodoListQuery {
     todos(orderBy: { created_at: asc }) {
+      id
       text
       completed
     }
@@ -14,7 +15,13 @@ const query = graphql`
 const TodoList = () => {
   const { todos } = useLazyLoadQuery<TodoListQuery>(query, {});
 
-  return <code>{JSON.stringify(todos, null, 4)}</code>;
+  return (
+    <ul>
+      {todos.map(({ id, text, completed }) => (
+        <li key={id}>{text}</li>
+      ))}
+    </ul>
+  );
 };
 
 export default TodoList;

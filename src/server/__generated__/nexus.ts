@@ -158,7 +158,6 @@ export interface NexusGenRootTypes {
   Query: {};
   Todo: { // root type
     completed: boolean; // Boolean!
-    id: number; // Int!
     text: string; // String!
   }
 }
@@ -208,7 +207,7 @@ export interface NexusGenFieldTypes {
   }
   Todo: { // field return type
     completed: boolean; // Boolean!
-    id: number; // Int!
+    id: string; // ID!
     text: string; // String!
   }
 }

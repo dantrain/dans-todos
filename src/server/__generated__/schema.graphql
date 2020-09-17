@@ -130,7 +130,7 @@ input StringFilter {
 
 type Todo {
   completed: Boolean!
-  id: Int!
+  id: ID!
   text: String!
 }
 
