@@ -19,6 +19,13 @@ const Query = queryType({
       ordering: { created_at: true },
       filtering: { completed: true },
     });
+    t.int("todosCount", {
+      resolve: (root, args, { prisma }) => prisma.todo.count(),
+    });
+    t.int("todosLeftCount", {
+      resolve: (root, args, { prisma }) =>
+        prisma.todo.count({ where: { completed: { equals: false } } }),
+    });
   },
 });
 

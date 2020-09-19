@@ -95,6 +95,8 @@ input NestedStringFilter {
 type Query {
   todo(where: TodoWhereUniqueInput!): Todo
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: [QueryTodosOrderByInput!], where: QueryTodosWhereInput): [Todo!]!
+  todosCount: Int!
+  todosLeftCount: Int!
 }
 
 input QueryTodosOrderByInput {

@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import Suspense from "../../components/Suspense/Suspense";
+import ToggleAll from "./ToggleAll/ToggleAll";
 import TodoList from "./TodoList/TodoList";
 
 const useStyles = makeStyles({
@@ -22,7 +23,11 @@ const Home = () => {
   return (
     <Card>
       <CardHeader
-        avatar={<Checkbox />}
+        avatar={
+          <Suspense fallback={<Checkbox disabled />}>
+            <ToggleAll />
+          </Suspense>
+        }
         title={
           <InputBase
             className={s.inputBase}

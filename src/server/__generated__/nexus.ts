@@ -204,6 +204,8 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     todo: NexusGenRootTypes['Todo'] | null; // Todo
     todos: NexusGenRootTypes['Todo'][]; // [Todo!]!
+    todosCount: number; // Int!
+    todosLeftCount: number; // Int!
   }
   Todo: { // field return type
     completed: boolean; // Boolean!

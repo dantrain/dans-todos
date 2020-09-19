@@ -25,9 +25,7 @@ const query = graphql`
       text
       completed
     }
-    incomplete: todos(where: { completed: { equals: false } }) {
-      id
-    }
+    todosLeftCount
   }
 `;
 
@@ -39,7 +37,7 @@ const useStyles = makeStyles({
 });
 
 const TodoList = () => {
-  const { todos, incomplete } = useLazyLoadQuery<TodoListQuery>(query, {});
+  const { todos, todosLeftCount } = useLazyLoadQuery<TodoListQuery>(query, {});
   const s = useStyles();
 
   return (
@@ -62,7 +60,7 @@ const TodoList = () => {
       <Divider />
       <Toolbar className={s.toolbar}>
         <Typography color="textSecondary">
-          {incomplete.length} item{incomplete.length !== 1 && "s"} left
+          {todosLeftCount} item{todosLeftCount !== 1 && "s"} left
         </Typography>
         <ToggleButtonGroup value="all" size="small" exclusive>
           <ToggleButton value="all">All</ToggleButton>

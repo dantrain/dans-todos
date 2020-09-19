@@ -10,9 +10,7 @@ export type TodoListQueryResponse = {
         readonly text: string;
         readonly completed: boolean;
     }>;
-    readonly incomplete: ReadonlyArray<{
-        readonly id: string;
-    }>;
+    readonly todosLeftCount: number;
 };
 export type TodoListQuery = {
     readonly response: TodoListQueryResponse;
@@ -28,21 +26,12 @@ query TodoListQuery {
     text
     completed
   }
-  incomplete: todos(where: {completed: {equals: false}}) {
-    id
-  }
+  todosLeftCount
 }
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v1 = [
+var v0 = [
   {
     "alias": null,
     "args": [
@@ -59,7 +48,13 @@ v1 = [
     "name": "todos",
     "plural": true,
     "selections": [
-      (v0/*: any*/),
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "id",
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -78,26 +73,11 @@ v1 = [
     "storageKey": "todos(orderBy:{\"created_at\":\"asc\"})"
   },
   {
-    "alias": "incomplete",
-    "args": [
-      {
-        "kind": "Literal",
-        "name": "where",
-        "value": {
-          "completed": {
-            "equals": false
-          }
-        }
-      }
-    ],
-    "concreteType": "Todo",
-    "kind": "LinkedField",
-    "name": "todos",
-    "plural": true,
-    "selections": [
-      (v0/*: any*/)
-    ],
-    "storageKey": "todos(where:{\"completed\":{\"equals\":false}})"
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "todosLeftCount",
+    "storageKey": null
   }
 ];
 return {
@@ -106,7 +86,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "TodoListQuery",
-    "selections": (v1/*: any*/),
+    "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -115,17 +95,17 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "TodoListQuery",
-    "selections": (v1/*: any*/)
+    "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "7208d9cb81df4ba69408fc614c14950a",
+    "cacheID": "81ef8c682db6b3a6a155be340626d5a0",
     "id": null,
     "metadata": {},
     "name": "TodoListQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery {\n  todos(orderBy: {created_at: asc}) {\n    id\n    text\n    completed\n  }\n  incomplete: todos(where: {completed: {equals: false}}) {\n    id\n  }\n}\n"
+    "text": "query TodoListQuery {\n  todos(orderBy: {created_at: asc}) {\n    id\n    text\n    completed\n  }\n  todosLeftCount\n}\n"
   }
 };
 })();
-(node as any).hash = 'f2aa0cfbba0ed8be830a7e24beb0d6c4';
+(node as any).hash = '8f745024ba0a0cab0165a2b091495ef2';
 export default node;
