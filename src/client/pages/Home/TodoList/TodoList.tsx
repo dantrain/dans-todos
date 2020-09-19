@@ -8,6 +8,7 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  makeStyles,
   Toolbar,
   Typography,
 } from "@material-ui/core";
@@ -30,8 +31,16 @@ const query = graphql`
   }
 `;
 
+const useStyles = makeStyles({
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+});
+
 const TodoList = () => {
   const { todos, incomplete } = useLazyLoadQuery<TodoListQuery>(query, {});
+  const s = useStyles();
 
   return (
     <>
@@ -51,18 +60,16 @@ const TodoList = () => {
         ))}
       </List>
       <Divider />
-      <Toolbar>
+      <Toolbar className={s.toolbar}>
         <Typography color="textSecondary">
-          {incomplete.length} items left
+          {incomplete.length} item{incomplete.length !== 1 && "s"} left
         </Typography>
         <ToggleButtonGroup value="all" size="small" exclusive>
           <ToggleButton value="all">All</ToggleButton>
           <ToggleButton value="active">Active</ToggleButton>
           <ToggleButton value="completed">Completed</ToggleButton>
         </ToggleButtonGroup>
-        <Button variant="outlined" color="primary">
-          Clear completed
-        </Button>
+        <Button color="primary">Clear completed</Button>
       </Toolbar>
     </>
   );

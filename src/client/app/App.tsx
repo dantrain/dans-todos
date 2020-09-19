@@ -5,10 +5,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Home from "../pages/Home/Home";
 import relayEnvironment from "../relayEnvironment";
 import { AppBar, Box, Container, Toolbar, Typography } from "@material-ui/core";
+import RemoveServerCss from "../components/RemoveServerCss/RemoveServerCss";
 
 const App = () => (
   <RelayEnvironmentProvider environment={relayEnvironment}>
     <CssBaseline />
+    <RemoveServerCss />
     <AppBar position="sticky">
       <Container maxWidth="sm">
         <Toolbar>
