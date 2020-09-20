@@ -16,9 +16,9 @@ const query = graphql`
   query TodoListQuery {
     todos(orderBy: { created_at: asc }) {
       id
+      completed
       ...TodoListItemFragment
     }
-    todosLeftCount
   }
 `;
 
@@ -30,7 +30,9 @@ const useStyles = makeStyles({
 });
 
 const TodoList = () => {
-  const { todos, todosLeftCount } = useLazyLoadQuery<TodoListQuery>(query, {});
+  const { todos } = useLazyLoadQuery<TodoListQuery>(query, {});
+  const incompleteCount = todos.filter(({ completed }) => !completed).length;
+
   const s = useStyles();
 
   return (
@@ -43,7 +45,7 @@ const TodoList = () => {
       <Divider />
       <Toolbar className={s.toolbar}>
         <Typography color="textSecondary">
-          {todosLeftCount} item{todosLeftCount !== 1 && "s"} left
+          {incompleteCount} item{incompleteCount !== 1 && "s"} left
         </Typography>
         <ToggleButtonGroup value="all" size="small" exclusive>
           <ToggleButton value="all">All</ToggleButton>

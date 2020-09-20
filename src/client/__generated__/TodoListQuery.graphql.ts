@@ -8,9 +8,9 @@ export type TodoListQueryVariables = {};
 export type TodoListQueryResponse = {
     readonly todos: ReadonlyArray<{
         readonly id: string;
+        readonly completed: boolean;
         readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
     }>;
-    readonly todosLeftCount: number;
 };
 export type TodoListQuery = {
     readonly response: TodoListQueryResponse;
@@ -23,12 +23,14 @@ export type TodoListQuery = {
 query TodoListQuery {
   todos(orderBy: {created_at: asc}) {
     id
+    completed
     ...TodoListItemFragment
   }
-  todosLeftCount
 }
 
 fragment TodoListItemFragment on Todo {
+  id
+  todoId
   text
   completed
 }
@@ -55,7 +57,7 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "todosLeftCount",
+  "name": "completed",
   "storageKey": null
 };
 return {
@@ -74,6 +76,7 @@ return {
         "plural": true,
         "selections": [
           (v1/*: any*/),
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -81,8 +84,7 @@ return {
           }
         ],
         "storageKey": "todos(orderBy:{\"created_at\":\"asc\"})"
-      },
-      (v2/*: any*/)
+      }
     ],
     "type": "Query",
     "abstractKey": null
@@ -102,35 +104,35 @@ return {
         "plural": true,
         "selections": [
           (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "text",
+            "name": "todoId",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "completed",
+            "name": "text",
             "storageKey": null
           }
         ],
         "storageKey": "todos(orderBy:{\"created_at\":\"asc\"})"
-      },
-      (v2/*: any*/)
+      }
     ]
   },
   "params": {
-    "cacheID": "f3d56aeaea1863a96a76e859ec4904ea",
+    "cacheID": "8240fdec70ca063b24bdcc04b8fdecf7",
     "id": null,
     "metadata": {},
     "name": "TodoListQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery {\n  todos(orderBy: {created_at: asc}) {\n    id\n    ...TodoListItemFragment\n  }\n  todosLeftCount\n}\n\nfragment TodoListItemFragment on Todo {\n  text\n  completed\n}\n"
+    "text": "query TodoListQuery {\n  todos(orderBy: {created_at: asc}) {\n    id\n    completed\n    ...TodoListItemFragment\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  todoId\n  text\n  completed\n}\n"
   }
 };
 })();
-(node as any).hash = 'c5dc7af0490d4767cbe70eacc59ccc64';
+(node as any).hash = 'd52d1634d63fcfdf4235f53f25fa8ffd';
 export default node;

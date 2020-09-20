@@ -5,6 +5,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type TodoListItemFragment = {
+    readonly id: string;
+    readonly todoId: number;
     readonly text: string;
     readonly completed: boolean;
     readonly " $refType": "TodoListItemFragment";
@@ -27,6 +29,20 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "todoId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "text",
       "storageKey": null
     },
@@ -41,5 +57,5 @@ const node: ReaderFragment = {
   "type": "Todo",
   "abstractKey": null
 };
-(node as any).hash = 'b08affb3b83a76f67c4f8075be6d47b5';
+(node as any).hash = '20228ded3a12ecb83d89b8be2664886f';
 export default node;

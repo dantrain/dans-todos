@@ -134,6 +134,7 @@ type Todo {
   completed: Boolean!
   id: ID!
   text: String!
+  todoId: Int!
 }
 
 input TodoCreateInput {

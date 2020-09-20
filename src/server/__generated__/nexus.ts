@@ -211,6 +211,7 @@ export interface NexusGenFieldTypes {
     completed: boolean; // Boolean!
     id: string; // ID!
     text: string; // String!
+    todoId: number; // Int!
   }
 }
 
