@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start:tsc": "tsc -b -w --preserveWatchOutput",
-    "start": "yarn start:tsc & razzle start",
+    "start": "yarn run generate && yarn start:tsc & razzle start",
     "build": "yarn run generate && tsc -b && razzle build",
     "test": "razzle test --env=jsdom",
     "start:prod": "NODE_ENV=production node build/server.js",

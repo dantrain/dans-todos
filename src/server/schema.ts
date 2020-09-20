@@ -1,5 +1,11 @@
 import { nexusSchemaPrisma } from "nexus-plugin-prisma/schema";
-import { makeSchema, mutationType, objectType, queryType } from "@nexus/schema";
+import {
+  makeSchema,
+  mutationType,
+  objectType,
+  queryType,
+  connectionPlugin,
+} from "@nexus/schema";
 
 const Todo = objectType({
   name: "Todo",
@@ -42,7 +48,7 @@ const Mutation = mutationType({
 
 const schema = makeSchema({
   types: [Query, Mutation, Todo],
-  plugins: [nexusSchemaPrisma({ experimentalCRUD: true })],
+  plugins: [nexusSchemaPrisma({ experimentalCRUD: true }), connectionPlugin()],
   outputs: {
     schema: __dirname + "/__generated__/schema.graphql",
     typegen: __dirname + "/__generated__/nexus.ts",
