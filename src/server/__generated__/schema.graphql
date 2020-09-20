@@ -118,7 +118,7 @@ type PageInfo {
 }
 
 type Query {
-  allTodos(
+  todos(
     """Returns the elements in the list that come after the specified cursor"""
     after: String
 
@@ -130,24 +130,22 @@ type Query {
 
     """Returns the last n elements from the list."""
     last: Int
-  ): TodoConnection!
-  todo(where: TodoWhereUniqueInput!): Todo
-  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: [QueryTodosOrderByInput!], where: QueryTodosWhereInput): [Todo!]!
-  todosCount: Int!
-  todosLeftCount: Int!
+  ): QueryTodos_Connection!
 }
 
-input QueryTodosOrderByInput {
-  created_at: SortOrder
-}
+type QueryTodos_Connection {
+  completedCount: Int!
 
-input QueryTodosWhereInput {
-  completed: BoolFilter
-}
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types
+  """
+  edges: [TodoEdge]
 
-enum SortOrder {
-  asc
-  desc
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
+  """
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 input StringFieldUpdateOperationsInput {
@@ -173,18 +171,6 @@ type Todo {
   id: ID!
   text: String!
   todoId: Int!
-}
-
-type TodoConnection {
-  """
-  https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types
-  """
-  edges: [TodoEdge]
-
-  """
-  https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
-  """
-  pageInfo: PageInfo!
 }
 
 input TodoCreateInput {

@@ -21,20 +21,7 @@ const Todo = objectType({
 
 const Query = queryType({
   definition: (t) => {
-    t.crud.todo();
-    t.crud.todos({
-      ordering: { created_at: true },
-      filtering: { completed: true },
-    });
-    t.int("todosCount", {
-      resolve: (root, args, { prisma }) => prisma.todo.count(),
-    });
-    t.int("todosLeftCount", {
-      resolve: (root, args, { prisma }) =>
-        prisma.todo.count({ where: { completed: { equals: false } } }),
-    });
-
-    t.connectionField("allTodos", {
+    t.connectionField("todos", {
       type: Todo,
       nodes: (root, args, { prisma }) =>
         prisma.todo.findMany({ orderBy: { created_at: "asc" } }),

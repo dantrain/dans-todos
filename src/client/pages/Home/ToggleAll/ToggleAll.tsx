@@ -5,19 +5,24 @@ import { ToggleAllQuery } from "../../../__generated__/ToggleAllQuery.graphql";
 
 const query = graphql`
   query ToggleAllQuery {
-    todosCount
-    todosLeftCount
+    todos(first: 50) {
+      totalCount
+      completedCount
+    }
   }
 `;
 
 const ToggleAll = () => {
-  const { todosCount, todosLeftCount } = useLazyLoadQuery<ToggleAllQuery>(
-    query,
-    {}
-  );
+  const {
+    todos: { totalCount, completedCount },
+  } = useLazyLoadQuery<ToggleAllQuery>(query, {});
 
   return (
-    <Checkbox indeterminate={todosCount > 0 && todosLeftCount !== todosCount} />
+    <Checkbox
+      disabled={totalCount === 0}
+      checked={totalCount > 0 && completedCount === totalCount}
+      indeterminate={totalCount > 0 && completedCount !== totalCount}
+    />
   );
 };
 

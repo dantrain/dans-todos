@@ -14,10 +14,16 @@ import TodoListItem from "./TodoListItem/TodoListItem";
 
 const query = graphql`
   query TodoListQuery {
-    todos(orderBy: { created_at: asc }) {
-      id
-      completed
-      ...TodoListItemFragment
+    todos(first: 50) @connection(key: "TodoList_todos") {
+      edges {
+        node {
+          id
+          completed
+          ...TodoListItemFragment
+        }
+      }
+      totalCount
+      completedCount
     }
   }
 `;
@@ -30,17 +36,21 @@ const useStyles = makeStyles({
 });
 
 const TodoList = () => {
-  const { todos } = useLazyLoadQuery<TodoListQuery>(query, {});
-  const incompleteCount = todos.filter(({ completed }) => !completed).length;
+  const {
+    todos: { edges, totalCount, completedCount },
+  } = useLazyLoadQuery<TodoListQuery>(query, {});
+
+  const incompleteCount = totalCount - completedCount;
 
   const s = useStyles();
 
-  return (
+  return totalCount && edges ? (
     <>
       <List>
-        {todos.map((todo) => (
-          <TodoListItem key={todo.id} todo={todo} />
-        ))}
+        {edges.map(
+          (edge) =>
+            edge?.node && <TodoListItem key={edge.node.id} todo={edge.node} />
+        )}
       </List>
       <Divider />
       <Toolbar className={s.toolbar}>
@@ -52,12 +62,12 @@ const TodoList = () => {
           <ToggleButton value="active">Active</ToggleButton>
           <ToggleButton value="completed">Completed</ToggleButton>
         </ToggleButtonGroup>
-        <Button color="primary" disabled={incompleteCount === todos.length}>
+        <Button color="primary" disabled={incompleteCount === totalCount}>
           Clear completed
         </Button>
       </Toolbar>
     </>
-  );
+  ) : null;
 };
 
 export default TodoList;

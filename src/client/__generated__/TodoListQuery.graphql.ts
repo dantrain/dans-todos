@@ -6,11 +6,17 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type TodoListQueryVariables = {};
 export type TodoListQueryResponse = {
-    readonly todos: ReadonlyArray<{
-        readonly id: string;
-        readonly completed: boolean;
-        readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
-    }>;
+    readonly todos: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly id: string;
+                readonly completed: boolean;
+                readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
+            };
+        } | null> | null;
+        readonly totalCount: number;
+        readonly completedCount: number;
+    };
 };
 export type TodoListQuery = {
     readonly response: TodoListQueryResponse;
@@ -21,10 +27,22 @@ export type TodoListQuery = {
 
 /*
 query TodoListQuery {
-  todos(orderBy: {created_at: asc}) {
-    id
-    completed
-    ...TodoListItemFragment
+  todos(first: 50) {
+    edges {
+      node {
+        id
+        completed
+        ...TodoListItemFragment
+        __typename
+      }
+      cursor
+    }
+    totalCount
+    completedCount
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
   }
 }
 
@@ -37,29 +55,80 @@ fragment TodoListItemFragment on Todo {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "orderBy",
-    "value": {
-      "created_at": "asc"
-    }
-  }
-],
-v1 = {
+var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "completed",
   "storageKey": null
-};
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "totalCount",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "completedCount",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "kind": "LinkedField",
+  "name": "pageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endCursor",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasNextPage",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v7 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 50
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -68,22 +137,49 @@ return {
     "name": "TodoListQuery",
     "selections": [
       {
-        "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "Todo",
+        "alias": "todos",
+        "args": null,
+        "concreteType": "QueryTodos_Connection",
         "kind": "LinkedField",
-        "name": "todos",
-        "plural": true,
+        "name": "__TodoList_todos_connection",
+        "plural": false,
         "selections": [
-          (v1/*: any*/),
-          (v2/*: any*/),
           {
+            "alias": null,
             "args": null,
-            "kind": "FragmentSpread",
-            "name": "TodoListItemFragment"
-          }
+            "concreteType": "TodoEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Todo",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v0/*: any*/),
+                  (v1/*: any*/),
+                  (v2/*: any*/),
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "TodoListItemFragment"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v4/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/)
         ],
-        "storageKey": "todos(orderBy:{\"created_at\":\"asc\"})"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -97,42 +193,89 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "Todo",
+        "args": (v7/*: any*/),
+        "concreteType": "QueryTodos_Connection",
         "kind": "LinkedField",
         "name": "todos",
-        "plural": true,
+        "plural": false,
         "selections": [
-          (v1/*: any*/),
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "todoId",
+            "concreteType": "TodoEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Todo",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v0/*: any*/),
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "todoId",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "text",
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v3/*: any*/)
+            ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "text",
-            "storageKey": null
-          }
+          (v4/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/)
         ],
-        "storageKey": "todos(orderBy:{\"created_at\":\"asc\"})"
+        "storageKey": "todos(first:50)"
+      },
+      {
+        "alias": null,
+        "args": (v7/*: any*/),
+        "filters": null,
+        "handle": "connection",
+        "key": "TodoList_todos",
+        "kind": "LinkedHandle",
+        "name": "todos"
       }
     ]
   },
   "params": {
-    "cacheID": "8240fdec70ca063b24bdcc04b8fdecf7",
+    "cacheID": "53e06156f14609dd3fbeeb8160c387a7",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "connection": [
+        {
+          "count": null,
+          "cursor": null,
+          "direction": "forward",
+          "path": [
+            "todos"
+          ]
+        }
+      ]
+    },
     "name": "TodoListQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery {\n  todos(orderBy: {created_at: asc}) {\n    id\n    completed\n    ...TodoListItemFragment\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  todoId\n  text\n  completed\n}\n"
+    "text": "query TodoListQuery {\n  todos(first: 50) {\n    edges {\n      node {\n        id\n        completed\n        ...TodoListItemFragment\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    completedCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  todoId\n  text\n  completed\n}\n"
   }
 };
 })();
-(node as any).hash = 'd52d1634d63fcfdf4235f53f25fa8ffd';
+(node as any).hash = '1dfb3db418cd3397d58c5ba07914a8d0';
 export default node;

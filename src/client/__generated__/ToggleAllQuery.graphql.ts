@@ -5,8 +5,10 @@
 import { ConcreteRequest } from "relay-runtime";
 export type ToggleAllQueryVariables = {};
 export type ToggleAllQueryResponse = {
-    readonly todosCount: number;
-    readonly todosLeftCount: number;
+    readonly todos: {
+        readonly totalCount: number;
+        readonly completedCount: number;
+    };
 };
 export type ToggleAllQuery = {
     readonly response: ToggleAllQueryResponse;
@@ -17,8 +19,10 @@ export type ToggleAllQuery = {
 
 /*
 query ToggleAllQuery {
-  todosCount
-  todosLeftCount
+  todos(first: 50) {
+    totalCount
+    completedCount
+  }
 }
 */
 
@@ -26,17 +30,34 @@ const node: ConcreteRequest = (function(){
 var v0 = [
   {
     "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "todosCount",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "todosLeftCount",
-    "storageKey": null
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "first",
+        "value": 50
+      }
+    ],
+    "concreteType": "QueryTodos_Connection",
+    "kind": "LinkedField",
+    "name": "todos",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "totalCount",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "completedCount",
+        "storageKey": null
+      }
+    ],
+    "storageKey": "todos(first:50)"
   }
 ];
 return {
@@ -57,14 +78,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "d2786b99afb649aea02925b3fcbea94f",
+    "cacheID": "a6f380731d50381d13963d325f9b5e22",
     "id": null,
     "metadata": {},
     "name": "ToggleAllQuery",
     "operationKind": "query",
-    "text": "query ToggleAllQuery {\n  todosCount\n  todosLeftCount\n}\n"
+    "text": "query ToggleAllQuery {\n  todos(first: 50) {\n    totalCount\n    completedCount\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c274d6b9c8d74ddc0148cfac71988917';
+(node as any).hash = '6e75fb5e226191a5c19159a02f5c4f61';
 export default node;

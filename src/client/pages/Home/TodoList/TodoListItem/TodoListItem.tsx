@@ -7,9 +7,17 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React, { ChangeEvent, MouseEvent } from "react";
+import React, { ChangeEvent } from "react";
 import { graphql, useFragment, useMutation } from "react-relay/hooks";
-import { TodoListItemDeleteMutation } from "../../../../__generated__/TodoListItemDeleteMutation.graphql";
+import {
+  ConnectionHandler,
+  ROOT_ID,
+  SelectorStoreUpdater,
+} from "relay-runtime";
+import {
+  TodoListItemDeleteMutation,
+  TodoListItemDeleteMutationResponse,
+} from "../../../../__generated__/TodoListItemDeleteMutation.graphql";
 import { TodoListItemFragment$key } from "../../../../__generated__/TodoListItemFragment.graphql";
 import { TodoListItemSetCompletedMutation } from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
 
@@ -69,11 +77,21 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
   );
 
   const handleDelete = () => {
+    const updater: SelectorStoreUpdater<TodoListItemDeleteMutationResponse> = (
+      store
+    ) => {
+      const connection = ConnectionHandler.getConnection(
+        store.getRoot(),
+        "TodoList_todos"
+      );
+      if (!connection) throw new Error("Can't find connection");
+      ConnectionHandler.deleteNode(connection, id);
+    };
+
     commitDelete({
       variables: { todoId },
-      updater: (store) => {
-        // store.delete(id);
-      },
+      optimisticUpdater: updater,
+      updater,
     });
   };
 
