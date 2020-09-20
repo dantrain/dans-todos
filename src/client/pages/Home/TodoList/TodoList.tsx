@@ -1,29 +1,22 @@
 import {
   Button,
-  Checkbox,
   Divider,
-  IconButton,
   List,
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
   makeStyles,
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import React from "react";
 import { graphql, useLazyLoadQuery } from "react-relay/hooks";
 import { TodoListQuery } from "../../../__generated__/TodoListQuery.graphql";
+import TodoListItem from "./TodoListItem/TodoListItem";
 
 const query = graphql`
   query TodoListQuery {
     todos(orderBy: { created_at: asc }) {
       id
-      text
-      completed
+      ...TodoListItemFragment
     }
     todosLeftCount
   }
@@ -43,18 +36,8 @@ const TodoList = () => {
   return (
     <>
       <List>
-        {todos.map(({ id, text, completed }) => (
-          <ListItem key={id}>
-            <ListItemIcon>
-              <Checkbox checked={completed} />
-            </ListItemIcon>
-            <ListItemText primary={text} />
-            <ListItemSecondaryAction>
-              <IconButton>
-                <DeleteIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
+        {todos.map((todo) => (
+          <TodoListItem key={todo.id} todo={todo} />
         ))}
       </List>
       <Divider />
