@@ -33,6 +33,21 @@ const Query = queryType({
       resolve: (root, args, { prisma }) =>
         prisma.todo.count({ where: { completed: { equals: false } } }),
     });
+
+    t.connectionField("allTodos", {
+      type: Todo,
+      nodes: (root, args, { prisma }) =>
+        prisma.todo.findMany({ orderBy: { created_at: "asc" } }),
+      extendConnection: (t) => {
+        t.int("totalCount", {
+          resolve: (root, args, { prisma }) => prisma.todo.count(),
+        });
+        t.int("completedCount", {
+          resolve: (root, args, { prisma }) =>
+            prisma.todo.count({ where: { completed: { equals: true } } }),
+        });
+      },
+    });
   },
 });
 

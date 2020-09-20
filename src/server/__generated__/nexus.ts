@@ -162,10 +162,24 @@ export interface NexusGenRootTypes {
     count: number; // Int!
   }
   Mutation: {};
+  PageInfo: { // root type
+    endCursor?: string | null; // String
+    hasNextPage: boolean; // Boolean!
+    hasPreviousPage: boolean; // Boolean!
+    startCursor?: string | null; // String
+  }
   Query: {};
   Todo: { // root type
     completed: boolean; // Boolean!
     text: string; // String!
+  }
+  TodoConnection: { // root type
+    edges?: Array<NexusGenRootTypes['TodoEdge'] | null> | null; // [TodoEdge]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+  }
+  TodoEdge: { // root type
+    cursor: string; // String!
+    node: NexusGenRootTypes['Todo']; // Todo!
   }
 }
 
@@ -208,7 +222,14 @@ export interface NexusGenFieldTypes {
     updateManyTodo: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateOneTodo: NexusGenRootTypes['Todo'] | null; // Todo
   }
+  PageInfo: { // field return type
+    endCursor: string | null; // String
+    hasNextPage: boolean; // Boolean!
+    hasPreviousPage: boolean; // Boolean!
+    startCursor: string | null; // String
+  }
   Query: { // field return type
+    allTodos: NexusGenRootTypes['TodoConnection']; // TodoConnection!
     todo: NexusGenRootTypes['Todo'] | null; // Todo
     todos: NexusGenRootTypes['Todo'][]; // [Todo!]!
     todosCount: number; // Int!
@@ -219,6 +240,14 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     text: string; // String!
     todoId: number; // Int!
+  }
+  TodoConnection: { // field return type
+    edges: Array<NexusGenRootTypes['TodoEdge'] | null> | null; // [TodoEdge]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+  }
+  TodoEdge: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['Todo']; // Todo!
   }
 }
 
@@ -243,6 +272,12 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    allTodos: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
     todo: { // args
       where: NexusGenInputs['TodoWhereUniqueInput']; // TodoWhereUniqueInput!
     }
@@ -262,7 +297,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "BatchPayload" | "Mutation" | "Query" | "Todo";
+export type NexusGenObjectNames = "BatchPayload" | "Mutation" | "PageInfo" | "Query" | "Todo" | "TodoConnection" | "TodoEdge";
 
 export type NexusGenInputNames = "BoolFieldUpdateOperationsInput" | "BoolFilter" | "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "IntFilter" | "NestedBoolFilter" | "NestedDateTimeFilter" | "NestedIntFilter" | "NestedStringFilter" | "QueryTodosOrderByInput" | "QueryTodosWhereInput" | "StringFieldUpdateOperationsInput" | "StringFilter" | "TodoCreateInput" | "TodoUpdateInput" | "TodoUpdateManyMutationInput" | "TodoWhereInput" | "TodoWhereUniqueInput";
 
