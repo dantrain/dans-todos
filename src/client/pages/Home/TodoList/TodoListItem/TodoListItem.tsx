@@ -7,19 +7,18 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useCallback } from "react";
 import { graphql, useFragment, useMutation } from "react-relay/hooks";
-import {
-  ConnectionHandler,
-  ROOT_ID,
-  SelectorStoreUpdater,
-} from "relay-runtime";
+import { ConnectionHandler, SelectorStoreUpdater } from "relay-runtime";
 import {
   TodoListItemDeleteMutation,
   TodoListItemDeleteMutationResponse,
 } from "../../../../__generated__/TodoListItemDeleteMutation.graphql";
 import { TodoListItemFragment$key } from "../../../../__generated__/TodoListItemFragment.graphql";
-import { TodoListItemSetCompletedMutation } from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
+import {
+  TodoListItemSetCompletedMutation,
+  TodoListItemSetCompletedMutationResponse,
+} from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
 
 const todoListItemFragment = graphql`
   fragment TodoListItemFragment on Todo {
@@ -63,20 +62,38 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     setCompletedMutation
   );
 
-  const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
-    commitToggle({
-      variables: { todoId, completed: event.target.checked },
-      optimisticResponse: {
-        updateOneTodo: { id, completed: event.target.checked },
-      },
-    });
-  };
+  const handleToggle = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const updater: SelectorStoreUpdater<TodoListItemSetCompletedMutationResponse> = (
+        store
+      ) => {
+        const connection = ConnectionHandler.getConnection(
+          store.getRoot(),
+          "TodoList_todos"
+        );
+        if (!connection) throw new Error("Can't find connection");
+        connection.setValue(
+          +(connection.getValue("completedCount") || 0) + (completed ? -1 : 1),
+          "completedCount"
+        );
+      };
+
+      commitToggle({
+        variables: { todoId, completed: event.target.checked },
+        optimisticResponse: {
+          updateOneTodo: { id, completed: event.target.checked },
+        },
+        updater,
+      });
+    },
+    [id, todoId, completed]
+  );
 
   const [commitDelete] = useMutation<TodoListItemDeleteMutation>(
     deleteMutation
   );
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     const updater: SelectorStoreUpdater<TodoListItemDeleteMutationResponse> = (
       store
     ) => {
@@ -86,6 +103,16 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       );
       if (!connection) throw new Error("Can't find connection");
       ConnectionHandler.deleteNode(connection, id);
+      connection.setValue(
+        +(connection.getValue("totalCount") || 0) - 1,
+        "totalCount"
+      );
+      if (completed) {
+        connection.setValue(
+          +(connection.getValue("completedCount") || 0) - 1,
+          "completedCount"
+        );
+      }
     };
 
     commitDelete({
@@ -93,7 +120,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       optimisticUpdater: updater,
       updater,
     });
-  };
+  }, [id, todoId, completed]);
 
   return (
     <ListItem>

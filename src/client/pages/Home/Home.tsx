@@ -23,11 +23,7 @@ const Home = () => {
   return (
     <Card>
       <CardHeader
-        avatar={
-          <Suspense fallback={<Checkbox disabled />}>
-            <ToggleAll />
-          </Suspense>
-        }
+        avatar={<ToggleAll />}
         title={
           <InputBase
             className={s.inputBase}
