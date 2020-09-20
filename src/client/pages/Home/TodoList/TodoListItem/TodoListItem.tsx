@@ -7,8 +7,9 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, MouseEvent } from "react";
 import { graphql, useFragment, useMutation } from "react-relay/hooks";
+import { TodoListItemDeleteMutation } from "../../../../__generated__/TodoListItemDeleteMutation.graphql";
 import { TodoListItemFragment$key } from "../../../../__generated__/TodoListItemFragment.graphql";
 import { TodoListItemSetCompletedMutation } from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
 
@@ -32,6 +33,14 @@ const setCompletedMutation = graphql`
   }
 `;
 
+const deleteMutation = graphql`
+  mutation TodoListItemDeleteMutation($todoId: Int) {
+    deleteOneTodo(where: { id: $todoId }) {
+      id
+    }
+  }
+`;
+
 type TodoListItemProps = {
   todo: TodoListItemFragment$key;
 };
@@ -41,12 +50,13 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     todoListItemFragment,
     todo
   );
-  const [commit] = useMutation<TodoListItemSetCompletedMutation>(
+
+  const [commitToggle] = useMutation<TodoListItemSetCompletedMutation>(
     setCompletedMutation
   );
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    commit({
+  const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
+    commitToggle({
       variables: { todoId, completed: event.target.checked },
       optimisticResponse: {
         updateOneTodo: { id, completed: event.target.checked },
@@ -54,14 +64,27 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     });
   };
 
+  const [commitDelete] = useMutation<TodoListItemDeleteMutation>(
+    deleteMutation
+  );
+
+  const handleDelete = () => {
+    commitDelete({
+      variables: { todoId },
+      updater: (store) => {
+        // store.delete(id);
+      },
+    });
+  };
+
   return (
     <ListItem>
       <ListItemIcon>
-        <Checkbox checked={completed} onChange={handleChange} />
+        <Checkbox checked={completed} onChange={handleToggle} />
       </ListItemIcon>
       <ListItemText primary={text} />
       <ListItemSecondaryAction>
-        <IconButton>
+        <IconButton onClick={handleDelete}>
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>

@@ -52,7 +52,9 @@ const TodoList = () => {
           <ToggleButton value="active">Active</ToggleButton>
           <ToggleButton value="completed">Completed</ToggleButton>
         </ToggleButtonGroup>
-        <Button color="primary">Clear completed</Button>
+        <Button color="primary" disabled={incompleteCount === todos.length}>
+          Clear completed
+        </Button>
       </Toolbar>
     </>
   );
