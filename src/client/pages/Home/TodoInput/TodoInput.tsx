@@ -75,6 +75,7 @@ const TodoInput = () => {
       value={value}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
+      autoFocus
     />
   );
 };

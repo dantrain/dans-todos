@@ -33,6 +33,9 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
   },
+  incompleteCount: {
+    minWidth: "100px",
+  },
 });
 
 const TodoList = () => {
@@ -54,7 +57,7 @@ const TodoList = () => {
       </List>
       <Divider />
       <Toolbar className={s.toolbar}>
-        <Typography color="textSecondary">
+        <Typography className={s.incompleteCount} color="textSecondary">
           {incompleteCount} item{incompleteCount !== 1 && "s"} left
         </Typography>
         <ToggleButtonGroup value="all" size="small" exclusive>
