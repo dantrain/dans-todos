@@ -11,9 +11,8 @@ const Todo = objectType({
   name: "Todo",
   definition: (t) => {
     t.id("id", {
-      resolve: ({ id }: any) => Buffer.from(`Todo${id}`).toString("base64"),
+      resolve: ({ id }: any) => `Todo${id}`,
     });
-    t.model.id({ alias: "todoId" });
     t.model.text();
     t.model.completed();
   },

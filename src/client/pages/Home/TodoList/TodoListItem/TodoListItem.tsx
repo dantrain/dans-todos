@@ -23,16 +23,15 @@ import {
 const todoListItemFragment = graphql`
   fragment TodoListItemFragment on Todo {
     id
-    todoId
     text
     completed
   }
 `;
 
 const setCompletedMutation = graphql`
-  mutation TodoListItemSetCompletedMutation($todoId: Int, $completed: Boolean) {
+  mutation TodoListItemSetCompletedMutation($id: Int, $completed: Boolean) {
     updateOneTodo(
-      where: { id: $todoId }
+      where: { id: $id }
       data: { completed: { set: $completed } }
     ) {
       completed
@@ -41,8 +40,8 @@ const setCompletedMutation = graphql`
 `;
 
 const deleteMutation = graphql`
-  mutation TodoListItemDeleteMutation($todoId: Int) {
-    deleteOneTodo(where: { id: $todoId }) {
+  mutation TodoListItemDeleteMutation($id: Int) {
+    deleteOneTodo(where: { id: $id }) {
       id
     }
   }
@@ -53,10 +52,7 @@ type TodoListItemProps = {
 };
 
 const TodoListItem = ({ todo }: TodoListItemProps) => {
-  const { id, todoId, text, completed } = useFragment(
-    todoListItemFragment,
-    todo
-  );
+  const { id, text, completed } = useFragment(todoListItemFragment, todo);
 
   const [commitToggle] = useMutation<TodoListItemSetCompletedMutation>(
     setCompletedMutation
@@ -79,14 +75,17 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       };
 
       commitToggle({
-        variables: { todoId, completed: event.target.checked },
+        variables: {
+          id: +id.replace("Todo", ""),
+          completed: event.target.checked,
+        },
         optimisticResponse: {
           updateOneTodo: { id, completed: event.target.checked },
         },
         updater,
       });
     },
-    [id, todoId, completed]
+    [id, completed]
   );
 
   const [commitDelete] = useMutation<TodoListItemDeleteMutation>(
@@ -116,11 +115,11 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     };
 
     commitDelete({
-      variables: { todoId },
+      variables: { id: +id.replace("Todo", "") },
       optimisticUpdater: updater,
       updater,
     });
-  }, [id, todoId, completed]);
+  }, [id, completed]);
 
   return (
     <ListItem>

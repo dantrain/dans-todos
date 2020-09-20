@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type TodoListItemSetCompletedMutationVariables = {
-    todoId?: number | null;
+    id?: number | null;
     completed?: boolean | null;
 };
 export type TodoListItemSetCompletedMutationResponse = {
@@ -21,10 +21,10 @@ export type TodoListItemSetCompletedMutation = {
 
 /*
 mutation TodoListItemSetCompletedMutation(
-  $todoId: Int
+  $id: Int
   $completed: Boolean
 ) {
-  updateOneTodo(where: {id: $todoId}, data: {completed: {set: $completed}}) {
+  updateOneTodo(where: {id: $id}, data: {completed: {set: $completed}}) {
     completed
     id
   }
@@ -40,7 +40,7 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "todoId"
+  "name": "id"
 },
 v2 = [
   {
@@ -65,7 +65,7 @@ v2 = [
       {
         "kind": "Variable",
         "name": "id",
-        "variableName": "todoId"
+        "variableName": "id"
       }
     ],
     "kind": "ObjectValue",
@@ -136,14 +136,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d8088fdea1602838cd704ddf52b1a3bd",
+    "cacheID": "1fcb603ad9be16ff35f01906a70123de",
     "id": null,
     "metadata": {},
     "name": "TodoListItemSetCompletedMutation",
     "operationKind": "mutation",
-    "text": "mutation TodoListItemSetCompletedMutation(\n  $todoId: Int\n  $completed: Boolean\n) {\n  updateOneTodo(where: {id: $todoId}, data: {completed: {set: $completed}}) {\n    completed\n    id\n  }\n}\n"
+    "text": "mutation TodoListItemSetCompletedMutation(\n  $id: Int\n  $completed: Boolean\n) {\n  updateOneTodo(where: {id: $id}, data: {completed: {set: $completed}}) {\n    completed\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2a7d5598b29d0e8c6003a43f6d8290dc';
+(node as any).hash = '312bab163ffa6f2a2f20161a723a6b40';
 export default node;

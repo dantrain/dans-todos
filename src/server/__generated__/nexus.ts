@@ -231,7 +231,6 @@ export interface NexusGenFieldTypes {
     completed: boolean; // Boolean!
     id: string; // ID!
     text: string; // String!
-    todoId: number; // Int!
   }
   TodoEdge: { // field return type
     cursor: string; // String!

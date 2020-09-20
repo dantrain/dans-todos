@@ -48,7 +48,6 @@ query TodoListQuery {
 
 fragment TodoListItemFragment on Todo {
   id
-  todoId
   text
   completed
 }
@@ -221,13 +220,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "todoId",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "text",
                     "storageKey": null
                   },
@@ -257,7 +249,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "53e06156f14609dd3fbeeb8160c387a7",
+    "cacheID": "c028cf03c78fb54e941054421e09f7ce",
     "id": null,
     "metadata": {
       "connection": [
@@ -273,7 +265,7 @@ return {
     },
     "name": "TodoListQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery {\n  todos(first: 50) {\n    edges {\n      node {\n        id\n        completed\n        ...TodoListItemFragment\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    completedCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  todoId\n  text\n  completed\n}\n"
+    "text": "query TodoListQuery {\n  todos(first: 50) {\n    edges {\n      node {\n        id\n        completed\n        ...TodoListItemFragment\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    completedCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
   }
 };
 })();

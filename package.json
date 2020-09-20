@@ -30,7 +30,8 @@
     "react-dom": "0.0.0-experimental-94c0244ba",
     "react-relay": "0.0.0-experimental-183bdd28",
     "react-router-dom": "^5.1.2",
-    "relay-runtime": "^10.0.1"
+    "relay-runtime": "^10.0.1",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.5.0",
@@ -44,6 +45,7 @@
     "@types/react-relay": "^7.0.9",
     "@types/react-router-dom": "^5.1.4",
     "@types/relay-runtime": "^10.0.3",
+    "@types/uuid": "^8.3.0",
     "@types/webpack-env": "^1.15.2",
     "babel-plugin-relay": "^10.0.1",
     "razzle": "^3.3.0-canary.5",

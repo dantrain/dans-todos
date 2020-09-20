@@ -1,36 +1,14 @@
-import {
-  Card,
-  CardHeader,
-  Checkbox,
-  Divider,
-  InputBase,
-  makeStyles,
-} from "@material-ui/core";
+import { Card, CardHeader, Divider } from "@material-ui/core";
 import React from "react";
 import Suspense from "../../components/Suspense/Suspense";
-import ToggleAll from "./ToggleAll/ToggleAll";
+import TodoInput from "./TodoInput/TodoInput";
 import TodoList from "./TodoList/TodoList";
-
-const useStyles = makeStyles({
-  inputBase: {
-    width: "100%",
-  },
-});
+import ToggleAll from "./ToggleAll/ToggleAll";
 
 const Home = () => {
-  const s = useStyles();
-
   return (
     <Card>
-      <CardHeader
-        avatar={<ToggleAll />}
-        title={
-          <InputBase
-            className={s.inputBase}
-            placeholder="What needs to be done?"
-          />
-        }
-      />
+      <CardHeader avatar={<ToggleAll />} title={<TodoInput />} />
       <Suspense fallback={<></>}>
         <Divider />
         <TodoList />
