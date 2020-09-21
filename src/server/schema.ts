@@ -10,9 +10,7 @@ import {
 const Todo = objectType({
   name: "Todo",
   definition: (t) => {
-    t.id("id", {
-      resolve: ({ id }: any) => `Todo${id}`,
-    });
+    t.id("id", { resolve: ({ id }: any) => `Todo${id}` });
     t.model.text();
     t.model.completed();
   },

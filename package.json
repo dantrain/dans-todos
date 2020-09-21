@@ -13,7 +13,8 @@
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only src/server/schema",
     "generate:relay": "relay-compiler",
-    "generate": "yarn run generate:prisma && yarn run generate:nexus && yarn run generate:relay"
+    "generate": "yarn run generate:prisma && yarn run generate:nexus && yarn run generate:relay",
+    "postinstall": "yarn run generate:prisma"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
