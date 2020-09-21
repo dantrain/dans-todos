@@ -38,7 +38,11 @@ const ToggleAll = () => {
       connection.setValue(connection.getValue("totalCount"), "completedCount");
     };
 
-    commit({ variables: { completed: true }, updater });
+    commit({
+      variables: { completed: true },
+      optimisticUpdater: updater,
+      updater,
+    });
   }, []);
 
   return (

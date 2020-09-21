@@ -1,5 +1,4 @@
 import {
-  Button,
   Divider,
   List,
   makeStyles,
@@ -10,6 +9,7 @@ import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import React from "react";
 import { graphql, useLazyLoadQuery } from "react-relay/hooks";
 import { TodoListQuery } from "../../../__generated__/TodoListQuery.graphql";
+import ClearCompleted from "./ClearCompleted/ClearCompleted";
 import TodoListItem from "./TodoListItem/TodoListItem";
 
 const query = graphql`
@@ -42,7 +42,6 @@ const TodoList = () => {
   const {
     todos: { edges, totalCount, completedCount },
   } = useLazyLoadQuery<TodoListQuery>(query, {});
-
   const incompleteCount = totalCount - completedCount;
 
   const s = useStyles();
@@ -65,9 +64,7 @@ const TodoList = () => {
           <ToggleButton value="active">Active</ToggleButton>
           <ToggleButton value="completed">Completed</ToggleButton>
         </ToggleButtonGroup>
-        <Button color="primary" disabled={incompleteCount === totalCount}>
-          Clear completed
-        </Button>
+        <ClearCompleted disabled={incompleteCount === totalCount} />
       </Toolbar>
     </>
   ) : null;

@@ -1,5 +1,11 @@
 import { InputBase, makeStyles } from "@material-ui/core";
-import React, { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { graphql, useMutation } from "react-relay/hooks";
 import { v4 as uuidv4 } from "uuid";
 import { ConnectionHandler } from "relay-runtime";
@@ -28,44 +34,47 @@ const TodoInput = () => {
 
   const [commit] = useMutation<TodoInputCreateMutation>(createMutation);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  };
+  }, []);
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      commit({
-        variables: { text: value.trim() },
-        updater: (store) => {
-          const payload = store.getRootField("createOneTodo");
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter" && value.length) {
+        commit({
+          variables: { text: value.trim() },
+          updater: (store) => {
+            const payload = store.getRootField("createOneTodo");
 
-          const connection = ConnectionHandler.getConnection(
-            store.getRoot(),
-            "TodoList_todos"
-          );
-          if (!connection) throw new Error("Can't find connection");
+            const connection = ConnectionHandler.getConnection(
+              store.getRoot(),
+              "TodoList_todos"
+            );
+            if (!connection) throw new Error("Can't find connection");
 
-          const edge = ConnectionHandler.createEdge(
-            store,
-            connection,
-            payload,
-            "TodoEdge"
-          );
+            const edge = ConnectionHandler.createEdge(
+              store,
+              connection,
+              payload,
+              "TodoEdge"
+            );
 
-          ConnectionHandler.insertEdgeAfter(connection, edge);
+            ConnectionHandler.insertEdgeAfter(connection, edge);
 
-          connection.setValue(
-            +(connection.getValue("totalCount") || 0) + 1,
-            "totalCount"
-          );
-        },
-      });
-      setValue("");
-    } else if (e.key === "Escape") {
-      setValue("");
-      ref?.current?.blur();
-    }
-  };
+            connection.setValue(
+              +(connection.getValue("totalCount") || 0) + 1,
+              "totalCount"
+            );
+          },
+        });
+        setValue("");
+      } else if (e.key === "Escape") {
+        setValue("");
+        ref?.current?.blur();
+      }
+    },
+    [value]
+  );
 
   return (
     <InputBase
