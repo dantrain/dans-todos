@@ -6,22 +6,29 @@ import {
   Store,
   Variables,
 } from "relay-runtime";
+import PubSub from "pubsub-js";
 
 async function fetchFn(params: RequestParameters, variables: Variables) {
-  const response = await fetch("/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: params.text,
-      variables,
-    }),
-  });
+  PubSub.publish("FETCH", "START");
 
-  const data = await response.json();
+  try {
+    const response = await fetch("/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: params.text,
+        variables,
+      }),
+    });
 
-  return data;
+    const data = await response.json();
+
+    return data;
+  } finally {
+    PubSub.publish("FETCH", "END");
+  }
 }
 
 export default new Environment({
