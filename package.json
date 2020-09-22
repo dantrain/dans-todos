@@ -21,7 +21,6 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@nexus/schema": "^0.15.0",
-    "@tanem/react-nprogress": "^3.0.44",
     "apollo-server-express": "^2.17.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
@@ -33,6 +32,7 @@
     "react-dom": "0.0.0-experimental-94c0244ba",
     "react-relay": "0.0.0-experimental-183bdd28",
     "react-router-dom": "^5.1.2",
+    "react-transition-group": "^4.4.1",
     "relay-runtime": "^10.0.1",
     "uuid": "^8.3.0"
   },

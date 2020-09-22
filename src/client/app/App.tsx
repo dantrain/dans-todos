@@ -13,7 +13,6 @@ const App = () => (
     <CssBaseline />
     <RemoveServerCss />
     <AppBar position="sticky">
-      <Progress />
       <Container maxWidth="sm">
         <Toolbar>
           <Typography variant="h5" component="h1">
@@ -21,6 +20,7 @@ const App = () => (
           </Typography>
         </Toolbar>
       </Container>
+      <Progress />
     </AppBar>
     <Container maxWidth="sm">
       <Box my={5}>

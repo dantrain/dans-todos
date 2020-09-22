@@ -20,14 +20,14 @@ const Query = queryType({
   definition: (t) => {
     t.connectionField("todos", {
       type: Todo,
-      nodes: (root, args, { prisma }) =>
+      nodes: (_root, _args, { prisma }) =>
         prisma.todo.findMany({ orderBy: { created_at: "asc" } }),
       extendConnection: (t) => {
         t.int("totalCount", {
-          resolve: (root, args, { prisma }) => prisma.todo.count(),
+          resolve: (_root, _args, { prisma }) => prisma.todo.count(),
         });
         t.int("completedCount", {
-          resolve: (root, args, { prisma }) =>
+          resolve: (_root, _args, { prisma }) =>
             prisma.todo.count({ where: { completed: { equals: true } } }),
         });
       },

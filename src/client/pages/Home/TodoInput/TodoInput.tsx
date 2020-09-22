@@ -7,7 +7,6 @@ import React, {
   useState,
 } from "react";
 import { graphql, useMutation } from "react-relay/hooks";
-import { v4 as uuidv4 } from "uuid";
 import { ConnectionHandler } from "relay-runtime";
 import { TodoInputCreateMutation } from "../../../__generated__/TodoInputCreateMutation.graphql";
 
