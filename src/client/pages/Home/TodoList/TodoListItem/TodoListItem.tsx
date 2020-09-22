@@ -19,6 +19,7 @@ import {
   TodoListItemSetCompletedMutation,
   TodoListItemSetCompletedMutationResponse,
 } from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
+import TodoEditInput from "./TodoEditInput/TodoEditInput";
 
 const todoListItemFragment = graphql`
   fragment TodoListItemFragment on Todo {
@@ -127,7 +128,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       <ListItemIcon>
         <Checkbox checked={completed} onChange={handleToggle} />
       </ListItemIcon>
-      <ListItemText primary={text} />
+      <ListItemText primary={<TodoEditInput id={id} initialValue={text} />} />
       <ListItemSecondaryAction>
         <IconButton onClick={handleDelete}>
           <DeleteIcon />
