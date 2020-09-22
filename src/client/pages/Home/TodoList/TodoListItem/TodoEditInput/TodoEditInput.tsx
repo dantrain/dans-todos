@@ -35,29 +35,26 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
 
   const [commit] = useMutation<TodoEditInputEditMutation>(editMutation);
 
-  const commitEdit = useCallback(() => {
-    commit({
-      variables: { id: +id.replace("Todo", ""), text: value.trim() },
-    });
-    setValue(value.trim());
+  const handleBlur = useCallback(() => {
+    if (value.length) {
+      setValue(value.trim());
+      commit({
+        variables: { id: +id.replace("Todo", ""), text: value.trim() },
+      });
+    } else {
+      setValue(initialValue);
+    }
   }, [id, value]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   }, []);
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" && value.length) {
-        commitEdit();
-        ref?.current?.blur();
-      } else if (e.key === "Escape") {
-        setValue(initialValue);
-        ref?.current?.blur();
-      }
-    },
-    [value, initialValue, commitEdit]
-  );
+  const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === "Escape") {
+      ref?.current?.blur();
+    }
+  }, []);
 
   return (
     <InputBase
@@ -66,7 +63,7 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
       value={value}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
-      onBlur={commitEdit}
+      onBlur={handleBlur}
     />
   );
 };
