@@ -3,6 +3,7 @@ import React, {
   ChangeEvent,
   KeyboardEvent,
   useCallback,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -33,13 +34,17 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
   const ref = useRef<HTMLInputElement | null>(null);
   const s = useStyles();
 
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
   const [commit] = useMutation<TodoEditInputEditMutation>(editMutation);
 
   const handleBlur = useCallback(() => {
     if (value.length) {
-      setValue(value.trim());
       commit({
         variables: { id: +id.replace("Todo", ""), text: value.trim() },
+        optimisticResponse: { updateOneTodo: { id, text: value.trim() } },
       });
     } else {
       setValue(initialValue);
