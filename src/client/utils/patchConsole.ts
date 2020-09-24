@@ -1,17 +1,14 @@
-export default (filterString: string) => {
+export default (regex: RegExp) => {
   if (process.env.NODE_ENV !== "production") {
-    const orgError = console.error;
-
-    console.error = (...args: any[]) => {
+    const patch = (func: typeof console.log) => (...args: any[]) => {
       if (
-        !(
-          args &&
-          typeof args[0] === "string" &&
-          args[0].indexOf(filterString) > -1
-        )
+        !(args && typeof args[0] === "string" && args[0].search(regex) > -1)
       ) {
-        orgError(...args);
+        func(...args);
       }
     };
+
+    console.error = patch(console.error);
+    console.warn = patch(console.warn);
   }
 };

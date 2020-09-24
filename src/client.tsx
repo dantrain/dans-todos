@@ -11,6 +11,6 @@ reactRoot.render(
 );
 
 if (module.hot) {
-  patchConsole("did not match. Server:");
+  patchConsole(/did not match\. Server|is deprecated in StrictMode/);
   module.hot.accept();
 }

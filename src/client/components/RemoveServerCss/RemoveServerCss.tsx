@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 
-const RemoveServerCss: React.FC = ({ children }) => {
+const RemoveServerCss: FC = ({ children }) => {
   useEffect(() => {
     const jssStyles = document.getElementById("jss-server-side");
 

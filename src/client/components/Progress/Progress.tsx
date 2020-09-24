@@ -34,13 +34,17 @@ const Progress = () => {
   const s = useStyles();
 
   useEffect(() => {
-    const token = PubSub.subscribe("FETCH", (_msg: string, data: string) => {
-      if (data === "START") setNoInFlight((state) => state + 1);
-      if (data === "END") setNoInFlight((state) => Math.max(0, state - 1));
+    const startToken = PubSub.subscribe("FETCH_START", () => {
+      setNoInFlight((state) => state + 1);
+    });
+
+    const endToken = PubSub.subscribe("FETCH_END", () => {
+      setNoInFlight((state) => Math.max(0, state - 1));
     });
 
     return () => {
-      PubSub.unsubscribe(token);
+      PubSub.unsubscribe(startToken);
+      PubSub.unsubscribe(endToken);
     };
   }, []);
 

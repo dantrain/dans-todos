@@ -9,7 +9,7 @@ import {
 import PubSub from "pubsub-js";
 
 async function fetchFn(params: RequestParameters, variables: Variables) {
-  PubSub.publish("FETCH", "START");
+  PubSub.publish("FETCH_START");
 
   try {
     const response = await fetch("/graphql", {
@@ -26,8 +26,11 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
     const data = await response.json();
 
     return data;
+  } catch (err) {
+    PubSub.publish("FETCH_FAIL", err);
+    throw err;
   } finally {
-    PubSub.publish("FETCH", "END");
+    PubSub.publish("FETCH_END");
   }
 }
 
