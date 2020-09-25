@@ -46,7 +46,8 @@ const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
       });
 
       connection.setValue(
-        +(connection.getValue("totalCount") || 0) - completedNodes.length,
+        +(connection.getValue("totalCount") || 0) -
+          +(connection.getValue("completedCount") || 0),
         "totalCount"
       );
 
