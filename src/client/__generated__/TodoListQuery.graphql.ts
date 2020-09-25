@@ -4,7 +4,10 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type TodoListQueryVariables = {};
+export type Filter = "ACTIVE" | "ALL" | "COMPLETED" | "%future added value";
+export type TodoListQueryVariables = {
+    filter?: Filter | null;
+};
 export type TodoListQueryResponse = {
     readonly todos: {
         readonly edges: ReadonlyArray<{
@@ -26,8 +29,10 @@ export type TodoListQuery = {
 
 
 /*
-query TodoListQuery {
-  todos(first: 50) {
+query TodoListQuery(
+  $filter: Filter
+) {
+  todos(first: 50, filter: $filter) {
     edges {
       node {
         id
@@ -54,49 +59,61 @@ fragment TodoListItemFragment on Todo {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "filter"
+  }
+],
+v1 = {
+  "kind": "Variable",
+  "name": "filter",
+  "variableName": "filter"
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v1 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "completed",
   "storageKey": null
 },
-v2 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v3 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v4 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v5 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "completedCount",
   "storageKey": null
 },
-v6 = {
+v8 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -121,7 +138,8 @@ v6 = {
   ],
   "storageKey": null
 },
-v7 = [
+v9 = [
+  (v1/*: any*/),
   {
     "kind": "Literal",
     "name": "first",
@@ -130,14 +148,16 @@ v7 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "TodoListQuery",
     "selections": [
       {
         "alias": "todos",
-        "args": null,
+        "args": [
+          (v1/*: any*/)
+        ],
         "concreteType": "QueryTodos_Connection",
         "kind": "LinkedField",
         "name": "__TodoList_todos_connection",
@@ -159,9 +179,9 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v0/*: any*/),
-                  (v1/*: any*/),
                   (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
@@ -170,13 +190,13 @@ return {
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/),
-          (v5/*: any*/),
-          (v6/*: any*/)
+          (v6/*: any*/),
+          (v7/*: any*/),
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
@@ -186,13 +206,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "TodoListQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v7/*: any*/),
+        "args": (v9/*: any*/),
         "concreteType": "QueryTodos_Connection",
         "kind": "LinkedField",
         "name": "todos",
@@ -214,8 +234,8 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v0/*: any*/),
-                  (v1/*: any*/),
+                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -223,24 +243,26 @@ return {
                     "name": "text",
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/),
-          (v5/*: any*/),
-          (v6/*: any*/)
+          (v6/*: any*/),
+          (v7/*: any*/),
+          (v8/*: any*/)
         ],
-        "storageKey": "todos(first:50)"
+        "storageKey": null
       },
       {
         "alias": null,
-        "args": (v7/*: any*/),
-        "filters": null,
+        "args": (v9/*: any*/),
+        "filters": [
+          "filter"
+        ],
         "handle": "connection",
         "key": "TodoList_todos",
         "kind": "LinkedHandle",
@@ -249,7 +271,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c028cf03c78fb54e941054421e09f7ce",
+    "cacheID": "fb5eae447e6266fa605be379f8edc557",
     "id": null,
     "metadata": {
       "connection": [
@@ -265,9 +287,9 @@ return {
     },
     "name": "TodoListQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery {\n  todos(first: 50) {\n    edges {\n      node {\n        id\n        completed\n        ...TodoListItemFragment\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    completedCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
+    "text": "query TodoListQuery(\n  $filter: Filter\n) {\n  todos(first: 50, filter: $filter) {\n    edges {\n      node {\n        id\n        completed\n        ...TodoListItemFragment\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    completedCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
   }
 };
 })();
-(node as any).hash = '1dfb3db418cd3397d58c5ba07914a8d0';
+(node as any).hash = 'dffa45eeb915acc30a912a3b80a6ac73';
 export default node;

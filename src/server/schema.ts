@@ -1,11 +1,13 @@
-import { nexusSchemaPrisma } from "nexus-plugin-prisma/schema";
 import {
+  arg,
+  connectionPlugin,
+  enumType,
   makeSchema,
   mutationType,
   objectType,
   queryType,
-  connectionPlugin,
 } from "@nexus/schema";
+import { nexusSchemaPrisma } from "nexus-plugin-prisma/schema";
 
 const Todo = objectType({
   name: "Todo",
@@ -16,12 +18,29 @@ const Todo = objectType({
   },
 });
 
+const Filter = enumType({
+  name: "Filter",
+  members: ["ALL", "ACTIVE", "COMPLETED"],
+});
+
 const Query = queryType({
   definition: (t) => {
     t.connectionField("todos", {
       type: Todo,
-      nodes: (_root, _args, { prisma }) =>
-        prisma.todo.findMany({ orderBy: { created_at: "asc" } }),
+      additionalArgs: {
+        filter: arg({ type: Filter, default: "ALL" }),
+      },
+      nodes: (_root, { filter }, { prisma }) =>
+        prisma.todo.findMany({
+          orderBy: { created_at: "asc" },
+          ...(filter !== "ALL"
+            ? {
+                where: {
+                  completed: { equals: filter === "COMPLETED" ? true : false },
+                },
+              }
+            : {}),
+        }),
       extendConnection: (t) => {
         t.int("totalCount", {
           resolve: (_root, _args, { prisma }) => prisma.todo.count(),
@@ -46,7 +65,7 @@ const Mutation = mutationType({
 });
 
 const schema = makeSchema({
-  types: [Query, Mutation, Todo],
+  types: [Query, Mutation, Todo, Filter],
   plugins: [nexusSchemaPrisma({ experimentalCRUD: true }), connectionPlugin()],
   outputs: {
     schema: __dirname + "/__generated__/schema.graphql",

@@ -8,13 +8,16 @@ import {
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import React from "react";
 import { graphql, useLazyLoadQuery } from "react-relay/hooks";
-import { TodoListQuery } from "../../../__generated__/TodoListQuery.graphql";
+import {
+  TodoListQuery,
+  Filter,
+} from "../../../__generated__/TodoListQuery.graphql";
 import ClearCompleted from "./ClearCompleted/ClearCompleted";
 import TodoListItem from "./TodoListItem/TodoListItem";
 
 const query = graphql`
-  query TodoListQuery {
-    todos(first: 50) @connection(key: "TodoList_todos") {
+  query TodoListQuery($filter: Filter) {
+    todos(first: 50, filter: $filter) @connection(key: "TodoList_todos") {
       edges {
         node {
           id
@@ -38,10 +41,14 @@ const useStyles = makeStyles({
   },
 });
 
-const TodoList = () => {
+type TodoListProps = {
+  filter: Filter;
+};
+
+const TodoList = ({ filter }: TodoListProps) => {
   const {
     todos: { edges, totalCount, completedCount },
-  } = useLazyLoadQuery<TodoListQuery>(query, {});
+  } = useLazyLoadQuery<TodoListQuery>(query, { filter });
   const incompleteCount = totalCount - completedCount;
 
   const s = useStyles();

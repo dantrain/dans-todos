@@ -139,6 +139,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  Filter: "ACTIVE" | "ALL" | "COMPLETED"
 }
 
 export interface NexusGenScalars {
@@ -193,6 +194,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   TodoUpdateManyMutationInput: NexusGenInputs['TodoUpdateManyMutationInput'];
   TodoWhereInput: NexusGenInputs['TodoWhereInput'];
   TodoWhereUniqueInput: NexusGenInputs['TodoWhereUniqueInput'];
+  Filter: NexusGenEnums['Filter'];
   String: NexusGenScalars['String'];
   Int: NexusGenScalars['Int'];
   Float: NexusGenScalars['Float'];
@@ -262,6 +264,7 @@ export interface NexusGenArgTypes {
     todos: { // args
       after?: string | null; // String
       before?: string | null; // String
+      filter?: NexusGenEnums['Filter'] | null; // Filter
       first?: number | null; // Int
       last?: number | null; // Int
     }
@@ -277,7 +280,7 @@ export type NexusGenObjectNames = "BatchPayload" | "Mutation" | "PageInfo" | "Qu
 
 export type NexusGenInputNames = "BoolFieldUpdateOperationsInput" | "BoolFilter" | "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "IntFilter" | "NestedBoolFilter" | "NestedDateTimeFilter" | "NestedIntFilter" | "NestedStringFilter" | "StringFieldUpdateOperationsInput" | "StringFilter" | "TodoCreateInput" | "TodoUpdateInput" | "TodoUpdateManyMutationInput" | "TodoWhereInput" | "TodoWhereUniqueInput";
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "Filter";
 
 export type NexusGenInterfaceNames = never;
 
