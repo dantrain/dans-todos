@@ -9,7 +9,7 @@ import App from "../client/app/App";
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 const uiHandler: RequestHandler = (req, res) => {
-  const context = {};
+  const context: { statusCode?: number } = {};
   const sheets = new ServerStyleSheets();
 
   const markup = renderToString(
@@ -22,7 +22,7 @@ const uiHandler: RequestHandler = (req, res) => {
 
   const css = sheets.toString();
 
-  res.send(
+  res.status(context.statusCode || 200).send(
     `<!doctype html>
 <html lang="">
   <head>
