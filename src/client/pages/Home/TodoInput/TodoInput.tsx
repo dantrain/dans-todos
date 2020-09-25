@@ -9,6 +9,7 @@ import React, {
 import { graphql, useMutation } from "react-relay/hooks";
 import { ConnectionHandler } from "relay-runtime";
 import { TodoInputCreateMutation } from "../../../__generated__/TodoInputCreateMutation.graphql";
+import useFilter from "../useFilter/useFilter";
 
 const createMutation = graphql`
   mutation TodoInputCreateMutation($text: String!) {
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 });
 
 const TodoInput = () => {
+  const filter = useFilter();
   const [value, setValue] = useState("");
   const ref = useRef<HTMLInputElement | null>(null);
   const s = useStyles();
@@ -47,7 +49,8 @@ const TodoInput = () => {
 
             const connection = ConnectionHandler.getConnection(
               store.getRoot(),
-              "TodoList_todos"
+              "TodoList_todos",
+              { filter }
             );
             if (!connection) throw new Error("Can't find connection");
 
@@ -72,7 +75,7 @@ const TodoInput = () => {
         ref?.current?.blur();
       }
     },
-    [value]
+    [value, filter]
   );
 
   return (

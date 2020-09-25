@@ -6,6 +6,7 @@ import {
   ClearCompletedMutation,
   ClearCompletedMutationResponse,
 } from "../../../../__generated__/ClearCompletedMutation.graphql";
+import useFilter from "../../useFilter/useFilter";
 
 const clearCompletedMutation = graphql`
   mutation ClearCompletedMutation {
@@ -20,6 +21,7 @@ type ClearCompletedProps = {
 };
 
 const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
+  const filter = useFilter();
   const [commit] = useMutation<ClearCompletedMutation>(clearCompletedMutation);
 
   const handleClick = useCallback(() => {
@@ -28,7 +30,8 @@ const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
     ) => {
       const connection = ConnectionHandler.getConnection(
         store.getRoot(),
-        "TodoList_todos"
+        "TodoList_todos",
+        { filter }
       );
       if (!connection) throw new Error("Can't find connection");
 
@@ -51,7 +54,7 @@ const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
     };
 
     commit({ variables: {}, optimisticUpdater: updater, updater });
-  }, []);
+  }, [filter]);
 
   return (
     <Button color="primary" disabled={disabled} onClick={handleClick}>

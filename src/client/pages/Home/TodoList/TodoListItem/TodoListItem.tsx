@@ -19,6 +19,8 @@ import {
   TodoListItemSetCompletedMutation,
   TodoListItemSetCompletedMutationResponse,
 } from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
+import { Filter } from "../../../../__generated__/TodoListQuery.graphql";
+import useFilter from "../../useFilter/useFilter";
 import TodoEditInput from "./TodoEditInput/TodoEditInput";
 
 const todoListItemFragment = graphql`
@@ -54,6 +56,7 @@ type TodoListItemProps = {
 
 const TodoListItem = ({ todo }: TodoListItemProps) => {
   const { id, text, completed } = useFragment(todoListItemFragment, todo);
+  const filter = useFilter();
 
   const [commitToggle] = useMutation<TodoListItemSetCompletedMutation>(
     setCompletedMutation
@@ -66,7 +69,8 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       ) => {
         const connection = ConnectionHandler.getConnection(
           store.getRoot(),
-          "TodoList_todos"
+          "TodoList_todos",
+          { filter }
         );
         if (!connection) throw new Error("Can't find connection");
         connection.setValue(
@@ -87,7 +91,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         updater,
       });
     },
-    [id, completed]
+    [id, completed, filter]
   );
 
   const [commitDelete] = useMutation<TodoListItemDeleteMutation>(
@@ -100,7 +104,8 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     ) => {
       const connection = ConnectionHandler.getConnection(
         store.getRoot(),
-        "TodoList_todos"
+        "TodoList_todos",
+        { filter }
       );
       if (!connection) throw new Error("Can't find connection");
       ConnectionHandler.deleteNode(connection, id);
@@ -121,7 +126,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       optimisticUpdater: updater,
       updater,
     });
-  }, [id, completed]);
+  }, [id, completed, filter]);
 
   return (
     <ListItem>

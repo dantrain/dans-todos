@@ -12,10 +12,8 @@ import indigo from "@material-ui/core/colors/indigo";
 import React from "react";
 import { graphql, useLazyLoadQuery } from "react-relay/hooks";
 import { NavLink } from "react-router-dom";
-import {
-  Filter,
-  TodoListQuery,
-} from "../../../__generated__/TodoListQuery.graphql";
+import { TodoListQuery } from "../../../__generated__/TodoListQuery.graphql";
+import useFilter from "../useFilter/useFilter";
 import ClearCompleted from "./ClearCompleted/ClearCompleted";
 import TodoListItem from "./TodoListItem/TodoListItem";
 
@@ -49,11 +47,8 @@ const useStyles = makeStyles({
   },
 });
 
-type TodoListProps = {
-  filter: Filter;
-};
-
-const TodoList = ({ filter }: TodoListProps) => {
+const TodoList = () => {
+  const filter = useFilter();
   const {
     todos: { edges, totalCount, completedCount },
   } = useLazyLoadQuery<TodoListQuery>(query, { filter });

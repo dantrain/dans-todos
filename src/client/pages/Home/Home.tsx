@@ -7,16 +7,13 @@ import TodoInput from "./TodoInput/TodoInput";
 import TodoList from "./TodoList/TodoList";
 import ToggleAll from "./ToggleAll/ToggleAll";
 
-const Home = ({ location }: RouteProps) => {
-  const filter = (location?.pathname.replace("/", "").toUpperCase() ||
-    "ALL") as Filter;
-
+const Home = () => {
   return (
     <Card>
       <CardHeader avatar={<ToggleAll />} title={<TodoInput />} />
       <Suspense fallback={<></>}>
         <Divider />
-        <TodoList filter={filter} />
+        <TodoList />
       </Suspense>
     </Card>
   );

@@ -7,6 +7,7 @@ import {
   ToggleAllSetAllCompletedMutationResponse,
 } from "../../../__generated__/ToggleAllSetAllCompletedMutation.graphql";
 import { ConnectionHandler, SelectorStoreUpdater } from "relay-runtime";
+import useFilter from "../useFilter/useFilter";
 
 const setAllCompletedMutation = graphql`
   mutation ToggleAllSetAllCompletedMutation($completed: Boolean) {
@@ -17,6 +18,7 @@ const setAllCompletedMutation = graphql`
 `;
 
 const ToggleAll = () => {
+  const filter = useFilter();
   const [commit] = useMutation<ToggleAllSetAllCompletedMutation>(
     setAllCompletedMutation
   );
@@ -27,7 +29,8 @@ const ToggleAll = () => {
     ) => {
       const connection = ConnectionHandler.getConnection(
         store.getRoot(),
-        "TodoList_todos"
+        "TodoList_todos",
+        { filter }
       );
       if (!connection) throw new Error("Can't find connection");
       connection
@@ -43,7 +46,7 @@ const ToggleAll = () => {
       optimisticUpdater: updater,
       updater,
     });
-  }, []);
+  }, [filter]);
 
   return (
     <IconButton onClick={handleClick}>
