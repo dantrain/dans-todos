@@ -18,11 +18,12 @@ const editMutation = graphql`
   }
 `;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   inputBase: {
     width: "100%",
+    paddingRight: `${theme.spacing(1)}px`,
   },
-});
+}));
 
 type TodoEditInputProps = {
   id: string;
@@ -57,6 +58,7 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
 
   const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === "Escape") {
+      e.preventDefault();
       ref?.current?.blur();
     }
   }, []);
@@ -69,6 +71,7 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
+      multiline
     />
   );
 };

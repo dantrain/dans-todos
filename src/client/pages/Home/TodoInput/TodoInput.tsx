@@ -42,6 +42,7 @@ const TodoInput = () => {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && value.length) {
+        e.preventDefault();
         commit({
           variables: { text: value.trim() },
           updater: (store) => {
@@ -71,6 +72,7 @@ const TodoInput = () => {
         });
         setValue("");
       } else if (e.key === "Escape") {
+        e.preventDefault();
         setValue("");
         ref?.current?.blur();
       }
@@ -87,6 +89,7 @@ const TodoInput = () => {
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       autoFocus
+      multiline
     />
   );
 };
