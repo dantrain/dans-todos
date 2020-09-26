@@ -11,7 +11,7 @@ import { TransitionProps } from "@material-ui/core/transitions";
 import { SnackbarProvider } from "notistack";
 import React, { FC } from "react";
 import { RelayEnvironmentProvider } from "react-relay/hooks";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ErrorSnackbar from "../components/ErrorSnackbar/ErrorSnackbar";
 import NoMatch from "../components/NoMatch/NoMatch";
 import Progress from "../components/Progress/Progress";
@@ -42,14 +42,12 @@ const App = () => (
       </AppBar>
       <Container maxWidth="sm">
         <Box my={5}>
-          <Switch>
-            <Route
-              exact={true}
-              path={["/", "/active", "/completed"]}
-              component={Home}
-            />
-            <NoMatch />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/active" element={<Home />} />
+            <Route path="/completed" element={<Home />} />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
         </Box>
       </Container>
     </SnackbarProvider>

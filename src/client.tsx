@@ -5,7 +5,7 @@ import App from "./client/app/App";
 import patchConsole from "./client/utils/patchConsole";
 
 reactRoot.render(
-  <BrowserRouter>
+  <BrowserRouter timeoutMs={1000}>
     <App />
   </BrowserRouter>
 );

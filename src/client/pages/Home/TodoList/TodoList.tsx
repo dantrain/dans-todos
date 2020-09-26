@@ -15,7 +15,6 @@ import { NavLink } from "react-router-dom";
 import { TodoListQuery } from "../../../__generated__/TodoListQuery.graphql";
 import useFilter from "../useFilter/useFilter";
 import ClearCompleted from "./ClearCompleted/ClearCompleted";
-import FilterButton from "./FilterButton/FilterButton";
 import TodoListItem from "./TodoListItem/TodoListItem";
 
 const query = graphql`
@@ -41,6 +40,10 @@ const useStyles = makeStyles({
   },
   incompleteCount: {
     minWidth: "100px",
+  },
+  active: {
+    border: `1px solid ${indigo[500]} !important`,
+    backgroundColor: fade(indigo[500], 0.04),
   },
 });
 
@@ -73,11 +76,19 @@ const TodoList = () => {
           {incompleteCount} item{incompleteCount !== 1 && "s"} left
         </Typography>
         <ButtonGroup color="primary" size="small">
-          <FilterButton to="/" exact>
+          <Button component={NavLink} to="/" activeClassName={s.active} end>
             All
-          </FilterButton>
-          <FilterButton to="/active">Active</FilterButton>
-          <FilterButton to="/completed">Completed</FilterButton>
+          </Button>
+          <Button component={NavLink} to="/active" activeClassName={s.active}>
+            Active
+          </Button>
+          <Button
+            component={NavLink}
+            to="/completed"
+            activeClassName={s.active}
+          >
+            Completed
+          </Button>
         </ButtonGroup>
         <ClearCompleted disabled={incompleteCount === totalCount} />
       </Toolbar>

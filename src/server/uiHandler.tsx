@@ -2,7 +2,7 @@ import { ServerStyleSheets } from "@material-ui/core";
 import { RequestHandler } from "express";
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { StaticRouter } from "react-router-dom";
+import { StaticRouter } from "react-router-dom/server";
 
 import App from "../client/app/App";
 
@@ -14,7 +14,7 @@ const uiHandler: RequestHandler = (req, res) => {
 
   const markup = renderToString(
     sheets.collect(
-      <StaticRouter context={context} location={req.url}>
+      <StaticRouter location={req.url}>
         <App />
       </StaticRouter>
     )
