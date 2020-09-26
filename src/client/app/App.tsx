@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Box,
   Container,
   Grow,
   Toolbar,
@@ -12,14 +11,13 @@ import { SnackbarProvider } from "notistack";
 import React, { FC } from "react";
 import { RelayEnvironmentProvider } from "react-relay/hooks";
 import { Route, Routes } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
 import ErrorSnackbar from "../components/ErrorSnackbar/ErrorSnackbar";
+import Main from "../components/Main/Main";
 import NotFound from "../components/NotFound/NotFound";
 import Progress from "../components/Progress/Progress";
 import RemoveServerCss from "../components/RemoveServerCss/RemoveServerCss";
 import Home from "../pages/Home/Home";
 import relayEnvironment from "../relayEnvironment";
-import Error from "../components/Error/Error";
 
 const App = () => (
   <RelayEnvironmentProvider environment={relayEnvironment}>
@@ -42,18 +40,14 @@ const App = () => (
         </Container>
         <Progress />
       </AppBar>
-      <Container maxWidth="sm">
-        <Box my={5}>
-          <ErrorBoundary FallbackComponent={Error}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/active" element={<Home />} />
-              <Route path="/completed" element={<Home />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </ErrorBoundary>
-        </Box>
-      </Container>
+      <Main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/active" element={<Home />} />
+          <Route path="/completed" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Main>
     </SnackbarProvider>
   </RelayEnvironmentProvider>
 );

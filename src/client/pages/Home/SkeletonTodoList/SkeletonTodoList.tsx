@@ -36,7 +36,7 @@ const SkeletonTodoList = () => {
             <ListItemText>
               <Skeleton
                 height={34}
-                width={200 + 50 * (((index + 1) % 2) * ((index + 1) % 5))}
+                width={80 + 20 * (((index + 1) % 2) * ((index + 1) % 5))}
                 animation="wave"
               />
             </ListItemText>
