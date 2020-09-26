@@ -3,8 +3,8 @@ import { RequestHandler } from "express";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-
 import App from "../client/app/App";
+import { NotFoundContext } from "../client/components/NotFound/NotFound";
 
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
@@ -15,7 +15,9 @@ const uiHandler: RequestHandler = (req, res) => {
   const markup = renderToString(
     sheets.collect(
       <StaticRouter location={req.url}>
-        <App />
+        <NotFoundContext.Provider value={context}>
+          <App />
+        </NotFoundContext.Provider>
       </StaticRouter>
     )
   );

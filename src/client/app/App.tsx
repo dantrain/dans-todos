@@ -13,7 +13,7 @@ import React, { FC } from "react";
 import { RelayEnvironmentProvider } from "react-relay/hooks";
 import { Route, Routes } from "react-router-dom";
 import ErrorSnackbar from "../components/ErrorSnackbar/ErrorSnackbar";
-import NoMatch from "../components/NoMatch/NoMatch";
+import NotFound from "../components/NotFound/NotFound";
 import Progress from "../components/Progress/Progress";
 import RemoveServerCss from "../components/RemoveServerCss/RemoveServerCss";
 import Home from "../pages/Home/Home";
@@ -46,7 +46,7 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/active" element={<Home />} />
             <Route path="/completed" element={<Home />} />
-            <Route path="*" element={<NoMatch />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
       </Container>
