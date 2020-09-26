@@ -19,7 +19,6 @@ import {
   TodoListItemSetCompletedMutation,
   TodoListItemSetCompletedMutationResponse,
 } from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
-import { Filter } from "../../../../__generated__/TodoListQuery.graphql";
 import useFilter from "../../useFilter/useFilter";
 import TodoEditInput from "./TodoEditInput/TodoEditInput";
 

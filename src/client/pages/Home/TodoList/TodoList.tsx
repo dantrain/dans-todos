@@ -58,6 +58,7 @@ const TodoList = () => {
 
   return totalCount && edges ? (
     <>
+      <Divider />
       {edges.length ? (
         <>
           <List>
