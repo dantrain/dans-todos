@@ -5,6 +5,7 @@ import Error from "../Error/Error";
 
 const useStyles = makeStyles((theme) => ({
   main: {
+    minWidth: "300px",
     margin: `${theme.spacing(5)}px 0`,
     [theme.breakpoints.down("xs")]: {
       margin: `${theme.spacing(2)}px 0`,

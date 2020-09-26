@@ -33,19 +33,31 @@ const query = graphql`
   }
 `;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
+    flexWrap: "wrap",
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+  },
+  buttonGroup: {
+    [theme.breakpoints.down("xs")]: {
+      order: -1,
+      flex: "1 0 100%",
+      justifyContent: "center",
+      padding: `${theme.spacing(1)}px 0 ${theme.spacing(2)}px`,
+      margin: `0 -${theme.spacing(3)}px ${theme.spacing(1)}px`,
+      borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+    },
   },
   incompleteCount: {
     minWidth: "100px",
   },
   active: {
     border: `1px solid ${indigo[500]} !important`,
-    backgroundColor: fade(indigo[500], 0.04),
+    backgroundColor: `${fade(indigo[500], 0.12)} !important`,
   },
-});
+}));
 
 const TodoList = () => {
   const filter = useFilter();
@@ -76,7 +88,7 @@ const TodoList = () => {
         <Typography className={s.incompleteCount} color="textSecondary">
           {incompleteCount} item{incompleteCount !== 1 && "s"} left
         </Typography>
-        <ButtonGroup color="primary" size="small">
+        <ButtonGroup color="primary" size="small" className={s.buttonGroup}>
           <Button component={NavLink} to="/" activeClassName={s.active} end>
             All
           </Button>
