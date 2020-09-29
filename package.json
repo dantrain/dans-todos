@@ -14,7 +14,9 @@
     "generate:nexus": "ts-node --transpile-only src/server/schema",
     "generate:relay": "relay-compiler",
     "generate": "yarn run generate:prisma && yarn run generate:nexus && yarn run generate:relay",
-    "postinstall": "yarn run generate:prisma"
+    "postinstall": "yarn run generate:prisma",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",

@@ -6,10 +6,9 @@ ENV PORT 80
 RUN yarn build
 
 FROM node:12-alpine
-WORKDIR /app
 COPY --from=build package.json yarn.lock ./
-COPY --from=build build ./build/
-COPY --from=build prisma ./prisma/
+COPY --from=build build/ build/
+COPY --from=build prisma/ prisma/
 RUN apk --no-cache add git
 RUN yarn install --frozen-lockfile --production
 EXPOSE 80
