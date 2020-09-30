@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./todo.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Todo {
-  id         Int      @default(autoincrement()) @id
+  id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())
   text       String
   completed  Boolean
