@@ -3,12 +3,15 @@ version: "3.8"
 services:
   app:
     build: .
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:d1rONeFo0KL8ZwC8@db:5432/postgres"
     ports:
       - 8080:80
+
   db:
     image: postgres:13-alpine
     restart: always
     environment:
-      POSTGRES_PASSWORD: example
-    ports:
-      - 5432:5432
+      POSTGRES_PASSWORD: d1rONeFo0KL8ZwC8
