@@ -180,7 +180,7 @@ type Todo {
 }
 
 input TodoCreateInput {
-  completed: Boolean!
+  completed: Boolean
   created_at: DateTime
   text: String!
 }

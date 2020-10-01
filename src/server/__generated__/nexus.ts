@@ -110,7 +110,7 @@ export interface NexusGenInputs {
     startsWith?: string | null; // String
   }
   TodoCreateInput: { // input type
-    completed: boolean; // Boolean!
+    completed?: boolean | null; // Boolean
     created_at?: NexusGenScalars['DateTime'] | null; // DateTime
     text: string; // String!
   }

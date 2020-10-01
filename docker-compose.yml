@@ -15,3 +15,5 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: d1rONeFo0KL8ZwC8
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
