@@ -10,6 +10,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import React, { ChangeEvent, useCallback } from "react";
 import { graphql, useFragment, useMutation } from "react-relay/hooks";
 import { ConnectionHandler, SelectorStoreUpdater } from "relay-runtime";
+import { fromGlobalId } from "graphql-relay";
 import {
   TodoListItemDeleteMutation,
   TodoListItemDeleteMutationResponse,
@@ -80,7 +81,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
 
       commitToggle({
         variables: {
-          id: +id!.replace("Todo", ""),
+          id: +fromGlobalId(id!).id,
           completed: event.target.checked,
         },
         optimisticResponse: {
@@ -121,7 +122,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     };
 
     commitDelete({
-      variables: { id: +id!.replace("Todo", "") },
+      variables: { id: +fromGlobalId(id!).id },
       optimisticUpdater: updater,
       updater,
     });

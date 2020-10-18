@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 import { graphql, useMutation } from "react-relay/hooks";
+import { fromGlobalId } from "graphql-relay";
 import { TodoEditInputEditMutation } from "../../../../../__generated__/TodoEditInputEditMutation.graphql";
 
 const editMutation = graphql`
@@ -44,7 +45,7 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
   const handleBlur = useCallback(() => {
     if (value.length) {
       commit({
-        variables: { id: +id.replace("Todo", ""), text: value.trim() },
+        variables: { id: +fromGlobalId(id).id, text: value.trim() },
         optimisticResponse: { updateOneTodo: { id, text: value.trim() } },
       });
     } else {
