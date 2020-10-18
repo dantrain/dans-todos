@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type TodoListItemFragment = {
-    readonly id: string;
+    readonly id: string | null;
     readonly text: string;
     readonly completed: boolean;
     readonly " $refType": "TodoListItemFragment";

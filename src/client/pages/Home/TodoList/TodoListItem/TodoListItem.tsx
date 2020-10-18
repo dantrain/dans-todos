@@ -80,7 +80,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
 
       commitToggle({
         variables: {
-          id: +id.replace("Todo", ""),
+          id: +id!.replace("Todo", ""),
           completed: event.target.checked,
         },
         optimisticResponse: {
@@ -107,7 +107,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         { filter }
       );
       if (!connection) throw new Error("Can't find connection");
-      ConnectionHandler.deleteNode(connection, id);
+      ConnectionHandler.deleteNode(connection, id!);
       connection.setValue(
         +(connection.getValue("totalCount") || 0) - 1,
         "totalCount"
@@ -121,7 +121,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     };
 
     commitDelete({
-      variables: { id: +id.replace("Todo", "") },
+      variables: { id: +id!.replace("Todo", "") },
       optimisticUpdater: updater,
       updater,
     });
@@ -132,7 +132,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       <ListItemIcon>
         <Checkbox checked={completed} onChange={handleToggle} />
       </ListItemIcon>
-      <ListItemText primary={<TodoEditInput id={id} initialValue={text} />} />
+      <ListItemText primary={<TodoEditInput id={id!} initialValue={text} />} />
       <ListItemSecondaryAction>
         <IconButton onClick={handleDelete}>
           <DeleteIcon />

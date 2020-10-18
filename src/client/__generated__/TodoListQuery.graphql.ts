@@ -12,14 +12,14 @@ export type TodoListQueryResponse = {
     readonly todos: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly id: string;
+                readonly id: string | null;
                 readonly completed: boolean;
                 readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
-            };
+            } | null;
         } | null> | null;
-        readonly totalCount: number;
-        readonly completedCount: number;
-    };
+        readonly totalCount: number | null;
+        readonly completedCount: number | null;
+    } | null;
 };
 export type TodoListQuery = {
     readonly response: TodoListQueryResponse;

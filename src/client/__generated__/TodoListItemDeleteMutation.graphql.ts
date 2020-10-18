@@ -8,7 +8,7 @@ export type TodoListItemDeleteMutationVariables = {
 };
 export type TodoListItemDeleteMutationResponse = {
     readonly deleteOneTodo: {
-        readonly id: string;
+        readonly id: string | null;
     } | null;
 };
 export type TodoListItemDeleteMutation = {

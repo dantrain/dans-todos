@@ -137,11 +137,16 @@ type Query {
 
     """Returns the last n elements from the list."""
     last: Int
-  ): QueryTodos_Connection!
+  ): QueryTodos_Connection
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 type QueryTodos_Connection {
-  completedCount: Int!
+  completedCount: Int
 
   """
   https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types
@@ -152,7 +157,7 @@ type QueryTodos_Connection {
   https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
   """
   pageInfo: PageInfo!
-  totalCount: Int!
+  totalCount: Int
 }
 
 input StringFieldUpdateOperationsInput {
@@ -168,6 +173,7 @@ input StringFilter {
   in: [String!]
   lt: String
   lte: String
+  mode: QueryMode
   not: NestedStringFilter
   notIn: [String!]
   startsWith: String
@@ -175,7 +181,7 @@ input StringFilter {
 
 type Todo {
   completed: Boolean!
-  id: ID!
+  id: ID
   text: String!
 }
 
@@ -190,7 +196,7 @@ type TodoEdge {
   cursor: String!
 
   """https://facebook.github.io/relay/graphql/connections.htm#sec-Node"""
-  node: Todo!
+  node: Todo
 }
 
 input TodoUpdateInput {

@@ -8,7 +8,7 @@ export type TodoInputCreateMutationVariables = {
 };
 export type TodoInputCreateMutationResponse = {
     readonly createOneTodo: {
-        readonly id: string;
+        readonly id: string | null;
         readonly text: string;
         readonly completed: boolean;
     };

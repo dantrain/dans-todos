@@ -61,10 +61,9 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoList = () => {
   const filter = useFilter();
-  const {
-    todos: { edges, totalCount, completedCount },
-  } = useLazyLoadQuery<TodoListQuery>(query, { filter });
-  const incompleteCount = totalCount - completedCount;
+  const { todos } = useLazyLoadQuery<TodoListQuery>(query, { filter });
+  const { edges, totalCount, completedCount } = todos!;
+  const incompleteCount = totalCount! - completedCount!;
 
   const s = useStyles();
 
