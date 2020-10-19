@@ -1,22 +1,36 @@
 import { ServerStyleSheets } from "@material-ui/core";
 import { RequestHandler } from "express";
+import useragent from "useragent";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import App from "../client/app/App";
 import { NotFoundContext } from "../client/components/NotFound/NotFound";
+import { LoginContext } from "../client/pages/Login/Login";
 
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 const uiHandler: RequestHandler = (req, res) => {
-  const context: { statusCode?: number } = {};
+  const agent = useragent.parse(req.headers["user-agent"]);
+  let supportsGoogleOneTap = false;
+
+  if (
+    (agent.family === "Chrome" && +agent.major >= 85) ||
+    (agent.family === "Firefox" && +agent.major >= 80)
+  ) {
+    supportsGoogleOneTap = true;
+  }
+
+  const notFoundContext: { statusCode?: number } = {};
   const sheets = new ServerStyleSheets();
 
   const markup = renderToString(
     sheets.collect(
       <StaticRouter location={req.url}>
-        <NotFoundContext.Provider value={context}>
-          <App />
+        <NotFoundContext.Provider value={notFoundContext}>
+          <LoginContext.Provider value={{ supportsGoogleOneTap }}>
+            <App />
+          </LoginContext.Provider>
         </NotFoundContext.Provider>
       </StaticRouter>
     )
@@ -24,7 +38,7 @@ const uiHandler: RequestHandler = (req, res) => {
 
   const css = sheets.toString();
 
-  res.status(context.statusCode || 200).send(
+  res.status(notFoundContext.statusCode || 200).send(
     `<!doctype html>
 <html lang="">
   <head>
@@ -46,8 +60,13 @@ const uiHandler: RequestHandler = (req, res) => {
           ? `<script src="${assets.client.js}" defer></script>`
           : `<script src="${assets.client.js}" defer crossorigin></script>`
       }
-      <script>function googleLoaded() { window.GOOGLE_LOADED = true; }</script>
-      <script src="https://apis.google.com/js/platform.js?onload=googleLoaded" async defer></script>
+      ${
+        supportsGoogleOneTap
+          ? `<script>window.SUPPORTS_GOOGLE_ONE_TAP = true;</script>
+            <script src="https://accounts.google.com/gsi/client" async defer></script>`
+          : `<script>window.SUPPORTS_GOOGLE_ONE_TAP = false; function googleLoaded() { window.GOOGLE_LOADED = true; }</script>
+            <script src="https://apis.google.com/js/platform.js?onload=googleLoaded" async defer></script>`
+      }
   </head>
   <body>
       <div id="root">${markup}</div>

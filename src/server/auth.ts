@@ -43,7 +43,7 @@ authRouter.post(
   "/onetaptokensignin",
   cookieParser(),
   bodyParser.urlencoded({ extended: false }),
-  (req, res) => {
+  (req, res, next) => {
     // Verify the CSRF token
     if (!req.cookies.g_csrf_token) {
       return res.status(400).send("No CSRF token in cookie");
@@ -58,6 +58,8 @@ authRouter.post(
     }
 
     console.log("CSRF token verified!");
+
+    next();
   },
   verifyUser,
   (req, res) => {
