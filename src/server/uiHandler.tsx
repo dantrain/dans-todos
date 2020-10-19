@@ -12,14 +12,7 @@ let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 const uiHandler: RequestHandler = (req, res) => {
   const agent = useragent.parse(req.headers["user-agent"]);
-  let supportsGoogleOneTap = false;
-
-  if (
-    (agent.family === "Chrome" && +agent.major >= 85) ||
-    (agent.family === "Firefox" && +agent.major >= 80)
-  ) {
-    supportsGoogleOneTap = true;
-  }
+  const supportsGoogleOneTap = agent.family === "Chrome" && +agent.major >= 85;
 
   const notFoundContext: { statusCode?: number } = {};
   const sheets = new ServerStyleSheets();
@@ -62,9 +55,8 @@ const uiHandler: RequestHandler = (req, res) => {
       }
       ${
         supportsGoogleOneTap
-          ? `<script>window.SUPPORTS_GOOGLE_ONE_TAP = true;</script>
-            <script src="https://accounts.google.com/gsi/client" async defer></script>`
-          : `<script>window.SUPPORTS_GOOGLE_ONE_TAP = false; function googleLoaded() { window.GOOGLE_LOADED = true; }</script>
+          ? `<script src="https://accounts.google.com/gsi/client" async defer></script>`
+          : `<script>function googleLoaded() { window.GOOGLE_LOADED = true; }</script>
             <script src="https://apis.google.com/js/platform.js?onload=googleLoaded" async defer></script>`
       }
   </head>

@@ -9,6 +9,7 @@ const CLIENT_ID =
 const client = new OAuth2Client(CLIENT_ID);
 
 const verifyUser: RequestHandler = async (req, res, next) => {
+  // Verify the ID token
   if (!req.body.credential) {
     return res.status(400).send("No ID token in post body");
   }

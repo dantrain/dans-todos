@@ -1,6 +1,13 @@
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+declare global {
+  interface Window {
+    gapi: typeof gapi;
+    GOOGLE_LOADED: boolean;
+  }
+}
+
 const LoginButton = () => {
   const el = <div id="google-sign-in" />;
 
@@ -9,15 +16,17 @@ const LoginButton = () => {
   }
 
   const navigate = useNavigate();
-  const [loaded, setLoaded] = useState(false);
+  const [status, setStatus] = useState("check");
 
   useLayoutEffect(() => {
-    if (loaded) {
+    let timeout: NodeJS.Timeout;
+
+    if (status === "loaded") {
       window.gapi.signin2.render("google-sign-in", {
         width: 250,
         height: 50,
         longtitle: true,
-        onSuccess: async (user) => {
+        onsuccess: async (user) => {
           const response = await fetch("/tokensignin", {
             method: "POST",
             headers: {
@@ -38,18 +47,17 @@ const LoginButton = () => {
       });
     } else {
       if (window.GOOGLE_LOADED) {
-        setLoaded(true);
+        setStatus("loaded");
       } else {
-        window.googleLoaded = () => {
-          setLoaded(true);
-        };
+        setStatus("wait");
+        timeout = setTimeout(() => setStatus("check"), 50);
       }
     }
 
     return () => {
-      window.googleLoaded = () => {};
+      clearTimeout(timeout);
     };
-  }, [loaded]);
+  }, [status]);
 
   return el;
 };
