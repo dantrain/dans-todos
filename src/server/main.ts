@@ -5,6 +5,7 @@ import "express-async-errors";
 import uiHandler from "./uiHandler";
 import schema from "./schema";
 import context from "./context";
+import authRouter from "./auth";
 
 const app = express();
 
@@ -18,6 +19,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
+
+app.use(authRouter);
 
 const apolloServer = new ApolloServer({ schema, context });
 

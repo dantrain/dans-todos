@@ -45,6 +45,7 @@ const uiHandler: RequestHandler = (req, res) => {
           ? `<script src="${assets.client.js}" defer></script>`
           : `<script src="${assets.client.js}" defer crossorigin></script>`
       }
+      <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
   <body>
       <div id="root">${markup}</div>
