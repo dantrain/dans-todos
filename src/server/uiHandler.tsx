@@ -30,6 +30,7 @@ const uiHandler: RequestHandler = (req, res) => {
   <head>
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta charSet='utf-8' />
+      <meta name="google-signin-client_id" content="368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com" />
       <title>Todo Next</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
       <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -45,7 +46,8 @@ const uiHandler: RequestHandler = (req, res) => {
           ? `<script src="${assets.client.js}" defer></script>`
           : `<script src="${assets.client.js}" defer crossorigin></script>`
       }
-      <script src="https://accounts.google.com/gsi/client" async defer></script>
+      <script>function googleLoaded() { window.GOOGLE_LOADED = true; }</script>
+      <script src="https://apis.google.com/js/platform.js?onload=googleLoaded" async defer></script>
   </head>
   <body>
       <div id="root">${markup}</div>
