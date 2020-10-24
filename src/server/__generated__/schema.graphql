@@ -172,10 +172,17 @@ type TodoEdge {
   node: Todo
 }
 
+input TodoListRelationFilter {
+  every: TodoWhereInput
+  none: TodoWhereInput
+  some: TodoWhereInput
+}
+
 input TodoUpdateInput {
   completed: BoolFieldUpdateOperationsInput
   createdat: DateTimeFieldUpdateOperationsInput
   text: StringFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutTodosInput
 }
 
 input TodoUpdateManyMutationInput {
@@ -192,6 +199,7 @@ input TodoWhereInput {
   NOT: [TodoWhereInput!]
   OR: [TodoWhereInput!]
   text: StringFilter
+  user: UserWhereInput
   userid: StringFilter
 }
 
@@ -217,6 +225,10 @@ type User {
   ): UserTodos_Connection
 }
 
+input UserCreateWithoutTodosInput {
+  id: String!
+}
+
 type UserTodos_Connection {
   completedCount: Int
 
@@ -230,4 +242,32 @@ type UserTodos_Connection {
   """
   pageInfo: PageInfo!
   totalCount: Int
+}
+
+input UserUpdateOneRequiredWithoutTodosInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTodosInput
+  update: UserUpdateWithoutTodosDataInput
+  upsert: UserUpsertWithoutTodosInput
+}
+
+input UserUpdateWithoutTodosDataInput {
+  id: StringFieldUpdateOperationsInput
+}
+
+input UserUpsertWithoutTodosInput {
+  create: UserCreateWithoutTodosInput!
+  update: UserUpdateWithoutTodosDataInput!
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  id: StringFilter
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  todos: TodoListRelationFilter
+}
+
+input UserWhereUniqueInput {
+  id: String
 }

@@ -20,8 +20,9 @@ import {
   TodoListItemSetCompletedMutation,
   TodoListItemSetCompletedMutationResponse,
 } from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
-import useFilter from "../../useFilter/useFilter";
+import { TodosConnectionContext } from "../TodoList";
 import TodoEditInput from "./TodoEditInput/TodoEditInput";
+import { useConnectionContext } from "../../../../utils/connectionContext";
 
 const todoListItemFragment = graphql`
   fragment TodoListItemFragment on Todo {
@@ -56,7 +57,7 @@ type TodoListItemProps = {
 
 const TodoListItem = ({ todo }: TodoListItemProps) => {
   const { id, text, completed } = useFragment(todoListItemFragment, todo);
-  const filter = useFilter();
+  const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
 
   const [commitToggle] = useMutation<TodoListItemSetCompletedMutation>(
     setCompletedMutation
@@ -67,14 +68,10 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       const updater: SelectorStoreUpdater<TodoListItemSetCompletedMutationResponse> = (
         store
       ) => {
-        const connection = ConnectionHandler.getConnection(
-          store.getRoot(),
-          "TodoList_todos",
-          { filter }
-        );
-        if (!connection) throw new Error("Can't find connection");
-        connection.setValue(
-          +(connection.getValue("completedCount") || 0) + (completed ? -1 : 1),
+        const connectionRecord = getConnectionRecord(store);
+        connectionRecord.setValue(
+          +(connectionRecord.getValue("completedCount") || 0) +
+            (completed ? -1 : 1),
           "completedCount"
         );
       };
@@ -87,11 +84,11 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         optimisticResponse: {
           updateOneTodo: { id, completed: event.target.checked },
         },
-        // optimisticUpdater: updater,
-        // updater,
+        optimisticUpdater: updater,
+        updater,
       });
     },
-    [id, completed, filter]
+    [id, completed, getConnectionRecord]
   );
 
   const [commitDelete] = useMutation<TodoListItemDeleteMutation>(
@@ -102,20 +99,15 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     const updater: SelectorStoreUpdater<TodoListItemDeleteMutationResponse> = (
       store
     ) => {
-      const connection = ConnectionHandler.getConnection(
-        store.getRoot(),
-        "TodoList_todos",
-        { filter }
-      );
-      if (!connection) throw new Error("Can't find connection");
-      ConnectionHandler.deleteNode(connection, id!);
-      connection.setValue(
-        +(connection.getValue("totalCount") || 0) - 1,
+      const connectionRecord = getConnectionRecord(store);
+      ConnectionHandler.deleteNode(connectionRecord, id!);
+      connectionRecord.setValue(
+        +(connectionRecord.getValue("totalCount") || 0) - 1,
         "totalCount"
       );
       if (completed) {
-        connection.setValue(
-          +(connection.getValue("completedCount") || 0) - 1,
+        connectionRecord.setValue(
+          +(connectionRecord.getValue("completedCount") || 0) - 1,
           "completedCount"
         );
       }
@@ -126,7 +118,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       optimisticUpdater: updater,
       updater,
     });
-  }, [id, completed, filter]);
+  }, [id, completed, getConnectionRecord]);
 
   return (
     <ListItem>

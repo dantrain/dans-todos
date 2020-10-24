@@ -14,12 +14,16 @@ import { graphql, useLazyLoadQuery } from "react-relay/hooks";
 import { NavLink } from "react-router-dom";
 import { TodoListQuery } from "../../../__generated__/TodoListQuery.graphql";
 import useFilter from "../useFilter/useFilter";
+import { createConnectionContext } from "../../../utils/connectionContext";
 import ClearCompleted from "./ClearCompleted/ClearCompleted";
 import TodoListItem from "./TodoListItem/TodoListItem";
+
+export const TodosConnectionContext = createConnectionContext();
 
 const query = graphql`
   query TodoListQuery($filter: Filter) {
     viewer {
+      id
       todos(first: 50, filter: $filter) @connection(key: "TodoList_todos") {
         edges {
           node {
@@ -70,7 +74,13 @@ const TodoList = () => {
   const s = useStyles();
 
   return totalCount && edges ? (
-    <>
+    <TodosConnectionContext.Provider
+      value={{
+        parentId: viewer!.id!,
+        connectionKey: "TodoList_todos",
+        filters: { filter },
+      }}
+    >
       <Divider />
       {edges.length ? (
         <>
@@ -106,7 +116,7 @@ const TodoList = () => {
         </ButtonGroup>
         <ClearCompleted disabled={incompleteCount === totalCount} />
       </Toolbar>
-    </>
+    </TodosConnectionContext.Provider>
   ) : null;
 };
 

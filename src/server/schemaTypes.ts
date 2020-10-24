@@ -1,6 +1,7 @@
 import {
   arg,
   enumType,
+  idArg,
   mutationType,
   objectType,
   queryType,
@@ -77,10 +78,58 @@ export const Query = queryType({
 
 export const Mutation = mutationType({
   definition: (t) => {
-    t.crud.createOneTodo();
-    t.crud.updateOneTodo();
-    t.crud.updateManyTodo();
-    t.crud.deleteOneTodo();
-    t.crud.deleteManyTodo();
+    t.crud.createOneTodo({
+      computedInputs: {
+        user: ({ ctx: { userid } }) => ({ connect: { id: userid } }),
+      },
+    });
+
+    t.crud.updateOneTodo({
+      resolve: async (root, args, ctx, info, originalResolve) => {
+        const todo = await ctx.prisma.todo.findOne({
+          where: { id: args.where.id || undefined },
+        });
+
+        if (todo?.userid !== ctx.userid) {
+          throw new Error("That's not your Todo mate is it?");
+        }
+
+        return originalResolve(root, args, ctx, info);
+      },
+    });
+
+    t.crud.deleteOneTodo({
+      resolve: async (root, args, ctx, info, originalResolve) => {
+        const todo = await ctx.prisma.todo.findOne({
+          where: { id: args.where.id || undefined },
+        });
+
+        if (todo?.userid !== ctx.userid) {
+          throw new Error("That's not your Todo mate is it?");
+        }
+
+        return originalResolve(root, args, ctx, info);
+      },
+    });
+
+    t.crud.updateManyTodo({
+      resolve: (root, args, ctx, info, originalResolve) =>
+        originalResolve(
+          root,
+          { ...args, where: { ...args.where, userid: { equals: ctx.userid } } },
+          ctx,
+          info
+        ),
+    });
+
+    t.crud.deleteManyTodo({
+      resolve: (root, args, ctx, info, originalResolve) =>
+        originalResolve(
+          root,
+          { ...args, where: { ...args.where, userid: { equals: ctx.userid } } },
+          ctx,
+          info
+        ),
+    });
   },
 });

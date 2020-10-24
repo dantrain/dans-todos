@@ -10,6 +10,7 @@ export type TodoListQueryVariables = {
 };
 export type TodoListQueryResponse = {
     readonly viewer: {
+        readonly id: string | null;
         readonly todos: {
             readonly edges: ReadonlyArray<{
                 readonly node: {
@@ -35,6 +36,7 @@ query TodoListQuery(
   $filter: Filter
 ) {
   viewer {
+    id
     todos(first: 50, filter: $filter) {
       edges {
         node {
@@ -52,7 +54,6 @@ query TodoListQuery(
         hasNextPage
       }
     }
-    id
   }
 }
 
@@ -72,16 +73,16 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "Variable",
-  "name": "filter",
-  "variableName": "filter"
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "kind": "Variable",
+  "name": "filter",
+  "variableName": "filter"
 },
 v3 = {
   "alias": null,
@@ -144,7 +145,7 @@ v8 = {
   "storageKey": null
 },
 v9 = [
-  (v1/*: any*/),
+  (v2/*: any*/),
   {
     "kind": "Literal",
     "name": "first",
@@ -166,10 +167,11 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": "todos",
             "args": [
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "concreteType": "UserTodos_Connection",
             "kind": "LinkedField",
@@ -192,7 +194,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       (v3/*: any*/),
                       (v4/*: any*/),
                       {
@@ -234,6 +236,7 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": null,
             "args": (v9/*: any*/),
@@ -258,7 +261,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       (v3/*: any*/),
                       {
                         "alias": null,
@@ -291,15 +294,14 @@ return {
             "key": "TodoList_todos",
             "kind": "LinkedHandle",
             "name": "todos"
-          },
-          (v2/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "466dcd5622897018e3fd8fb2d24ea7e6",
+    "cacheID": "44fe2e7cd12237c8d7eb6d96c6c1136f",
     "id": null,
     "metadata": {
       "connection": [
@@ -316,9 +318,9 @@ return {
     },
     "name": "TodoListQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery(\n  $filter: Filter\n) {\n  viewer {\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          completed\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      totalCount\n      completedCount\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    id\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
+    "text": "query TodoListQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          completed\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      totalCount\n      completedCount\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
   }
 };
 })();
-(node as any).hash = '477c62da08f3592e330fe393ba065479';
+(node as any).hash = '8a78aee6c85dad5f776c1c2a57e3c2b7';
 export default node;
