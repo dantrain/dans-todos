@@ -2,11 +2,13 @@ import express, { RequestHandler } from "express";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { OAuth2Client } from "google-auth-library";
+import { PrismaClient } from "@prisma/client";
 
 const CLIENT_ID =
   "368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com";
 
-const client = new OAuth2Client(CLIENT_ID);
+const authClient = new OAuth2Client(CLIENT_ID);
+const prisma = new PrismaClient();
 
 const verifyUser: RequestHandler = async (req, res, next) => {
   // Verify the ID token
@@ -14,7 +16,7 @@ const verifyUser: RequestHandler = async (req, res, next) => {
     return res.status(400).send("No ID token in post body");
   }
 
-  const ticket = await client.verifyIdToken({
+  const ticket = await authClient.verifyIdToken({
     idToken: req.body.credential,
     audience: CLIENT_ID,
   });
@@ -30,6 +32,13 @@ const verifyUser: RequestHandler = async (req, res, next) => {
   }
 
   console.log("User ID", userId);
+
+  const user = await prisma.user.findOne({ where: { id: userId } });
+
+  if (!user) {
+    console.log("Creating new user", userId);
+    await prisma.user.create({ data: { id: userId } });
+  }
 
   if (req.session) {
     req.session.userId = userId;

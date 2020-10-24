@@ -71,10 +71,6 @@ export const Query = queryType({
 
 export const Mutation = mutationType({
   definition: (t) => {
-    t.crud.createOneUser({
-      computedInputs: { id: ({ ctx }) => ctx.userId },
-    });
-
     t.crud.createOneTodo();
     t.crud.updateOneTodo();
     t.crud.updateManyTodo();
