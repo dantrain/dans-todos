@@ -6,11 +6,15 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import App from "../client/app/App";
 import { NotFoundContext } from "../client/components/NotFound/NotFound";
-import { LoginContext } from "../client/pages/Login/Login";
+import { SignInContext } from "../client/pages/SignIn/SignIn";
 
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 const uiHandler: RequestHandler = (req, res) => {
+  if (!req.session?.userId && req.url !== "/signin") {
+    return res.redirect("/signin");
+  }
+
   const agent = useragent.parse(req.headers["user-agent"]);
   const supportsGoogleOneTap = agent.family === "Chrome" && +agent.major >= 85;
 
@@ -21,9 +25,9 @@ const uiHandler: RequestHandler = (req, res) => {
     sheets.collect(
       <StaticRouter location={req.url}>
         <NotFoundContext.Provider value={notFoundContext}>
-          <LoginContext.Provider value={{ supportsGoogleOneTap }}>
+          <SignInContext.Provider value={{ supportsGoogleOneTap }}>
             <App />
-          </LoginContext.Provider>
+          </SignInContext.Provider>
         </NotFoundContext.Provider>
       </StaticRouter>
     )

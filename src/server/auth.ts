@@ -31,6 +31,10 @@ const verifyUser: RequestHandler = async (req, res, next) => {
 
   console.log("User ID", userId);
 
+  if (req.session) {
+    req.session.userId = userId;
+  }
+
   next();
 };
 

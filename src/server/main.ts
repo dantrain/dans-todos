@@ -1,5 +1,6 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
+import session from "express-session";
 import helmet from "helmet";
 import "express-async-errors";
 import uiHandler from "./uiHandler";
@@ -19,6 +20,18 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
+
+app.use(
+  session({
+    name: "todo.sid",
+    secret: "ultra secret secret",
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+      maxAge: 30 * 60 * 1000,
+    },
+  })
+);
 
 app.use(authRouter);
 

@@ -17,7 +17,7 @@ import NotFound from "../components/NotFound/NotFound";
 import Progress from "../components/Progress/Progress";
 import RemoveServerCss from "../components/RemoveServerCss/RemoveServerCss";
 import Home from "../pages/Home/Home";
-import Login from "../pages/Login/Login";
+import SignIn from "../pages/SignIn/SignIn";
 import relayEnvironment from "../relayEnvironment";
 
 const App = () => (
@@ -43,7 +43,7 @@ const App = () => (
       </AppBar>
       <Main>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/" element={<Home />} />
           <Route path="/active" element={<Home />} />
           <Route path="/completed" element={<Home />} />
