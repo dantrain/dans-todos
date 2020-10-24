@@ -7,15 +7,6 @@ import {
 } from "@nexus/schema";
 import { toGlobalId } from "graphql-relay";
 
-export const User = objectType({
-  name: "User",
-  definition: (t) => {
-    t.id("id", { resolve: ({ id }: any) => toGlobalId("User", id) });
-    t.model.id({ alias: "userid" });
-    t.model.todos();
-  },
-});
-
 export const Todo = objectType({
   name: "Todo",
   definition: (t) => {
@@ -31,45 +22,58 @@ export const Filter = enumType({
   members: ["ALL", "ACTIVE", "COMPLETED"],
 });
 
+export const User = objectType({
+  name: "User",
+  definition: (t) => {
+    t.id("id", { resolve: ({ id }: any) => toGlobalId("User", id) });
+
+    t.connectionField("todos", {
+      type: Todo,
+      additionalArgs: {
+        filter: arg({ type: Filter, default: "ALL" }),
+      },
+      nodes: ({ id }: any, { filter }, { prisma }) => {
+        switch (filter) {
+          case "ACTIVE":
+            return prisma.todo.findMany({
+              orderBy: { createdAt: "asc" },
+              where: { userId: id, completed: { equals: false } },
+            });
+          case "COMPLETED":
+            return prisma.todo.findMany({
+              orderBy: { createdAt: "asc" },
+              where: { userId: id, completed: { equals: true } },
+            });
+          default:
+            return prisma.todo.findMany({
+              where: { userId: id },
+              orderBy: { createdAt: "asc" },
+            });
+        }
+      },
+      extendConnection: (t) => {
+        t.int("totalCount", {
+          resolve: ({ id }: any, _args, { prisma }) =>
+            prisma.todo.count({ where: { userId: id } }),
+        });
+        t.int("completedCount", {
+          resolve: ({ id }: any, _args, { prisma }) =>
+            prisma.todo.count({
+              where: { userId: id, completed: { equals: true } },
+            }),
+        });
+      },
+    });
+  },
+});
+
 export const Query = queryType({
   definition: (t) => {
     t.field("viewer", {
       type: "User",
-      resolve: (_root, _args, ctx) =>
-        ctx.prisma.user.findOne({ where: { id: ctx.userId } }),
+      resolve: (_root, _args, { prisma, userId }) =>
+        prisma.user.findOne({ where: { id: userId } }),
     });
-
-    // t.connectionField("todos", {
-    //   type: Todo,
-    //   additionalArgs: {
-    //     filter: arg({ type: Filter, default: "ALL" }),
-    //   },
-    //   nodes: (_root, { filter }, { prisma }) => {
-    //     switch (filter) {
-    //       case "ACTIVE":
-    //         return prisma.todo.findMany({
-    //           orderBy: { createdAt: "asc" },
-    //           where: { completed: { equals: false } },
-    //         });
-    //       case "COMPLETED":
-    //         return prisma.todo.findMany({
-    //           orderBy: { createdAt: "asc" },
-    //           where: { completed: { equals: true } },
-    //         });
-    //       default:
-    //         return prisma.todo.findMany({ orderBy: { createdAt: "asc" } });
-    //     }
-    //   },
-    //   extendConnection: (t) => {
-    //     t.int("totalCount", {
-    //       resolve: (_root, _args, { prisma }) => prisma.todo.count(),
-    //     });
-    //     t.int("completedCount", {
-    //       resolve: (_root, _args, { prisma }) =>
-    //         prisma.todo.count({ where: { completed: { equals: true } } }),
-    //     });
-    //   },
-    // });
   },
 });
 

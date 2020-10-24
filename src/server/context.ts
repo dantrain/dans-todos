@@ -7,15 +7,14 @@ export interface Context {
   prisma: PrismaClient;
 }
 
+const prisma = new PrismaClient();
+
 const context = ({ req }: ExpressContext): Context => {
   const userId = req.session?.userId;
 
   if (!userId) throw new AuthenticationError("You must be signed in");
 
-  return {
-    userId,
-    prisma: new PrismaClient(),
-  };
+  return { userId, prisma };
 };
 
 export default context;
