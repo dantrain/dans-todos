@@ -8,7 +8,7 @@ const schema = makeSchema({
     nexusSchemaPrisma({
       experimentalCRUD: true,
       computedInputs: {
-        user: ({ ctx: { userId } }) => ({ connect: { id: userId } }),
+        user: ({ ctx: { userid } }) => ({ connect: { id: userid } }),
       },
     }),
     connectionPlugin(),

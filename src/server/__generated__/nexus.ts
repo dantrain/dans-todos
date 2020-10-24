@@ -112,28 +112,28 @@ export interface NexusGenInputs {
   }
   TodoCreateInput: { // input type
     completed?: boolean | null; // Boolean
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdat?: NexusGenScalars['DateTime'] | null; // DateTime
     text: string; // String!
   }
   TodoUpdateInput: { // input type
     completed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    createdat?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     text?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
   TodoUpdateManyMutationInput: { // input type
     completed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    createdat?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     text?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
   TodoWhereInput: { // input type
     AND?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
     completed?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
-    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    createdat?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
     NOT?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
     OR?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
     text?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    userId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    userid?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
   TodoWhereUniqueInput: { // input type
     id?: number | null; // Int

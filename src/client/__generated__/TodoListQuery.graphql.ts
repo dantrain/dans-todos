@@ -9,16 +9,18 @@ export type TodoListQueryVariables = {
     filter?: Filter | null;
 };
 export type TodoListQueryResponse = {
-    readonly todos: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string | null;
-                readonly completed: boolean;
-                readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
-            } | null;
-        } | null> | null;
-        readonly totalCount: number | null;
-        readonly completedCount: number | null;
+    readonly viewer: {
+        readonly todos: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly id: string | null;
+                    readonly completed: boolean;
+                    readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
+                } | null;
+            } | null> | null;
+            readonly totalCount: number | null;
+            readonly completedCount: number | null;
+        } | null;
     } | null;
 };
 export type TodoListQuery = {
@@ -32,22 +34,25 @@ export type TodoListQuery = {
 query TodoListQuery(
   $filter: Filter
 ) {
-  todos(first: 50, filter: $filter) {
-    edges {
-      node {
-        id
-        completed
-        ...TodoListItemFragment
-        __typename
+  viewer {
+    todos(first: 50, filter: $filter) {
+      edges {
+        node {
+          id
+          completed
+          ...TodoListItemFragment
+          __typename
+        }
+        cursor
       }
-      cursor
+      totalCount
+      completedCount
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
     }
-    totalCount
-    completedCount
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
+    id
   }
 }
 
@@ -154,49 +159,60 @@ return {
     "name": "TodoListQuery",
     "selections": [
       {
-        "alias": "todos",
-        "args": [
-          (v1/*: any*/)
-        ],
-        "concreteType": "QueryTodos_Connection",
+        "alias": null,
+        "args": null,
+        "concreteType": "User",
         "kind": "LinkedField",
-        "name": "__TodoList_todos_connection",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "TodoEdge",
+            "alias": "todos",
+            "args": [
+              (v1/*: any*/)
+            ],
+            "concreteType": "UserTodos_Connection",
             "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
+            "name": "__TodoList_todos_connection",
+            "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Todo",
+                "concreteType": "TodoEdge",
                 "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
+                "name": "edges",
+                "plural": true,
                 "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
                   {
+                    "alias": null,
                     "args": null,
-                    "kind": "FragmentSpread",
-                    "name": "TodoListItemFragment"
-                  }
+                    "concreteType": "Todo",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "TodoListItemFragment"
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/)
             ],
             "storageKey": null
-          },
-          (v6/*: any*/),
-          (v7/*: any*/),
-          (v8/*: any*/)
+          }
         ],
         "storageKey": null
       }
@@ -212,66 +228,78 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v9/*: any*/),
-        "concreteType": "QueryTodos_Connection",
+        "args": null,
+        "concreteType": "User",
         "kind": "LinkedField",
-        "name": "todos",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "concreteType": "TodoEdge",
+            "args": (v9/*: any*/),
+            "concreteType": "UserTodos_Connection",
             "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
+            "name": "todos",
+            "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Todo",
+                "concreteType": "TodoEdge",
                 "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
+                "name": "edges",
+                "plural": true,
                 "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "text",
+                    "concreteType": "Todo",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "text",
+                        "storageKey": null
+                      },
+                      (v4/*: any*/)
+                    ],
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/)
             ],
             "storageKey": null
           },
-          (v6/*: any*/),
-          (v7/*: any*/),
-          (v8/*: any*/)
+          {
+            "alias": null,
+            "args": (v9/*: any*/),
+            "filters": [
+              "filter"
+            ],
+            "handle": "connection",
+            "key": "TodoList_todos",
+            "kind": "LinkedHandle",
+            "name": "todos"
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v9/*: any*/),
-        "filters": [
-          "filter"
-        ],
-        "handle": "connection",
-        "key": "TodoList_todos",
-        "kind": "LinkedHandle",
-        "name": "todos"
       }
     ]
   },
   "params": {
-    "cacheID": "fb5eae447e6266fa605be379f8edc557",
+    "cacheID": "466dcd5622897018e3fd8fb2d24ea7e6",
     "id": null,
     "metadata": {
       "connection": [
@@ -280,6 +308,7 @@ return {
           "cursor": null,
           "direction": "forward",
           "path": [
+            "viewer",
             "todos"
           ]
         }
@@ -287,9 +316,9 @@ return {
     },
     "name": "TodoListQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery(\n  $filter: Filter\n) {\n  todos(first: 50, filter: $filter) {\n    edges {\n      node {\n        id\n        completed\n        ...TodoListItemFragment\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    completedCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
+    "text": "query TodoListQuery(\n  $filter: Filter\n) {\n  viewer {\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          completed\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      totalCount\n      completedCount\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    id\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
   }
 };
 })();
-(node as any).hash = 'dffa45eeb915acc30a912a3b80a6ac73';
+(node as any).hash = '477c62da08f3592e330fe393ba065479';
 export default node;

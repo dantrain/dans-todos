@@ -87,8 +87,8 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         optimisticResponse: {
           updateOneTodo: { id, completed: event.target.checked },
         },
-        optimisticUpdater: updater,
-        updater,
+        // optimisticUpdater: updater,
+        // updater,
       });
     },
     [id, completed, filter]

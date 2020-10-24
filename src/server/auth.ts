@@ -25,23 +25,23 @@ const verifyUser: RequestHandler = async (req, res, next) => {
 
   // Get the User ID
   const payload = ticket.getPayload();
-  const userId = payload?.sub;
+  const userid = payload?.sub;
 
-  if (!userId) {
+  if (!userid) {
     return res.status(500).send("No User ID in token payload");
   }
 
-  console.log("User ID", userId);
+  console.log("User ID", userid);
 
-  const user = await prisma.user.findOne({ where: { id: userId } });
+  const user = await prisma.user.findOne({ where: { id: userid } });
 
   if (!user) {
-    console.log("Creating new user", userId);
-    await prisma.user.create({ data: { id: userId } });
+    console.log("Creating new user", userid);
+    await prisma.user.create({ data: { id: userid } });
   }
 
   if (req.session) {
-    req.session.userId = userId;
+    req.session.userid = userid;
   }
 
   next();

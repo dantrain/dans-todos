@@ -160,7 +160,7 @@ type Todo {
 
 input TodoCreateInput {
   completed: Boolean
-  createdAt: DateTime
+  createdat: DateTime
   text: String!
 }
 
@@ -174,25 +174,25 @@ type TodoEdge {
 
 input TodoUpdateInput {
   completed: BoolFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
+  createdat: DateTimeFieldUpdateOperationsInput
   text: StringFieldUpdateOperationsInput
 }
 
 input TodoUpdateManyMutationInput {
   completed: BoolFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
+  createdat: DateTimeFieldUpdateOperationsInput
   text: StringFieldUpdateOperationsInput
 }
 
 input TodoWhereInput {
   AND: [TodoWhereInput!]
   completed: BoolFilter
-  createdAt: DateTimeFilter
+  createdat: DateTimeFilter
   id: IntFilter
   NOT: [TodoWhereInput!]
   OR: [TodoWhereInput!]
   text: StringFilter
-  userId: StringFilter
+  userid: StringFilter
 }
 
 input TodoWhereUniqueInput {

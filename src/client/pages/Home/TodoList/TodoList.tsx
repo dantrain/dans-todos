@@ -19,16 +19,18 @@ import TodoListItem from "./TodoListItem/TodoListItem";
 
 const query = graphql`
   query TodoListQuery($filter: Filter) {
-    todos(first: 50, filter: $filter) @connection(key: "TodoList_todos") {
-      edges {
-        node {
-          id
-          completed
-          ...TodoListItemFragment
+    viewer {
+      todos(first: 50, filter: $filter) @connection(key: "TodoList_todos") {
+        edges {
+          node {
+            id
+            completed
+            ...TodoListItemFragment
+          }
         }
+        totalCount
+        completedCount
       }
-      totalCount
-      completedCount
     }
   }
 `;
@@ -61,8 +63,8 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoList = () => {
   const filter = useFilter();
-  const { todos } = useLazyLoadQuery<TodoListQuery>(query, { filter });
-  const { edges, totalCount, completedCount } = todos!;
+  const { viewer } = useLazyLoadQuery<TodoListQuery>(query, { filter });
+  const { edges, totalCount, completedCount } = viewer!.todos!;
   const incompleteCount = totalCount! - completedCount!;
 
   const s = useStyles();

@@ -3,18 +3,18 @@ import { AuthenticationError } from "apollo-server-express";
 import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 
 export interface Context {
-  userId: string;
+  userid: string;
   prisma: PrismaClient;
 }
 
 const prisma = new PrismaClient();
 
 const context = ({ req }: ExpressContext): Context => {
-  const userId = req.session?.userId;
+  const userid = req.session?.userid;
 
-  if (!userId) throw new AuthenticationError("You must be signed in");
+  if (!userid) throw new AuthenticationError("You must be signed in");
 
-  return { userId, prisma };
+  return { userid, prisma };
 };
 
 export default context;

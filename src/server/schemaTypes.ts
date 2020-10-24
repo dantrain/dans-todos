@@ -32,35 +32,33 @@ export const User = objectType({
       additionalArgs: {
         filter: arg({ type: Filter, default: "ALL" }),
       },
-      nodes: ({ id }: any, { filter }, { prisma }) => {
+      nodes: ({ id: userid }: any, { filter }, { prisma }) => {
         switch (filter) {
           case "ACTIVE":
             return prisma.todo.findMany({
-              orderBy: { createdAt: "asc" },
-              where: { userId: id, completed: { equals: false } },
+              where: { userid, completed: false },
+              orderBy: { createdat: "asc" },
             });
           case "COMPLETED":
             return prisma.todo.findMany({
-              orderBy: { createdAt: "asc" },
-              where: { userId: id, completed: { equals: true } },
+              where: { userid, completed: true },
+              orderBy: { createdat: "asc" },
             });
           default:
             return prisma.todo.findMany({
-              where: { userId: id },
-              orderBy: { createdAt: "asc" },
+              where: { userid },
+              orderBy: { createdat: "asc" },
             });
         }
       },
       extendConnection: (t) => {
         t.int("totalCount", {
-          resolve: ({ id }: any, _args, { prisma }) =>
-            prisma.todo.count({ where: { userId: id } }),
+          resolve: (_root, _args, { prisma, userid }) =>
+            prisma.todo.count({ where: { userid } }),
         });
         t.int("completedCount", {
-          resolve: ({ id }: any, _args, { prisma }) =>
-            prisma.todo.count({
-              where: { userId: id, completed: { equals: true } },
-            }),
+          resolve: (_root, _args, { prisma, userid }) =>
+            prisma.todo.count({ where: { userid, completed: true } }),
         });
       },
     });
@@ -71,8 +69,8 @@ export const Query = queryType({
   definition: (t) => {
     t.field("viewer", {
       type: "User",
-      resolve: (_root, _args, { prisma, userId }) =>
-        prisma.user.findOne({ where: { id: userId } }),
+      resolve: (_root, _args, { prisma, userid }) =>
+        prisma.user.findOne({ where: { id: userid } }),
     });
   },
 });

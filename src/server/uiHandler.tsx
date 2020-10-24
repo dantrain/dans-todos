@@ -11,7 +11,7 @@ import { SignInContext } from "../client/pages/SignIn/SignIn";
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 const uiHandler: RequestHandler = (req, res) => {
-  if (!req.session?.userId && req.url !== "/signin") {
+  if (!req.session?.userid && req.url !== "/signin") {
     return res.redirect("/signin");
   }
 
