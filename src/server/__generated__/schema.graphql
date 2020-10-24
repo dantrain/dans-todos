@@ -51,6 +51,7 @@ input IntFilter {
 
 type Mutation {
   createOneTodo(data: TodoCreateInput!): Todo!
+  createOneUser(data: UserCreateInput!): User!
   deleteManyTodo(where: TodoWhereInput): BatchPayload!
   deleteOneTodo(where: TodoWhereUniqueInput!): Todo
   updateManyTodo(data: TodoUpdateManyMutationInput!, where: TodoWhereInput): BatchPayload!
@@ -98,66 +99,13 @@ input NestedStringFilter {
   startsWith: String
 }
 
-"""
-PageInfo cursor, as defined in https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
-"""
-type PageInfo {
-  """
-  The cursor corresponding to the last nodes in edges. Null if the connection is empty.
-  """
-  endCursor: String
-
-  """
-  Used to indicate whether more edges exist following the set defined by the clients arguments.
-  """
-  hasNextPage: Boolean!
-
-  """
-  Used to indicate whether more edges exist prior to the set defined by the clients arguments.
-  """
-  hasPreviousPage: Boolean!
-
-  """
-  The cursor corresponding to the first nodes in edges. Null if the connection is empty.
-  """
-  startCursor: String
-}
-
 type Query {
-  todos(
-    """Returns the elements in the list that come after the specified cursor"""
-    after: String
-
-    """Returns the elements in the list that come before the specified cursor"""
-    before: String
-    filter: Filter = ALL
-
-    """Returns the first n elements from the list."""
-    first: Int
-
-    """Returns the last n elements from the list."""
-    last: Int
-  ): QueryTodos_Connection
+  user(where: UserWhereUniqueInput!): User
 }
 
 enum QueryMode {
   default
   insensitive
-}
-
-type QueryTodos_Connection {
-  completedCount: Int
-
-  """
-  https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types
-  """
-  edges: [TodoEdge]
-
-  """
-  https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
-  """
-  pageInfo: PageInfo!
-  totalCount: Int
 }
 
 input StringFieldUpdateOperationsInput {
@@ -183,44 +131,63 @@ type Todo {
   completed: Boolean!
   id: ID
   text: String!
+  todoid: Int!
 }
 
 input TodoCreateInput {
   completed: Boolean
-  created_at: DateTime
+  createdAt: DateTime
   text: String!
 }
 
-type TodoEdge {
-  """https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor"""
-  cursor: String!
+input TodoCreateManyWithoutUserInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutUserInput!]
+}
 
-  """https://facebook.github.io/relay/graphql/connections.htm#sec-Node"""
-  node: Todo
+input TodoCreateWithoutUserInput {
+  completed: Boolean
+  createdAt: DateTime
+  text: String!
 }
 
 input TodoUpdateInput {
   completed: BoolFieldUpdateOperationsInput
-  created_at: DateTimeFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
   text: StringFieldUpdateOperationsInput
 }
 
 input TodoUpdateManyMutationInput {
   completed: BoolFieldUpdateOperationsInput
-  created_at: DateTimeFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
   text: StringFieldUpdateOperationsInput
 }
 
 input TodoWhereInput {
   AND: [TodoWhereInput!]
   completed: BoolFilter
-  created_at: DateTimeFilter
+  createdAt: DateTimeFilter
   id: IntFilter
   NOT: [TodoWhereInput!]
   OR: [TodoWhereInput!]
   text: StringFilter
+  userId: StringFilter
 }
 
 input TodoWhereUniqueInput {
   id: Int
+}
+
+type User {
+  id: ID
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+  userid: String!
+}
+
+input UserCreateInput {
+  todos: TodoCreateManyWithoutUserInput
+}
+
+input UserWhereUniqueInput {
+  id: String
 }

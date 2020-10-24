@@ -16,9 +16,11 @@ import Main from "../components/Main/Main";
 import NotFound from "../components/NotFound/NotFound";
 import Progress from "../components/Progress/Progress";
 import RemoveServerCss from "../components/RemoveServerCss/RemoveServerCss";
-import Home from "../pages/Home/Home";
+// import Home from "../pages/Home/Home";
 import SignIn from "../pages/SignIn/SignIn";
 import relayEnvironment from "../relayEnvironment";
+
+const Home = () => <div>Hello, world!</div>;
 
 const App = () => (
   <RelayEnvironmentProvider environment={relayEnvironment}>
