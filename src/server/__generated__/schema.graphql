@@ -51,7 +51,6 @@ input IntFilter {
 
 type Mutation {
   createOneTodo(data: TodoCreateInput!): Todo!
-  createOneUser(data: UserCreateInput!): User!
   deleteManyTodo(where: TodoWhereInput): BatchPayload!
   deleteOneTodo(where: TodoWhereUniqueInput!): Todo
   updateManyTodo(data: TodoUpdateManyMutationInput!, where: TodoWhereInput): BatchPayload!
@@ -140,17 +139,6 @@ input TodoCreateInput {
   text: String!
 }
 
-input TodoCreateManyWithoutUserInput {
-  connect: [TodoWhereUniqueInput!]
-  create: [TodoCreateWithoutUserInput!]
-}
-
-input TodoCreateWithoutUserInput {
-  completed: Boolean
-  createdAt: DateTime
-  text: String!
-}
-
 input TodoUpdateInput {
   completed: BoolFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
@@ -182,10 +170,6 @@ type User {
   id: ID
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
   userid: String!
-}
-
-input UserCreateInput {
-  todos: TodoCreateManyWithoutUserInput
 }
 
 input UserWhereUniqueInput {

@@ -33,7 +33,11 @@ export const Filter = enumType({
 
 export const Query = queryType({
   definition: (t) => {
-    t.crud.user();
+    t.field("viewer", {
+      type: "User",
+      resolve: (_root, _args, ctx) =>
+        ctx.prisma.user.findOne({ where: { id: ctx.userId } }),
+    });
 
     // t.connectionField("todos", {
     //   type: Todo,

@@ -115,15 +115,6 @@ export interface NexusGenInputs {
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     text: string; // String!
   }
-  TodoCreateManyWithoutUserInput: { // input type
-    connect?: NexusGenInputs['TodoWhereUniqueInput'][] | null; // [TodoWhereUniqueInput!]
-    create?: NexusGenInputs['TodoCreateWithoutUserInput'][] | null; // [TodoCreateWithoutUserInput!]
-  }
-  TodoCreateWithoutUserInput: { // input type
-    completed?: boolean | null; // Boolean
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    text: string; // String!
-  }
   TodoUpdateInput: { // input type
     completed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
@@ -146,9 +137,6 @@ export interface NexusGenInputs {
   }
   TodoWhereUniqueInput: { // input type
     id?: number | null; // Int
-  }
-  UserCreateInput: { // input type
-    todos?: NexusGenInputs['TodoCreateManyWithoutUserInput'] | null; // TodoCreateManyWithoutUserInput
   }
   UserWhereUniqueInput: { // input type
     id?: string | null; // String
@@ -195,13 +183,10 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   StringFieldUpdateOperationsInput: NexusGenInputs['StringFieldUpdateOperationsInput'];
   StringFilter: NexusGenInputs['StringFilter'];
   TodoCreateInput: NexusGenInputs['TodoCreateInput'];
-  TodoCreateManyWithoutUserInput: NexusGenInputs['TodoCreateManyWithoutUserInput'];
-  TodoCreateWithoutUserInput: NexusGenInputs['TodoCreateWithoutUserInput'];
   TodoUpdateInput: NexusGenInputs['TodoUpdateInput'];
   TodoUpdateManyMutationInput: NexusGenInputs['TodoUpdateManyMutationInput'];
   TodoWhereInput: NexusGenInputs['TodoWhereInput'];
   TodoWhereUniqueInput: NexusGenInputs['TodoWhereUniqueInput'];
-  UserCreateInput: NexusGenInputs['UserCreateInput'];
   UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
   Filter: NexusGenEnums['Filter'];
   QueryMode: NexusGenEnums['QueryMode'];
@@ -219,7 +204,6 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createOneTodo: NexusGenRootTypes['Todo']; // Todo!
-    createOneUser: NexusGenRootTypes['User']; // User!
     deleteManyTodo: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteOneTodo: NexusGenRootTypes['Todo'] | null; // Todo
     updateManyTodo: NexusGenRootTypes['BatchPayload']; // BatchPayload!
@@ -245,9 +229,6 @@ export interface NexusGenArgTypes {
   Mutation: {
     createOneTodo: { // args
       data: NexusGenInputs['TodoCreateInput']; // TodoCreateInput!
-    }
-    createOneUser: { // args
-      data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
     }
     deleteManyTodo: { // args
       where?: NexusGenInputs['TodoWhereInput'] | null; // TodoWhereInput
@@ -286,7 +267,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "BatchPayload" | "Mutation" | "Query" | "Todo" | "User";
 
-export type NexusGenInputNames = "BoolFieldUpdateOperationsInput" | "BoolFilter" | "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "IntFilter" | "NestedBoolFilter" | "NestedDateTimeFilter" | "NestedIntFilter" | "NestedStringFilter" | "StringFieldUpdateOperationsInput" | "StringFilter" | "TodoCreateInput" | "TodoCreateManyWithoutUserInput" | "TodoCreateWithoutUserInput" | "TodoUpdateInput" | "TodoUpdateManyMutationInput" | "TodoWhereInput" | "TodoWhereUniqueInput" | "UserCreateInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = "BoolFieldUpdateOperationsInput" | "BoolFilter" | "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "IntFilter" | "NestedBoolFilter" | "NestedDateTimeFilter" | "NestedIntFilter" | "NestedStringFilter" | "StringFieldUpdateOperationsInput" | "StringFilter" | "TodoCreateInput" | "TodoUpdateInput" | "TodoUpdateManyMutationInput" | "TodoWhereInput" | "TodoWhereUniqueInput" | "UserWhereUniqueInput";
 
 export type NexusGenEnumNames = "Filter" | "QueryMode";
 

@@ -3,7 +3,7 @@ import { AuthenticationError } from "apollo-server-express";
 import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 
 export interface Context {
-  userId: number;
+  userId: string;
   prisma: PrismaClient;
 }
 
