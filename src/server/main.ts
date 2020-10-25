@@ -24,7 +24,9 @@ if (process.env.NODE_ENV === "production") {
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
 
 const RedisStore = connectRedis(session);
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({
+  url: process.env.REDIS_URL,
+});
 
 app.use(
   session({

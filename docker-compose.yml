@@ -7,12 +7,16 @@ services:
       - redis
       - db
     environment:
+      REDIS_URL: "redis://default:tT0DnQpmQKKcTTZ6@redis:6379"
       DATABASE_URL: "postgresql://postgres:d1rONeFo0KL8ZwC8@db:5432/postgres"
     ports:
-      - 8080:80
+      - 3000:80
 
   redis:
     image: redis:6-alpine
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
 
   db:
     image: postgres:13-alpine
