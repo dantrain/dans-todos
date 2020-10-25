@@ -1,5 +1,7 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
+import redis from "redis";
+import connectRedis from "connect-redis";
 import session from "express-session";
 import helmet from "helmet";
 import "express-async-errors";
@@ -21,8 +23,12 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
 
+const RedisStore = connectRedis(session);
+const redisClient = redis.createClient();
+
 app.use(
   session({
+    store: new RedisStore({ client: redisClient }),
     name: "todo.sid",
     secret: "ultra secret secret",
     saveUninitialized: false,

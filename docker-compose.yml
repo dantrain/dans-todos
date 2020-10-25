@@ -4,11 +4,15 @@ services:
   app:
     build: .
     depends_on:
+      - redis
       - db
     environment:
       DATABASE_URL: "postgresql://postgres:d1rONeFo0KL8ZwC8@db:5432/postgres"
     ports:
       - 8080:80
+
+  redis:
+    image: redis:6-alpine
 
   db:
     image: postgres:13-alpine
