@@ -49,7 +49,7 @@ const verifyUser: RequestHandler = async (req, res, next) => {
 const authRouter = express.Router();
 
 authRouter.post("/tokensignin", bodyParser.json(), verifyUser, (req, res) => {
-  res.sendStatus(200);
+  res.status(204).send();
 });
 
 authRouter.post(

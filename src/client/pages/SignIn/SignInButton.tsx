@@ -38,7 +38,7 @@ const LoginButton = () => {
             }),
           });
 
-          if (response.status === 200) {
+          if (response.status === 204) {
             navigate("/");
           } else {
             throw new Error("Sign-in failed");
