@@ -33,7 +33,7 @@ app.use(
   session({
     store: new RedisStore({ client: redisClient }),
     name: "todo.sid",
-    secret: "ultra secret secret",
+    secret: process.env.SESSION_SECRETS!.split(" "),
     saveUninitialized: false,
     resave: false,
     cookie: {

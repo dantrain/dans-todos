@@ -4,8 +4,7 @@ import bodyParser from "body-parser";
 import { OAuth2Client } from "google-auth-library";
 import { PrismaClient } from "@prisma/client";
 
-const CLIENT_ID =
-  "368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com";
+const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
 
 const authClient = new OAuth2Client(CLIENT_ID);
 const prisma = new PrismaClient();

@@ -8,6 +8,8 @@ import App from "../client/app/App";
 import { NotFoundContext } from "../client/components/NotFound/NotFound";
 import { SignInContext } from "../client/pages/SignIn/SignIn";
 
+const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
+
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 const uiHandler: RequestHandler = (req, res) => {
@@ -41,7 +43,7 @@ const uiHandler: RequestHandler = (req, res) => {
   <head>
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta charSet='utf-8' />
-      <meta name="google-signin-client_id" content="368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com" />
+      <meta name="google-signin-client_id" content="${CLIENT_ID}" />
       <title>Todo Next</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
       <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
