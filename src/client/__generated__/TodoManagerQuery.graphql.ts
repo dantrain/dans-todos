@@ -5,34 +5,31 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Filter = "ACTIVE" | "ALL" | "COMPLETED" | "%future added value";
-export type TodoListQueryVariables = {
+export type TodoManagerQueryVariables = {
     filter?: Filter | null;
 };
-export type TodoListQueryResponse = {
+export type TodoManagerQueryResponse = {
     readonly viewer: {
         readonly id: string | null;
         readonly todos: {
             readonly edges: ReadonlyArray<{
                 readonly node: {
                     readonly id: string | null;
-                    readonly completed: boolean;
-                    readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
                 } | null;
             } | null> | null;
-            readonly totalCount: number | null;
-            readonly completedCount: number | null;
+            readonly " $fragmentRefs": FragmentRefs<"TodoListFragment" | "TodoFooterFragment">;
         } | null;
     } | null;
 };
-export type TodoListQuery = {
-    readonly response: TodoListQueryResponse;
-    readonly variables: TodoListQueryVariables;
+export type TodoManagerQuery = {
+    readonly response: TodoManagerQueryResponse;
+    readonly variables: TodoManagerQueryVariables;
 };
 
 
 
 /*
-query TodoListQuery(
+query TodoManagerQuery(
   $filter: Filter
 ) {
   viewer {
@@ -41,18 +38,30 @@ query TodoListQuery(
       edges {
         node {
           id
-          completed
-          ...TodoListItemFragment
           __typename
         }
         cursor
       }
-      totalCount
-      completedCount
+      ...TodoListFragment
+      ...TodoFooterFragment
       pageInfo {
         endCursor
         hasNextPage
       }
+    }
+  }
+}
+
+fragment TodoFooterFragment on UserTodos_Connection {
+  totalCount
+  completedCount
+}
+
+fragment TodoListFragment on UserTodos_Connection {
+  edges {
+    node {
+      id
+      ...TodoListItemFragment
     }
   }
 }
@@ -88,38 +97,17 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "completed",
+  "name": "__typename",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "totalCount",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "completedCount",
-  "storageKey": null
-},
-v8 = {
+v5 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -144,7 +132,7 @@ v8 = {
   ],
   "storageKey": null
 },
-v9 = [
+v6 = [
   (v2/*: any*/),
   {
     "kind": "Literal",
@@ -157,7 +145,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "TodoListQuery",
+    "name": "TodoManagerQuery",
     "selections": [
       {
         "alias": null,
@@ -175,7 +163,7 @@ return {
             ],
             "concreteType": "UserTodos_Connection",
             "kind": "LinkedField",
-            "name": "__TodoList_todos_connection",
+            "name": "__TodoManager_todos_connection",
             "plural": false,
             "selections": [
               {
@@ -195,23 +183,25 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v3/*: any*/),
-                      (v4/*: any*/),
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "TodoListItemFragment"
-                      }
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v8/*: any*/)
+              (v5/*: any*/),
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "TodoListFragment"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "TodoFooterFragment"
+              }
             ],
             "storageKey": null
           }
@@ -226,7 +216,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "TodoListQuery",
+    "name": "TodoManagerQuery",
     "selections": [
       {
         "alias": null,
@@ -239,7 +229,7 @@ return {
           (v1/*: any*/),
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": (v6/*: any*/),
             "concreteType": "UserTodos_Connection",
             "kind": "LinkedField",
             "name": "todos",
@@ -270,28 +260,46 @@ return {
                         "name": "text",
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "completed",
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v8/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "completedCount",
+                "storageKey": null
+              },
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": (v6/*: any*/),
             "filters": [
               "filter"
             ],
             "handle": "connection",
-            "key": "TodoList_todos",
+            "key": "TodoManager_todos",
             "kind": "LinkedHandle",
             "name": "todos"
           }
@@ -301,7 +309,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "44fe2e7cd12237c8d7eb6d96c6c1136f",
+    "cacheID": "ec85658091ffdd21f74436abac1eb66b",
     "id": null,
     "metadata": {
       "connection": [
@@ -316,11 +324,11 @@ return {
         }
       ]
     },
-    "name": "TodoListQuery",
+    "name": "TodoManagerQuery",
     "operationKind": "query",
-    "text": "query TodoListQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          completed\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      totalCount\n      completedCount\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
+    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          __typename\n        }\n        cursor\n      }\n      ...TodoListFragment\n      ...TodoFooterFragment\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoFooterFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListFragment on UserTodos_Connection {\n  edges {\n    node {\n      id\n      ...TodoListItemFragment\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
   }
 };
 })();
-(node as any).hash = '8a78aee6c85dad5f776c1c2a57e3c2b7';
+(node as any).hash = '8b258bf08201392e0d54dc097dc6c267';
 export default node;

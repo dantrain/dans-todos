@@ -1,13 +1,14 @@
 import { IconButton } from "@material-ui/core";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
-import { graphql, useMutation } from "react-relay/hooks";
 import React, { useCallback } from "react";
+import { graphql, useMutation } from "react-relay/hooks";
+import { SelectorStoreUpdater } from "relay-runtime";
+import { useConnectionContext } from "../../../../utils/connectionContext";
 import {
   ToggleAllSetAllCompletedMutation,
   ToggleAllSetAllCompletedMutationResponse,
-} from "../../../__generated__/ToggleAllSetAllCompletedMutation.graphql";
-import { ConnectionHandler, SelectorStoreUpdater } from "relay-runtime";
-import useFilter from "../useFilter/useFilter";
+} from "../../../../__generated__/ToggleAllSetAllCompletedMutation.graphql";
+import { TodosConnectionContext } from "../TodoManager";
 
 const setAllCompletedMutation = graphql`
   mutation ToggleAllSetAllCompletedMutation($completed: Boolean) {
@@ -18,7 +19,8 @@ const setAllCompletedMutation = graphql`
 `;
 
 const ToggleAll = () => {
-  const filter = useFilter();
+  const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
+
   const [commit] = useMutation<ToggleAllSetAllCompletedMutation>(
     setAllCompletedMutation
   );
@@ -27,18 +29,16 @@ const ToggleAll = () => {
     const updater: SelectorStoreUpdater<ToggleAllSetAllCompletedMutationResponse> = (
       store
     ) => {
-      const connection = ConnectionHandler.getConnection(
-        store.getRoot(),
-        "TodoList_todos",
-        { filter }
-      );
-      if (!connection) throw new Error("Can't find connection");
-      connection
+      const connectionRecord = getConnectionRecord(store);
+      connectionRecord
         .getLinkedRecords("edges")
         ?.forEach((edge) =>
           edge.getLinkedRecord("node")?.setValue(true, "completed")
         );
-      connection.setValue(connection.getValue("totalCount"), "completedCount");
+      connectionRecord.setValue(
+        connectionRecord.getValue("totalCount"),
+        "completedCount"
+      );
     };
 
     commit({
@@ -46,7 +46,7 @@ const ToggleAll = () => {
       optimisticUpdater: updater,
       updater,
     });
-  }, [filter]);
+  }, [getConnectionRecord]);
 
   return (
     <IconButton onClick={handleClick}>

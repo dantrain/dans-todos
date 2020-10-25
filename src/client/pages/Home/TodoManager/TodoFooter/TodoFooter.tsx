@@ -3,39 +3,21 @@ import {
   ButtonGroup,
   Divider,
   fade,
-  List,
   makeStyles,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import indigo from "@material-ui/core/colors/indigo";
 import React from "react";
-import { graphql, useLazyLoadQuery } from "react-relay/hooks";
+import { graphql, useFragment } from "react-relay/hooks";
 import { NavLink } from "react-router-dom";
-import { TodoListQuery } from "../../../__generated__/TodoListQuery.graphql";
-import useFilter from "../useFilter/useFilter";
-import { createConnectionContext } from "../../../utils/connectionContext";
+import { TodoFooterFragment$key } from "../../../../__generated__/TodoFooterFragment.graphql";
 import ClearCompleted from "./ClearCompleted/ClearCompleted";
-import TodoListItem from "./TodoListItem/TodoListItem";
 
-export const TodosConnectionContext = createConnectionContext();
-
-const query = graphql`
-  query TodoListQuery($filter: Filter) {
-    viewer {
-      id
-      todos(first: 50, filter: $filter) @connection(key: "TodoList_todos") {
-        edges {
-          node {
-            id
-            completed
-            ...TodoListItemFragment
-          }
-        }
-        totalCount
-        completedCount
-      }
-    }
+const fragment = graphql`
+  fragment TodoFooterFragment on UserTodos_Connection {
+    totalCount
+    completedCount
   }
 `;
 
@@ -65,36 +47,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoList = () => {
-  const filter = useFilter();
-  const { viewer } = useLazyLoadQuery<TodoListQuery>(query, { filter });
-  const { edges, totalCount, completedCount } = viewer!.todos!;
+type TodoFooterProps = {
+  todos: TodoFooterFragment$key;
+};
+
+const TodoFooter = ({ todos }: TodoFooterProps) => {
+  const { totalCount, completedCount } = useFragment(fragment, todos);
   const incompleteCount = totalCount! - completedCount!;
 
   const s = useStyles();
 
-  return totalCount && edges ? (
-    <TodosConnectionContext.Provider
-      value={{
-        parentId: viewer!.id!,
-        connectionKey: "TodoList_todos",
-        filters: { filter },
-      }}
-    >
+  return totalCount ? (
+    <>
       <Divider />
-      {edges.length ? (
-        <>
-          <List>
-            {edges.map(
-              (edge) =>
-                edge?.node && (
-                  <TodoListItem key={edge.node.id} todo={edge.node} />
-                )
-            )}
-          </List>
-          <Divider />
-        </>
-      ) : null}
       <Toolbar className={s.toolbar}>
         <Typography className={s.incompleteCount} color="textSecondary">
           {incompleteCount} item{incompleteCount !== 1 && "s"} left
@@ -116,8 +81,8 @@ const TodoList = () => {
         </ButtonGroup>
         <ClearCompleted disabled={incompleteCount === totalCount} />
       </Toolbar>
-    </TodosConnectionContext.Provider>
+    </>
   ) : null;
 };
 
-export default TodoList;
+export default TodoFooter;

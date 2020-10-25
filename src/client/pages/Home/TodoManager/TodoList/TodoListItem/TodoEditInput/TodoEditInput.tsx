@@ -1,4 +1,5 @@
 import { InputBase, makeStyles } from "@material-ui/core";
+import { fromGlobalId } from "graphql-relay";
 import React, {
   ChangeEvent,
   KeyboardEvent,
@@ -8,8 +9,7 @@ import React, {
   useState,
 } from "react";
 import { graphql, useMutation } from "react-relay/hooks";
-import { fromGlobalId } from "graphql-relay";
-import { TodoEditInputEditMutation } from "../../../../../__generated__/TodoEditInputEditMutation.graphql";
+import { TodoEditInputEditMutation } from "../../../../../../__generated__/TodoEditInputEditMutation.graphql";
 
 const editMutation = graphql`
   mutation TodoEditInputEditMutation($id: Int, $text: String!) {

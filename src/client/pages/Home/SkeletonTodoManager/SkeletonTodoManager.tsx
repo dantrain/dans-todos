@@ -1,5 +1,6 @@
 import {
   Box,
+  CardHeader,
   Divider,
   List,
   ListItem,
@@ -34,11 +35,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SkeletonTodoList = () => {
+const SkeletonTodoManager = () => {
   const s = useStyles();
 
   return (
     <>
+      <CardHeader
+        avatar={
+          <Box mx="11px" py="7px">
+            <Skeleton width={20} height={34} animation="wave" />
+          </Box>
+        }
+      />
       <Divider />
       <List>
         {Array.from({ length: 3 }).map((_, index) => (
@@ -75,4 +83,4 @@ const SkeletonTodoList = () => {
   );
 };
 
-export default SkeletonTodoList;
+export default SkeletonTodoManager;

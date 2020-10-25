@@ -8,8 +8,9 @@ import React, {
 } from "react";
 import { graphql, useMutation } from "react-relay/hooks";
 import { ConnectionHandler } from "relay-runtime";
-import { TodoInputCreateMutation } from "../../../__generated__/TodoInputCreateMutation.graphql";
-import useFilter from "../useFilter/useFilter";
+import { useConnectionContext } from "../../../../utils/connectionContext";
+import { TodoInputCreateMutation } from "../../../../__generated__/TodoInputCreateMutation.graphql";
+import { TodosConnectionContext } from "../TodoManager";
 
 const createMutation = graphql`
   mutation TodoInputCreateMutation($text: String!) {
@@ -28,11 +29,10 @@ const useStyles = makeStyles({
 });
 
 const TodoInput = () => {
-  const filter = useFilter();
   const [value, setValue] = useState("");
   const ref = useRef<HTMLInputElement | null>(null);
-  const s = useStyles();
 
+  const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
   const [commit] = useMutation<TodoInputCreateMutation>(createMutation);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -48,24 +48,19 @@ const TodoInput = () => {
           updater: (store) => {
             const payload = store.getRootField("createOneTodo");
 
-            const connection = ConnectionHandler.getConnection(
-              store.getRoot(),
-              "TodoList_todos",
-              { filter }
-            );
-            if (!connection) throw new Error("Can't find connection");
+            const connectionRecord = getConnectionRecord(store);
 
             const edge = ConnectionHandler.createEdge(
               store,
-              connection,
+              connectionRecord,
               payload,
               "TodoEdge"
             );
 
-            ConnectionHandler.insertEdgeAfter(connection, edge);
+            ConnectionHandler.insertEdgeAfter(connectionRecord, edge);
 
-            connection.setValue(
-              +(connection.getValue("totalCount") || 0) + 1,
+            connectionRecord.setValue(
+              +(connectionRecord.getValue("totalCount") || 0) + 1,
               "totalCount"
             );
           },
@@ -77,8 +72,10 @@ const TodoInput = () => {
         ref?.current?.blur();
       }
     },
-    [value, filter]
+    [value, getConnectionRecord]
   );
+
+  const s = useStyles();
 
   return (
     <InputBase

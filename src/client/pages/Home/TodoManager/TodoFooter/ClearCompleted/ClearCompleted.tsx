@@ -2,11 +2,12 @@ import { Button } from "@material-ui/core";
 import React, { useCallback } from "react";
 import { graphql, useMutation } from "react-relay/hooks";
 import { ConnectionHandler, SelectorStoreUpdater } from "relay-runtime";
+import { useConnectionContext } from "../../../../../utils/connectionContext";
 import {
   ClearCompletedMutation,
   ClearCompletedMutationResponse,
-} from "../../../../__generated__/ClearCompletedMutation.graphql";
-import useFilter from "../../useFilter/useFilter";
+} from "../../../../../__generated__/ClearCompletedMutation.graphql";
+import { TodosConnectionContext } from "../../TodoManager";
 
 const clearCompletedMutation = graphql`
   mutation ClearCompletedMutation {
@@ -21,19 +22,14 @@ type ClearCompletedProps = {
 };
 
 const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
-  const filter = useFilter();
+  const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
   const [commit] = useMutation<ClearCompletedMutation>(clearCompletedMutation);
 
   const handleClick = useCallback(() => {
     const updater: SelectorStoreUpdater<ClearCompletedMutationResponse> = (
       store
     ) => {
-      const connection = ConnectionHandler.getConnection(
-        store.getRoot(),
-        "TodoList_todos",
-        { filter }
-      );
-      if (!connection) throw new Error("Can't find connection");
+      const connection = getConnectionRecord(store);
 
       const completedNodes =
         connection
@@ -55,7 +51,7 @@ const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
     };
 
     commit({ variables: {}, optimisticUpdater: updater, updater });
-  }, [filter]);
+  }, [getConnectionRecord]);
 
   return (
     <Button color="primary" disabled={disabled} onClick={handleClick}>
