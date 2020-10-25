@@ -11,17 +11,17 @@ import { fromGlobalId } from "graphql-relay";
 import React, { ChangeEvent, useCallback } from "react";
 import { graphql, useFragment, useMutation } from "react-relay/hooks";
 import { ConnectionHandler, SelectorStoreUpdater } from "relay-runtime";
-import { useConnectionContext } from "../../../../../utils/connectionContext";
+import { useConnectionContext } from "../../../../utils/connectionContext";
 import {
   TodoListItemDeleteMutation,
   TodoListItemDeleteMutationResponse,
-} from "../../../../../__generated__/TodoListItemDeleteMutation.graphql";
-import { TodoListItemFragment$key } from "../../../../../__generated__/TodoListItemFragment.graphql";
+} from "../../../../__generated__/TodoListItemDeleteMutation.graphql";
+import { TodoListItemFragment$key } from "../../../../__generated__/TodoListItemFragment.graphql";
 import {
   TodoListItemSetCompletedMutation,
   TodoListItemSetCompletedMutationResponse,
-} from "../../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
-import { TodosConnectionContext } from "../../TodoManager";
+} from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
+import { TodosConnectionContext } from "../TodoManager";
 import TodoEditInput from "./TodoEditInput/TodoEditInput";
 
 const todoListItemFragment = graphql`

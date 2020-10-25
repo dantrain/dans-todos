@@ -1,4 +1,4 @@
-import { CardHeader } from "@material-ui/core";
+import { CardHeader, Divider, List } from "@material-ui/core";
 import React from "react";
 import { graphql, useLazyLoadQuery } from "react-relay/hooks";
 import { useLocation } from "react-router-dom";
@@ -9,7 +9,7 @@ import {
 } from "../../../__generated__/TodoManagerQuery.graphql";
 import TodoFooter from "./TodoFooter/TodoFooter";
 import TodoInput from "./TodoInput/TodoInput";
-import TodoList from "./TodoList/TodoList";
+import TodoListItem from "./TodoListItem/TodoListItem";
 import ToggleAll from "./ToggleAll/ToggleAll";
 
 export const TodosConnectionContext = createConnectionContext();
@@ -22,9 +22,9 @@ const query = graphql`
         edges {
           node {
             id
+            ...TodoListItemFragment
           }
         }
-        ...TodoListFragment
         ...TodoFooterFragment
       }
     }
@@ -46,7 +46,19 @@ const TodoManager = () => {
       }}
     >
       <CardHeader avatar={<ToggleAll />} title={<TodoInput />} />
-      <TodoList todos={todos!} />
+      {todos!.edges && todos!.edges.length ? (
+        <>
+          <Divider />
+          <List>
+            {todos!.edges.map(
+              (edge) =>
+                edge?.node && (
+                  <TodoListItem key={edge.node.id} todo={edge.node} />
+                )
+            )}
+          </List>
+        </>
+      ) : null}
       <TodoFooter todos={todos!} />
     </TodosConnectionContext.Provider>
   );

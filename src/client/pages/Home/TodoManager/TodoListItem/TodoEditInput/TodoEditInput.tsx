@@ -9,7 +9,7 @@ import React, {
   useState,
 } from "react";
 import { graphql, useMutation } from "react-relay/hooks";
-import { TodoEditInputEditMutation } from "../../../../../../__generated__/TodoEditInputEditMutation.graphql";
+import { TodoEditInputEditMutation } from "../../../../../__generated__/TodoEditInputEditMutation.graphql";
 
 const editMutation = graphql`
   mutation TodoEditInputEditMutation($id: Int, $text: String!) {

@@ -15,9 +15,10 @@ export type TodoManagerQueryResponse = {
             readonly edges: ReadonlyArray<{
                 readonly node: {
                     readonly id: string | null;
+                    readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
                 } | null;
             } | null> | null;
-            readonly " $fragmentRefs": FragmentRefs<"TodoListFragment" | "TodoFooterFragment">;
+            readonly " $fragmentRefs": FragmentRefs<"TodoFooterFragment">;
         } | null;
     } | null;
 };
@@ -38,11 +39,11 @@ query TodoManagerQuery(
       edges {
         node {
           id
+          ...TodoListItemFragment
           __typename
         }
         cursor
       }
-      ...TodoListFragment
       ...TodoFooterFragment
       pageInfo {
         endCursor
@@ -55,15 +56,6 @@ query TodoManagerQuery(
 fragment TodoFooterFragment on UserTodos_Connection {
   totalCount
   completedCount
-}
-
-fragment TodoListFragment on UserTodos_Connection {
-  edges {
-    node {
-      id
-      ...TodoListItemFragment
-    }
-  }
 }
 
 fragment TodoListItemFragment on Todo {
@@ -183,7 +175,12 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v3/*: any*/)
+                      (v3/*: any*/),
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "TodoListItemFragment"
+                      }
                     ],
                     "storageKey": null
                   },
@@ -192,11 +189,6 @@ return {
                 "storageKey": null
               },
               (v5/*: any*/),
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "TodoListFragment"
-              },
               {
                 "args": null,
                 "kind": "FragmentSpread",
@@ -252,7 +244,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -266,7 +257,8 @@ return {
                         "kind": "ScalarField",
                         "name": "completed",
                         "storageKey": null
-                      }
+                      },
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -309,7 +301,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ec85658091ffdd21f74436abac1eb66b",
+    "cacheID": "80a2bc555ddfdeca94b83d9e0b6d1ec2",
     "id": null,
     "metadata": {
       "connection": [
@@ -326,9 +318,9 @@ return {
     },
     "name": "TodoManagerQuery",
     "operationKind": "query",
-    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          __typename\n        }\n        cursor\n      }\n      ...TodoListFragment\n      ...TodoFooterFragment\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoFooterFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListFragment on UserTodos_Connection {\n  edges {\n    node {\n      id\n      ...TodoListItemFragment\n    }\n  }\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
+    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      ...TodoFooterFragment\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoFooterFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
   }
 };
 })();
-(node as any).hash = '8b258bf08201392e0d54dc097dc6c267';
+(node as any).hash = '4e2b8e99ebfe0bb04a5af969360ac34a';
 export default node;
