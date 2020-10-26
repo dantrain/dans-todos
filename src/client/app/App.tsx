@@ -2,11 +2,15 @@ import {
   AppBar,
   Avatar,
   Container,
+  createMuiTheme,
   Grow,
   makeStyles,
+  ThemeProvider,
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import blue from "@material-ui/core/colors/blue";
+import pink from "@material-ui/core/colors/pink";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { SnackbarProvider } from "notistack";
@@ -40,6 +44,10 @@ let defaultContext: AppContext =
 
 export const AppContext = createContext<AppContext>(defaultContext);
 
+const theme = createMuiTheme({
+  palette: { primary: { main: "#1976d2" }, secondary: pink },
+});
+
 const useStyles = makeStyles({ title: { flexGrow: 1 } });
 
 const App = ({ context = defaultContext }: { context?: AppContext }) => {
@@ -47,40 +55,42 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => {
 
   return (
     <AppContext.Provider value={context}>
-      <RelayEnvironmentProvider environment={relayEnvironment}>
-        <CssBaseline />
-        <RemoveServerCss />
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          autoHideDuration={3000}
-          TransitionComponent={Grow as FC<TransitionProps>}
-        >
-          <ErrorSnackbar />
-          <AppBar position="sticky">
-            <Container maxWidth="sm">
-              <Toolbar>
-                <Typography className={s.title} variant="h5" component="h1">
-                  {context.name ? `${context.name}'s Todos` : "Todos"}
-                </Typography>
-                {context.avatar && context.name ? (
-                  <Avatar alt={context.name} src={context.avatar} />
-                ) : null}
-              </Toolbar>
-            </Container>
-            <Progress />
-          </AppBar>
-          <Main>
-            <Routes>
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/active" element={<Home />} />
-              <Route path="/completed" element={<Home />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Main>
-        </SnackbarProvider>
-      </RelayEnvironmentProvider>
+      <ThemeProvider theme={theme}>
+        <RelayEnvironmentProvider environment={relayEnvironment}>
+          <CssBaseline />
+          <RemoveServerCss />
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            autoHideDuration={3000}
+            TransitionComponent={Grow as FC<TransitionProps>}
+          >
+            <ErrorSnackbar />
+            <AppBar position="sticky">
+              <Container maxWidth="sm">
+                <Toolbar>
+                  <Typography className={s.title} variant="h5" component="h1">
+                    {context.name ? `${context.name}'s Todos` : "Todos"}
+                  </Typography>
+                  {context.avatar && context.name ? (
+                    <Avatar alt={context.name} src={context.avatar} />
+                  ) : null}
+                </Toolbar>
+              </Container>
+              <Progress />
+            </AppBar>
+            <Main>
+              <Routes>
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/active" element={<Home />} />
+                <Route path="/completed" element={<Home />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Main>
+          </SnackbarProvider>
+        </RelayEnvironmentProvider>
+      </ThemeProvider>
     </AppContext.Provider>
   );
 };
