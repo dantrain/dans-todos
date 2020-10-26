@@ -1,13 +1,10 @@
 import React, { createContext, useContext } from "react";
 import SignInButton from "./SignInButton";
 import OneTapSignIn from "./OneTapSignIn";
-
-export const SignInContext = createContext<{
-  supportsGoogleOneTap: boolean;
-}>({ supportsGoogleOneTap: false });
+import { AppContext } from "../../app/App";
 
 const SignIn = () => {
-  const { supportsGoogleOneTap } = useContext(SignInContext);
+  const { supportsGoogleOneTap } = useContext(AppContext);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>

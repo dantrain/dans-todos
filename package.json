@@ -51,6 +51,7 @@
     "react-transition-group": "^4.4.1",
     "redis": "^3.0.2",
     "relay-runtime": "^10.0.1",
+    "serialize-javascript": "^5.0.1",
     "useragent": "^2.3.0"
   },
   "devDependencies": {
@@ -74,6 +75,7 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/redis": "^2.8.28",
     "@types/relay-runtime": "^10.0.4",
+    "@types/serialize-javascript": "^4.0.0",
     "@types/useragent": "^2.1.1",
     "@types/webpack-env": "^1.15.3",
     "babel-plugin-relay": "^10.0.1",

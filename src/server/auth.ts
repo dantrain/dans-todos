@@ -39,8 +39,10 @@ const verifyUser: RequestHandler = async (req, res, next) => {
     await prisma.user.create({ data: { id: userid } });
   }
 
-  if (req.session) {
+  if (req.session && payload) {
     req.session.userid = userid;
+    req.session.name = payload.given_name;
+    req.session.avatar = payload.picture;
   }
 
   next();

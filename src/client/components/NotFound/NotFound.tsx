@@ -1,10 +1,9 @@
 import { Alert, AlertTitle } from "@material-ui/lab";
-import React, { createContext, useContext } from "react";
-
-export const NotFoundContext = createContext<{ statusCode?: number }>({});
+import React, { useContext } from "react";
+import { AppContext } from "../../app/App";
 
 const NotFound = () => {
-  const context = useContext(NotFoundContext);
+  const context = useContext(AppContext);
   context.statusCode = 404;
 
   return (

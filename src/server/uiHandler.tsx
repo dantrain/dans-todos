@@ -4,40 +4,43 @@ import useragent from "useragent";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import App from "../client/app/App";
-import { NotFoundContext } from "../client/components/NotFound/NotFound";
-import { SignInContext } from "../client/pages/SignIn/SignIn";
+import App, { AppContext } from "../client/app/App";
+import serialize from "serialize-javascript";
 
 const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
 
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 const uiHandler: RequestHandler = (req, res) => {
+  const context: AppContext = {};
+
   if (!req.session?.userid && req.url !== "/signin") {
     return res.redirect("/signin");
+  } else {
+    context.name = req.session?.name;
+    context.avatar = req.session?.avatar;
   }
 
-  const agent = useragent.parse(req.headers["user-agent"]);
-  const supportsGoogleOneTap = agent.family === "Chrome" && +agent.major >= 85;
+  if (req.url === "/signin") {
+    const agent = useragent.parse(req.headers["user-agent"]);
 
-  const notFoundContext: { statusCode?: number } = {};
+    context.supportsGoogleOneTap =
+      agent.family === "Chrome" && +agent.major >= 85;
+  }
+
   const sheets = new ServerStyleSheets();
 
   const markup = renderToString(
     sheets.collect(
       <StaticRouter location={req.url}>
-        <NotFoundContext.Provider value={notFoundContext}>
-          <SignInContext.Provider value={{ supportsGoogleOneTap }}>
-            <App />
-          </SignInContext.Provider>
-        </NotFoundContext.Provider>
+        <App context={context} />
       </StaticRouter>
     )
   );
 
   const css = sheets.toString();
 
-  res.status(notFoundContext.statusCode || 200).send(
+  res.status(context.statusCode || 200).send(
     `<!doctype html>
 <html lang="">
   <head>
@@ -60,14 +63,17 @@ const uiHandler: RequestHandler = (req, res) => {
           : `<script src="${assets.client.js}" defer crossorigin></script>`
       }
       ${
-        supportsGoogleOneTap
-          ? `<script src="https://accounts.google.com/gsi/client" async defer></script>`
-          : `<script>function googleLoaded() { window.GOOGLE_LOADED = true; }</script>
+        req.url === "/signin"
+          ? context.supportsGoogleOneTap
+            ? `<script src="https://accounts.google.com/gsi/client" async defer></script>`
+            : `<script>function googleLoaded() { window.GOOGLE_LOADED = true; }</script>
             <script src="https://apis.google.com/js/platform.js?onload=googleLoaded" async defer></script>`
+          : ""
       }
   </head>
   <body>
       <div id="root">${markup}</div>
+      <script>window.CONTEXT = ${serialize(context)}</script>
   </body>
 </html>`
   );
