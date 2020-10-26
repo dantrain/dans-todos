@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -15,7 +14,6 @@ const LoginButton = () => {
     return el;
   }
 
-  const navigate = useNavigate();
   const [status, setStatus] = useState("check");
 
   useLayoutEffect(() => {
@@ -39,7 +37,7 @@ const LoginButton = () => {
           });
 
           if (response.status === 204) {
-            navigate("/");
+            window.location.href = "/";
           } else {
             throw new Error("Sign-in failed");
           }
