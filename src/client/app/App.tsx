@@ -50,7 +50,11 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   title: { flexGrow: 1 },
-  avatar: { width: theme.spacing(4), height: theme.spacing(4) },
+  avatar: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    backgroundColor: "#4791db",
+  },
 }));
 
 const App = ({ context = defaultContext }: { context?: AppContext }) => {
