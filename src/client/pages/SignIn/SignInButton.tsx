@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useState } from "react";
 declare global {
   interface Window {
     gapi: typeof gapi;
-    GOOGLE_LOADED: boolean;
+    __GOOGLE_LOADED__: boolean;
   }
 }
 
@@ -44,7 +44,7 @@ const LoginButton = () => {
         },
       });
     } else {
-      if (window.GOOGLE_LOADED) {
+      if (window.__GOOGLE_LOADED__) {
         setStatus("loaded");
       } else {
         setStatus("wait");

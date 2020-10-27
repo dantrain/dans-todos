@@ -54,7 +54,7 @@ const Index = ({ css, content, context }: IndexProps) => {
             <script
               dangerouslySetInnerHTML={{
                 __html:
-                  "function googleLoaded() { window.GOOGLE_LOADED = true; }",
+                  "function googleLoaded() { window.__GOOGLE_LOADED__ = true; }",
               }}
             />
             <script

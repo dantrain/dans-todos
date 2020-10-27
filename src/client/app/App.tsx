@@ -50,12 +50,7 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   title: { flexGrow: 1 },
-  avatar: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    color: theme.palette.getContrastText(pink[500]),
-    backgroundColor: pink[500],
-  },
+  avatar: { width: theme.spacing(4), height: theme.spacing(4) },
 }));
 
 const App = ({ context = defaultContext }: { context?: AppContext }) => {
@@ -81,11 +76,7 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => {
                     {context.name ? `${context.name}'s Todos` : "Todos"}
                   </Typography>
                   {context.avatar && context.name ? (
-                    <Avatar
-                      className={s.avatar}
-                      alt={context.name}
-                      src={context.avatar}
-                    />
+                    <Avatar className={s.avatar} src={context.avatar} />
                   ) : null}
                 </Toolbar>
               </Container>
