@@ -1,12 +1,12 @@
-import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import helmet from "helmet";
+import express from "express";
 import "express-async-errors";
-import uiHandler from "./uiHandler";
-import schema from "./schema";
-import context from "./context";
+import helmet from "helmet";
 import authRouter from "./auth";
+import context from "./context";
+import schema from "./schema";
 import session from "./session";
+import uiRouter from "./ui";
 
 const app = express();
 
@@ -30,6 +30,6 @@ const apolloServer = new ApolloServer({ schema, context });
 
 apolloServer.applyMiddleware({ app });
 
-app.get("/*", uiHandler);
+app.use(uiRouter);
 
 export default app;

@@ -9,7 +9,6 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import blue from "@material-ui/core/colors/blue";
 import pink from "@material-ui/core/colors/pink";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { TransitionProps } from "@material-ui/core/transitions";
@@ -28,6 +27,7 @@ import relayEnvironment from "../relayEnvironment";
 
 export type AppContext = {
   statusCode?: number;
+  signIn?: boolean;
   supportsGoogleOneTap?: boolean;
   name?: string;
   avatar?: string;
@@ -35,12 +35,12 @@ export type AppContext = {
 
 declare global {
   interface Window {
-    CONTEXT: AppContext;
+    __CONTEXT__: AppContext;
   }
 }
 
 let defaultContext: AppContext =
-  typeof window !== "undefined" && window.CONTEXT ? window.CONTEXT : {};
+  typeof window !== "undefined" && window.__CONTEXT__ ? window.__CONTEXT__ : {};
 
 export const AppContext = createContext<AppContext>(defaultContext);
 
@@ -48,7 +48,15 @@ const theme = createMuiTheme({
   palette: { primary: { main: "#1976d2" }, secondary: pink },
 });
 
-const useStyles = makeStyles({ title: { flexGrow: 1 } });
+const useStyles = makeStyles((theme) => ({
+  title: { flexGrow: 1 },
+  avatar: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    color: theme.palette.getContrastText(pink[500]),
+    backgroundColor: pink[500],
+  },
+}));
 
 const App = ({ context = defaultContext }: { context?: AppContext }) => {
   const s = useStyles();
@@ -73,7 +81,11 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => {
                     {context.name ? `${context.name}'s Todos` : "Todos"}
                   </Typography>
                   {context.avatar && context.name ? (
-                    <Avatar alt={context.name} src={context.avatar} />
+                    <Avatar
+                      className={s.avatar}
+                      alt={context.name}
+                      src={context.avatar}
+                    />
                   ) : null}
                 </Toolbar>
               </Container>
