@@ -25,6 +25,7 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
 
     const data = await response.json();
 
+    PubSub.publish("FETCH_SUCCESS");
     return data;
   } catch (err) {
     PubSub.publish("FETCH_FAIL", err);

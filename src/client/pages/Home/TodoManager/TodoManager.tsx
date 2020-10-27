@@ -18,7 +18,8 @@ const query = graphql`
   query TodoManagerQuery($filter: Filter) {
     viewer {
       id
-      todos(first: 50, filter: $filter) @connection(key: "TodoManager_todos") {
+      todos(first: 50, filter: $filter)
+        @connection(key: "TodoManagerQuery_todos") {
         edges {
           node {
             id
@@ -41,7 +42,7 @@ const TodoManager = () => {
     <TodosConnectionContext.Provider
       value={{
         parentId: id!,
-        connectionKey: "TodoManager_todos",
+        connectionKey: "TodoManagerQuery_todos",
         filters: { filter },
       }}
     >

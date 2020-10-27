@@ -11,6 +11,7 @@ services:
       DATABASE_URL: "postgresql://postgres:d1rONeFo0KL8ZwC8@db:5432/postgres"
       RAZZLE_CLIENT_ID: "368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com"
       SESSION_SECRETS: "kRRrPf0PzWZpVI61 l0FjSTg65UKubndp nfgZyYkXbBAUx5zY"
+      RAZZLE_SESSION_MAX_AGE: "1800000"
     ports:
       - 8080:80
 

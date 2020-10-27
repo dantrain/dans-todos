@@ -1,14 +1,12 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import redis from "redis";
-import connectRedis from "connect-redis";
-import session from "express-session";
 import helmet from "helmet";
 import "express-async-errors";
 import uiHandler from "./uiHandler";
 import schema from "./schema";
 import context from "./context";
 import authRouter from "./auth";
+import session from "./session";
 
 const app = express();
 
@@ -24,23 +22,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
 
-const RedisStore = connectRedis(session);
-const redisClient = redis.createClient({
-  url: process.env.REDIS_URL,
-});
-
-app.use(
-  session({
-    store: new RedisStore({ client: redisClient }),
-    name: "todo.sid",
-    secret: process.env.SESSION_SECRETS!.split(" "),
-    saveUninitialized: false,
-    resave: false,
-    cookie: {
-      maxAge: 30 * 60 * 1000,
-    },
-  })
-);
+app.use(session);
 
 app.use(authRouter);
 

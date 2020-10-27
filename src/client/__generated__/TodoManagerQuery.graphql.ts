@@ -155,7 +155,7 @@ return {
             ],
             "concreteType": "UserTodos_Connection",
             "kind": "LinkedField",
-            "name": "__TodoManager_todos_connection",
+            "name": "__TodoManagerQuery_todos_connection",
             "plural": false,
             "selections": [
               {
@@ -291,7 +291,7 @@ return {
               "filter"
             ],
             "handle": "connection",
-            "key": "TodoManager_todos",
+            "key": "TodoManagerQuery_todos",
             "kind": "LinkedHandle",
             "name": "todos"
           }
@@ -322,5 +322,5 @@ return {
   }
 };
 })();
-(node as any).hash = '4e2b8e99ebfe0bb04a5af969360ac34a';
+(node as any).hash = '0766b14571eb6c015cab89206124e30c';
 export default node;
