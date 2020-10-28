@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start:tsc": "tsc -b -w --preserveWatchOutput",
-    "start": "yarn run generate && concurrently -k \"yarn run start:db\" \"yarn run start:redis\" \"yarn run start:tsc\" \"razzle start\"",
+    "start": "yarn run generate && concurrently -k \"yarn run start:db\" \"wait-on tcp:5432 && yarn run start:redis\" \"wait-on tcp:6379 && yarn run start:tsc\" \"razzle start\"",
     "build": "yarn run generate && tsc -b && razzle build",
     "test": "razzle test --env=jsdom",
     "type-check": "tsc --noEmit",
@@ -86,7 +86,8 @@
     "relay-config": "^10.0.1",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3",
-    "typescript-plugin-css-modules": "^2.7.0"
+    "typescript-plugin-css-modules": "^2.7.0",
+    "wait-on": "^5.2.0"
   },
   "jest": {
     "testMatch": [
