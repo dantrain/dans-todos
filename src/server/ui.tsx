@@ -17,6 +17,7 @@ uiRouter.get("/*", (req, res) => {
   } else {
     context.name = req.session?.name;
     context.avatar = req.session?.avatar;
+    context.supportsGoogleOneTap = req.session?.supportsGoogleOneTap;
   }
 
   if (req.url === "/signin") {

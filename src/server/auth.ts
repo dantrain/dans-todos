@@ -74,6 +74,10 @@ authRouter.post(
 
     console.log("CSRF token verified!");
 
+    if (req.session) {
+      req.session.supportsGoogleOneTap = true;
+    }
+
     next();
   },
   verifyUser,
@@ -81,5 +85,16 @@ authRouter.post(
     res.redirect("/");
   }
 );
+
+authRouter.post("/signout", (req, res) => {
+  req.session?.destroy((err) => {
+    if (!err) {
+      console.log("Signed out!");
+      return res.sendStatus(200);
+    }
+
+    res.sendStatus(500);
+  });
+});
 
 export default authRouter;

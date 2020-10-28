@@ -46,7 +46,7 @@ const Index = ({ css, content, context }: IndexProps) => {
           defer
           crossOrigin={isProduction ? undefined : "anonymous"}
         />
-        {context.signIn && context.supportsGoogleOneTap && (
+        {context.supportsGoogleOneTap && (
           <script src="https://accounts.google.com/gsi/client" async defer />
         )}
         {context.signIn && !context.supportsGoogleOneTap && (

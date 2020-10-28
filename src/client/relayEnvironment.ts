@@ -25,6 +25,14 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
 
     const data = await response.json();
 
+    if (response.status >= 400) {
+      if (data.errors[0].extensions.code === "UNAUTHENTICATED") {
+        window.location.href = "/signin";
+      }
+
+      throw new Error(data.errors[0].message || "Something went wrong");
+    }
+
     PubSub.publish("FETCH_SUCCESS");
     return data;
   } catch (err) {

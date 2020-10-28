@@ -40,6 +40,7 @@
     "graphql-relay": "^0.6.0",
     "helmet": "^4.1.1",
     "history": "^5.0.0",
+    "material-ui-popup-state": "^1.7.0",
     "nexus-plugin-prisma": "^0.22.0",
     "notistack": "^1.0.1",
     "pubsub-js": "^1.9.0",
