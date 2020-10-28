@@ -77,7 +77,7 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => {
               <Container maxWidth="sm">
                 <Toolbar>
                   <Typography className={s.title} variant="h5" component="h1">
-                    {context.name ? `${context.name}'s Todos` : "Todos"}
+                    {context.name ? `${context.name}'s Todos` : "Dan's Todos"}
                   </Typography>
                   {context.avatar && context.name ? (
                     <Avatar className={s.avatar} src={context.avatar} />
