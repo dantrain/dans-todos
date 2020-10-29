@@ -27,7 +27,7 @@ const Index = ({ css, content, context }: IndexProps) => {
         {context.signIn && !context.supportsGoogleOneTap && (
           <meta name="google-signin-client_id" content={CLIENT_ID} />
         )}
-        <title>Todo Next</title>
+        <title>Dan's Todos</title>
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com/"

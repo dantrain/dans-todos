@@ -3,6 +3,7 @@ import reactRoot from "./client/reactRoot";
 import { BrowserRouter } from "react-router-dom";
 import App from "./client/app/App";
 import patchConsole from "./client/utils/patchConsole";
+import "./client/sessionTimeout";
 
 reactRoot.render(
   <BrowserRouter timeoutMs={1000}>

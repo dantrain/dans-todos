@@ -10,7 +10,7 @@ const redisClient = redis.createClient({
 
 const session = expressSession({
   store: new RedisStore({ client: redisClient }),
-  name: "todo.sid",
+  name: "danstodos.sid",
   secret: process.env.SESSION_SECRETS!.split(" "),
   saveUninitialized: false,
   resave: false,
