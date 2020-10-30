@@ -4,7 +4,16 @@ import * as schemaTypes from "./schemaTypes";
 
 const schema = makeSchema({
   types: Object.values(schemaTypes),
-  plugins: [nexusSchemaPrisma({ experimentalCRUD: true }), connectionPlugin()],
+  plugins: [
+    nexusSchemaPrisma({
+      experimentalCRUD: true,
+      // See https://github.com/graphql-nexus/nexus-plugin-prisma/issues/531
+      outputs: {
+        typegen: __dirname + "/__generated__/typegen-nexus-plugin-prisma.d.ts",
+      },
+    }),
+    connectionPlugin(),
+  ],
   outputs: {
     schema: __dirname + "/__generated__/schema.graphql",
     typegen: __dirname + "/__generated__/nexus.ts",
