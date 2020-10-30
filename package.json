@@ -20,7 +20,8 @@
     "postinstall": "yarn run generate:prisma",
     "docker:build": "docker-compose build",
     "docker:up": "docker-compose up",
-    "docker:down": "docker-compose down --rmi all --volumes"
+    "docker:down": "docker-compose down --rmi all --volumes",
+    "heroku:db:schema": "heroku pg:psql --app dans-todos -f schema.sql"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -94,5 +95,8 @@
     "testMatch": [
       "**/?(*.)+(spec|test).[jt]s?(x)"
     ]
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
