@@ -20,10 +20,13 @@ if (!window.__CONTEXT__.signIn) {
       new Date().getTime();
 
     if (delta < 0) {
-      window.google.accounts.id.disableAutoSelect();
+      window.google?.accounts?.id?.disableAutoSelect();
       window.location.href = "/signin";
     } else {
-      sessionTimeoutCheck = setTimeout(checkAndRedirect, delta + 1000);
+      sessionTimeoutCheck = setTimeout(
+        checkAndRedirect,
+        Math.min(delta + 1000, MAX_WAIT)
+      );
     }
   };
 

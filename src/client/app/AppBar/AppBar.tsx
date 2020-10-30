@@ -43,7 +43,7 @@ const AppBar = () => {
   });
 
   const handleSignOut = useCallback(async () => {
-    window.google.accounts.id.disableAutoSelect();
+    window.google?.accounts?.id?.disableAutoSelect();
     await fetch("/signout", { method: "POST" });
     window.location.href = "/signin";
   }, []);
