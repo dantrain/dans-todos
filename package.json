@@ -46,6 +46,7 @@
     "notistack": "^1.0.1",
     "pubsub-js": "^1.9.0",
     "razzle-heroku": "^3.0.0",
+    "razzle-plugin-workbox": "^1.0.3",
     "react": "0.0.0-experimental-94c0244ba",
     "react-dom": "0.0.0-experimental-94c0244ba",
     "react-error-boundary": "^3.0.2",

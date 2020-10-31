@@ -1,9 +1,10 @@
 import React from "react";
-import reactRoot from "./client/reactRoot";
 import { BrowserRouter } from "react-router-dom";
+import { register } from "razzle-plugin-workbox/service-worker";
 import App from "./client/app/App";
-import patchConsole from "./client/utils/patchConsole";
+import reactRoot from "./client/reactRoot";
 import "./client/sessionTimeout";
+import patchConsole from "./client/utils/patchConsole";
 
 reactRoot.render(
   <BrowserRouter timeoutMs={1000}>
@@ -17,3 +18,5 @@ if (module.hot) {
   );
   module.hot.accept();
 }
+
+register();
