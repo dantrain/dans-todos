@@ -7,6 +7,7 @@ import {
   Variables,
 } from "relay-runtime";
 import PubSub from "pubsub-js";
+import signOut from "./utils/signOut";
 
 async function fetchFn(params: RequestParameters, variables: Variables) {
   PubSub.publish("FETCH_START");
@@ -27,7 +28,7 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
 
     if (response.status >= 400) {
       if (data.errors[0].extensions.code === "UNAUTHENTICATED") {
-        window.location.href = "/signin";
+        signOut();
       }
 
       throw new Error(data.errors[0].message || "Something went wrong");

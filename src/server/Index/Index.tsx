@@ -24,7 +24,7 @@ const Index = ({ css, content, context }: IndexProps) => {
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {context.signIn && !context.supportsGoogleOneTap && (
+        {!context.supportsGoogleOneTap && (
           <meta name="google-signin-client_id" content={CLIENT_ID} />
         )}
         <title>Dan's Todos</title>
@@ -49,12 +49,16 @@ const Index = ({ css, content, context }: IndexProps) => {
         {context.supportsGoogleOneTap && (
           <script src="https://accounts.google.com/gsi/client" async defer />
         )}
-        {context.signIn && !context.supportsGoogleOneTap && (
+        {!context.supportsGoogleOneTap && (
           <>
             <script
               dangerouslySetInnerHTML={{
-                __html:
-                  "function googleLoaded() { window.__GOOGLE_LOADED__ = true; }",
+                __html: `function googleLoaded() {
+                    window.__GOOGLE_LOADED__ = true;
+                    window.gapi.load('auth2', function() {
+                      window.gapi.auth2.init();
+                    })
+                  }`,
               }}
             />
             <script

@@ -17,13 +17,8 @@ import {
 import React, { useCallback, useContext } from "react";
 import { Link } from "react-router-dom";
 import Progress from "../../components/Progress/Progress";
+import signOut from "../../utils/signOut";
 import { AppContext } from "../App";
-
-declare global {
-  interface Window {
-    google: any;
-  }
-}
 
 const useStyles = makeStyles((theme) => ({
   titleLink: { flexGrow: 1, textDecoration: "none", color: "inherit" },
@@ -42,10 +37,8 @@ const AppBar = () => {
     popupId: "account-menu",
   });
 
-  const handleSignOut = useCallback(async () => {
-    window.google?.accounts?.id?.disableAutoSelect();
-    await fetch("/signout", { method: "POST" });
-    window.location.href = "/signin";
+  const handleSignOut = useCallback(() => {
+    signOut({ destroySession: true });
   }, []);
 
   const s = useStyles();

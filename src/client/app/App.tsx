@@ -17,7 +17,7 @@ import AppBar from "./AppBar/AppBar";
 
 export type AppContext = {
   statusCode?: number;
-  signIn?: boolean;
+  signedIn?: boolean;
   supportsGoogleOneTap?: boolean;
   name?: string;
   avatar?: string;

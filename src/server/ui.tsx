@@ -14,18 +14,20 @@ uiRouter.get("/*", (req, res) => {
 
   if (!req.session?.userid && req.url !== "/signin") {
     return res.redirect("/signin");
-  } else {
-    context.name = req.session?.name;
-    context.avatar = req.session?.avatar;
-    context.supportsGoogleOneTap = req.session?.supportsGoogleOneTap;
   }
 
   if (req.url === "/signin") {
     const agent = useragent.parse(req.headers["user-agent"]);
 
-    context.signIn = true;
+    console.log(agent.toAgent());
+
     context.supportsGoogleOneTap =
-      agent.family === "Chrome" && +agent.major >= 85;
+      agent.family === "Chrome" && +agent.major > 84;
+  } else if (req.session?.userid) {
+    context.signedIn = true;
+    context.name = req.session.name;
+    context.avatar = req.session.avatar;
+    context.supportsGoogleOneTap = req.session.supportsGoogleOneTap;
   }
 
   const sheets = new ServerStyleSheets();

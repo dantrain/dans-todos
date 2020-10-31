@@ -1,4 +1,5 @@
 import PubSub from "pubsub-js";
+import signOut from "./utils/signOut";
 
 declare global {
   interface Window {
@@ -6,7 +7,7 @@ declare global {
   }
 }
 
-if (!window.__CONTEXT__.signIn) {
+if (window.__CONTEXT__.signedIn) {
   const MAX_AGE = +process.env.RAZZLE_SESSION_MAX_AGE!;
   const MAX_WAIT = Math.min(MAX_AGE + 1000, 43200000);
   const supportsRequestIdleCallback = "requestIdleCallback" in window;
@@ -20,8 +21,7 @@ if (!window.__CONTEXT__.signIn) {
       new Date().getTime();
 
     if (delta < 0) {
-      window.google?.accounts?.id?.disableAutoSelect();
-      window.location.href = "/signin";
+      signOut();
     } else {
       sessionTimeoutCheck = setTimeout(
         checkAndRedirect,
