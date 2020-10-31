@@ -27,6 +27,7 @@ const Index = ({ css, content, context }: IndexProps) => {
         {!context.supportsGoogleOneTap && (
           <meta name="google-signin-client_id" content={CLIENT_ID} />
         )}
+        <meta name="theme-color" content="#1976d2" />
         <title>Dan's Todos</title>
         <link
           rel="preconnect"
@@ -41,6 +42,7 @@ const Index = ({ css, content, context }: IndexProps) => {
         {assets?.client?.css && (
           <link rel="stylesheet" href={assets.client.css} />
         )}
+        <link rel="manifest" href="/manifest.webmanifest" />
         <script
           src={assets.client.js}
           defer
