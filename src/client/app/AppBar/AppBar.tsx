@@ -15,13 +15,13 @@ import {
   usePopupState,
 } from "material-ui-popup-state/hooks";
 import React, { useCallback, useContext } from "react";
-import { Link } from "react-router-dom";
 import Progress from "../../components/Progress/Progress";
 import signOut from "../../utils/signOut";
 import { AppContext } from "../App";
 
 const useStyles = makeStyles((theme) => ({
-  titleLink: { flexGrow: 1, textDecoration: "none", color: "inherit" },
+  toolbar: { justifyContent: "space-between" },
+  titleLink: { textDecoration: "none", color: "inherit" },
   avatarButton: { "&:hover": { backgroundColor: "rgba(0,0,0,0.1)" } },
   avatar: {
     width: theme.spacing(4),
@@ -46,12 +46,12 @@ const AppBar = () => {
   return (
     <MaterialAppBar position="sticky">
       <Container maxWidth="sm">
-        <Toolbar>
-          <Link className={s.titleLink} title="Home" to="/">
+        <Toolbar className={s.toolbar}>
+          <a className={s.titleLink} title="Home" href="/">
             <Typography variant="h5" component="h1">
               {context.name ? `${context.name}'s Todos` : "Dan's Todos"}
             </Typography>
-          </Link>
+          </a>
           {context.avatar && context.name ? (
             <>
               <IconButton
