@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 
 const redirectToHttps: RequestHandler = (req, res, next) => {
-  if (req.protocol === "https") {
+  if (req.headers["x-forwarded-proto"] === "https") {
     return next();
   }
 
