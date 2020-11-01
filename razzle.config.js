@@ -8,7 +8,7 @@ module.exports = {
         navigateFallback: undefined,
         runtimeCaching: [
           {
-            urlPattern: /^(?:(?!google\.com|graphql|tokensignin|onetaptokensignin|signout).)+$/,
+            urlPattern: /^(?:(?!google\.com|graphql|tokensignin|signin|signout).)+$/,
             handler: "StaleWhileRevalidate",
           },
         ],

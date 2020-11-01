@@ -53,7 +53,7 @@ const Progress = () => {
 
   useEffect(() => {
     if (noInFlight > 0) {
-      delayTimeoutRef.current = setTimeout(() => setLoading(true), 150);
+      delayTimeoutRef.current = setTimeout(() => setLoading(true), 200);
     } else {
       setLoading(false);
     }
