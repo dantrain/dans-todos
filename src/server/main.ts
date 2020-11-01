@@ -4,6 +4,7 @@ import "express-async-errors";
 import helmet from "helmet";
 import authRouter from "./auth";
 import context from "./context";
+import redirectToHttps from "./redirectToHttps";
 import schema from "./schema";
 import session from "./session";
 import uiRouter from "./ui";
@@ -18,6 +19,11 @@ if (process.env.NODE_ENV === "production") {
       contentSecurityPolicy: false,
     })
   );
+}
+
+if (process.env.HEROKU === "true") {
+  app.set("trust proxy", true);
+  app.use(redirectToHttps);
 }
 
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
