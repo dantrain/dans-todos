@@ -1,9 +1,3 @@
-declare global {
-  interface Window {
-    google: any;
-  }
-}
-
 export default async ({ destroySession = false } = {}) => {
   const promises = [];
 

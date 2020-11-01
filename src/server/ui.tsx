@@ -12,15 +12,17 @@ const uiRouter = express.Router();
 uiRouter.get("/*", (req, res) => {
   const context: AppContext = {};
 
-  if (!req.session?.userid && req.url !== "/signin") {
+  if (!req.session?.userid && req.path !== "/signin") {
     return res.redirect("/signin");
   }
 
-  if (req.url === "/signin") {
+  if (req.path === "/signin") {
     const agent = useragent.parse(req.headers["user-agent"]);
 
     context.supportsGoogleOneTap =
-      agent.family.includes("Chrome") && +agent.major >= 85;
+      !req.query.noonetap &&
+      ((agent.family.includes("Chrome") && +agent.major >= 85) ||
+        (agent.family.includes("Firefox") && +agent.major >= 80));
   } else if (req.session?.userid) {
     context.signedIn = true;
     context.name = req.session.name;

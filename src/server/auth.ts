@@ -1,15 +1,16 @@
-import express, { RequestHandler } from "express";
-import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
-import { OAuth2Client } from "google-auth-library";
 import { PrismaClient } from "@prisma/client";
+import bodyParser from "body-parser";
+import express from "express";
+import { OAuth2Client } from "google-auth-library";
 
 const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
 
 const authClient = new OAuth2Client(CLIENT_ID);
 const prisma = new PrismaClient();
 
-const verifyUser: RequestHandler = async (req, res, next) => {
+const authRouter = express.Router();
+
+authRouter.post("/tokensignin", bodyParser.json(), async (req, res) => {
   // Verify the ID token
   if (!req.body.credential) {
     return res.status(400).send("No ID token in post body");
@@ -43,48 +44,11 @@ const verifyUser: RequestHandler = async (req, res, next) => {
     req.session.userid = userid;
     req.session.name = payload.given_name;
     req.session.avatar = payload.picture;
+    req.session.supportsGoogleOneTap = !!req.query.onetap;
   }
 
-  next();
-};
-
-const authRouter = express.Router();
-
-authRouter.post("/tokensignin", bodyParser.json(), verifyUser, (req, res) => {
   res.status(204).send();
 });
-
-authRouter.post(
-  "/onetaptokensignin",
-  cookieParser(),
-  bodyParser.urlencoded({ extended: false }),
-  (req, res, next) => {
-    // Verify the CSRF token
-    if (!req.cookies.g_csrf_token) {
-      return res.status(400).send("No CSRF token in cookie");
-    }
-
-    if (!req.body.g_csrf_token) {
-      return res.status(400).send("No CSRF token in post body");
-    }
-
-    if (req.cookies.g_csrf_token !== req.body.g_csrf_token) {
-      return res.status(400).send("Failed to verify double submit cookie");
-    }
-
-    console.log("CSRF token verified!");
-
-    if (req.session) {
-      req.session.supportsGoogleOneTap = true;
-    }
-
-    next();
-  },
-  verifyUser,
-  (req, res) => {
-    res.redirect("/");
-  }
-);
 
 authRouter.post("/signout", (req, res) => {
   req.session?.destroy((err) => {

@@ -49,13 +49,20 @@ const Index = ({ css, content, context }: IndexProps) => {
           crossOrigin={isProduction ? undefined : "anonymous"}
         />
         {context.supportsGoogleOneTap && (
-          <script src="https://accounts.google.com/gsi/client" async defer />
+          <>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `function onGoogleLibraryLoad() { window.__GOOGLE_LOADED__ = true; }`,
+              }}
+            />
+            <script src="https://accounts.google.com/gsi/client" async defer />
+          </>
         )}
         {!context.supportsGoogleOneTap && (
           <>
             <script
               dangerouslySetInnerHTML={{
-                __html: `function googleLoaded() {
+                __html: `function onGoogleLibraryLoad() {
                     window.__GOOGLE_LOADED__ = true;
                     window.gapi.load('auth2', function() {
                       window.gapi.auth2.init();
@@ -64,7 +71,7 @@ const Index = ({ css, content, context }: IndexProps) => {
               }}
             />
             <script
-              src="https://apis.google.com/js/platform.js?onload=googleLoaded"
+              src="https://apis.google.com/js/platform.js?onload=onGoogleLibraryLoad"
               async
               defer
             />
