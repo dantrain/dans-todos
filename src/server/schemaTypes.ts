@@ -1,7 +1,6 @@
 import {
   arg,
   enumType,
-  idArg,
   mutationType,
   objectType,
   queryType,
