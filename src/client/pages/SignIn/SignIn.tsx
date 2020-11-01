@@ -74,7 +74,7 @@ const SignIn = () => {
         });
 
         window.google.accounts.id.prompt((notification: any) => {
-          if (notification.isNotDisplayed()) {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
             window.location.href = "/signin?noonetap=true";
           }
         });
