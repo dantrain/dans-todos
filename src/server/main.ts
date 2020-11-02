@@ -8,6 +8,7 @@ import context from "./context";
 import schema from "./schema";
 import session from "./session";
 import uiRouter from "./ui";
+import plugins from "./apolloServerPlugins";
 
 const app = express();
 
@@ -21,7 +22,7 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-app.use(compression);
+app.use(compression());
 
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
 
@@ -29,7 +30,7 @@ app.use(session);
 
 app.use(authRouter);
 
-const apolloServer = new ApolloServer({ schema, context });
+const apolloServer = new ApolloServer({ schema, context, plugins });
 
 apolloServer.applyMiddleware({ app });
 
