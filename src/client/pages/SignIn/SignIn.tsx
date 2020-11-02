@@ -1,11 +1,12 @@
+import PubSub from 'pubsub-js';
 import React, {
   useCallback,
   useContext,
   useLayoutEffect,
   useState,
 } from 'react';
+import { Helmet } from 'react-helmet';
 import { AppContext } from '../../app/App';
-import PubSub from 'pubsub-js';
 
 declare global {
   interface Window {
@@ -21,9 +22,14 @@ const SignIn = () => {
   const [status, setStatus] = useState('check');
 
   const el = (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div id="google-sign-in" />
-    </div>
+    <>
+      <Helmet>
+        <title>Sign in</title>
+      </Helmet>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div id="google-sign-in" />
+      </div>
+    </>
   );
 
   if (typeof window === 'undefined') {

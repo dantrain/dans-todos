@@ -1,9 +1,10 @@
-import express from 'express';
 import { ServerStyleSheets } from '@material-ui/core';
-import useragent from 'useragent';
+import express from 'express';
 import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
+import { Helmet } from 'react-helmet';
 import { StaticRouter } from 'react-router-dom/server';
+import useragent from 'useragent';
 import App, { AppContext } from '../client/app/App';
 import Index from './Index/Index';
 
@@ -41,9 +42,10 @@ uiRouter.get('/*', (req, res) => {
   );
 
   const css = sheets.toString();
+  const helmet = Helmet.renderStatic();
 
   const html = renderToStaticMarkup(
-    <Index css={css} content={content} context={context} />
+    <Index css={css} helmet={helmet} content={content} context={context} />
   );
 
   res.status(context.statusCode || 200).send(`<!DOCTYPE html>\n${html}`);

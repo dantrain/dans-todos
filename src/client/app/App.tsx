@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { SnackbarProvider } from 'notistack';
 import React, { createContext, FC } from 'react';
+import { Helmet } from 'react-helmet';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import { Route, Routes } from 'react-router-dom';
 import ErrorSnackbar from '../components/ErrorSnackbar/ErrorSnackbar';
@@ -42,6 +43,10 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => (
   <AppContext.Provider value={context}>
     <ThemeProvider theme={theme}>
       <RelayEnvironmentProvider environment={relayEnvironment}>
+        <Helmet
+          titleTemplate={`${context.name || 'Dan'}'s Todos · %s`}
+          defaultTitle={`${context.name || 'Dan'}'s Todos`}
+        />
         <CssBaseline />
         <RemoveServerCss />
         <SnackbarProvider

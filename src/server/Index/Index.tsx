@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppContext } from '../../client/app/App';
 import serialize from 'serialize-javascript';
+import { HelmetData } from 'react-helmet';
 
 const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
 const isProduction = process.env.NODE_ENV === 'production';
@@ -9,17 +10,18 @@ let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 type IndexProps = {
   css: string;
+  helmet: HelmetData;
   content: string;
   context: AppContext;
 };
 
-const Index = ({ css, content, context }: IndexProps) => {
+const Index = ({ css, helmet, content, context }: IndexProps) => {
   const contextJs = `window.__CONTEXT__ = ${serialize(context, {
     isJSON: true,
   })}`;
 
   return (
-    <html lang="en">
+    <html lang="en" {...helmet.htmlAttributes.toComponent()}>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -29,7 +31,8 @@ const Index = ({ css, content, context }: IndexProps) => {
         )}
         <meta name="theme-color" content="#115293" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <title>Dan's Todos</title>
+        {helmet.meta.toComponent()}
+        {helmet.title.toComponent()}
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com/"
@@ -112,6 +115,7 @@ const Index = ({ css, content, context }: IndexProps) => {
           media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
           rel="apple-touch-startup-image"
         />
+        {helmet.link.toComponent()}
         <script
           src={assets.client.js}
           defer
@@ -147,7 +151,7 @@ const Index = ({ css, content, context }: IndexProps) => {
           </>
         )}
       </head>
-      <body>
+      <body {...helmet.bodyAttributes.toComponent()}>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
         <script dangerouslySetInnerHTML={{ __html: contextJs }} />
       </body>
