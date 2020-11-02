@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-import bodyParser from "body-parser";
-import express from "express";
-import { OAuth2Client } from "google-auth-library";
-import logger from "./logger";
+import { PrismaClient } from '@prisma/client';
+import bodyParser from 'body-parser';
+import express from 'express';
+import { OAuth2Client } from 'google-auth-library';
+import logger from './logger';
 
 const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
 
@@ -11,10 +11,10 @@ const prisma = new PrismaClient();
 
 const authRouter = express.Router();
 
-authRouter.post("/tokensignin", bodyParser.json(), async (req, res) => {
+authRouter.post('/tokensignin', bodyParser.json(), async (req, res) => {
   // Verify the ID token
   if (!req.body.credential) {
-    return res.status(400).send("No ID token in post body");
+    return res.status(400).send('No ID token in post body');
   }
 
   const ticket = await authClient.verifyIdToken({
@@ -22,14 +22,14 @@ authRouter.post("/tokensignin", bodyParser.json(), async (req, res) => {
     audience: CLIENT_ID,
   });
 
-  logger.info("ID token verified");
+  logger.info('ID token verified');
 
   // Get the User ID
   const payload = ticket.getPayload();
   const userid = payload?.sub;
 
   if (!userid) {
-    return res.status(500).send("No User ID in token payload");
+    return res.status(500).send('No User ID in token payload');
   }
 
   logger.info(`User signed in: ${userid}`);
@@ -51,7 +51,7 @@ authRouter.post("/tokensignin", bodyParser.json(), async (req, res) => {
   res.status(204).send();
 });
 
-authRouter.post("/signout", (req, res) => {
+authRouter.post('/signout', (req, res) => {
   req.session?.destroy((err) => {
     if (!err) {
       logger.info(`User signed out`);

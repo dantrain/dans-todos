@@ -1,6 +1,6 @@
-import { Alert, AlertTitle } from "@material-ui/lab";
-import React, { useContext } from "react";
-import { AppContext } from "../../app/App";
+import { Alert, AlertTitle } from '@material-ui/lab';
+import React, { useContext } from 'react';
+import { AppContext } from '../../app/App';
 
 const NotFound = () => {
   const context = useContext(AppContext);

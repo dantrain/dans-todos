@@ -5,24 +5,24 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { fromGlobalId } from "graphql-relay";
-import React, { ChangeEvent, useCallback } from "react";
-import { graphql, useFragment, useMutation } from "react-relay/hooks";
-import { ConnectionHandler, SelectorStoreUpdater } from "relay-runtime";
-import { useConnectionContext } from "../../../../utils/connectionContext";
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { fromGlobalId } from 'graphql-relay';
+import React, { ChangeEvent, useCallback } from 'react';
+import { graphql, useFragment, useMutation } from 'react-relay/hooks';
+import { ConnectionHandler, SelectorStoreUpdater } from 'relay-runtime';
+import { useConnectionContext } from '../../../../utils/connectionContext';
 import {
   TodoListItemDeleteMutation,
   TodoListItemDeleteMutationResponse,
-} from "../../../../__generated__/TodoListItemDeleteMutation.graphql";
-import { TodoListItemFragment$key } from "../../../../__generated__/TodoListItemFragment.graphql";
+} from '../../../../__generated__/TodoListItemDeleteMutation.graphql';
+import { TodoListItemFragment$key } from '../../../../__generated__/TodoListItemFragment.graphql';
 import {
   TodoListItemSetCompletedMutation,
   TodoListItemSetCompletedMutationResponse,
-} from "../../../../__generated__/TodoListItemSetCompletedMutation.graphql";
-import { TodosConnectionContext } from "../TodoManager";
-import TodoEditInput from "./TodoEditInput/TodoEditInput";
+} from '../../../../__generated__/TodoListItemSetCompletedMutation.graphql';
+import { TodosConnectionContext } from '../TodoManager';
+import TodoEditInput from './TodoEditInput/TodoEditInput';
 
 const todoListItemFragment = graphql`
   fragment TodoListItemFragment on Todo {
@@ -70,9 +70,9 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       ) => {
         const connectionRecord = getConnectionRecord(store);
         connectionRecord.setValue(
-          +(connectionRecord.getValue("completedCount") || 0) +
+          +(connectionRecord.getValue('completedCount') || 0) +
             (completed ? -1 : 1),
-          "completedCount"
+          'completedCount'
         );
       };
 
@@ -102,13 +102,13 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       const connectionRecord = getConnectionRecord(store);
       ConnectionHandler.deleteNode(connectionRecord, id!);
       connectionRecord.setValue(
-        +(connectionRecord.getValue("totalCount") || 0) - 1,
-        "totalCount"
+        +(connectionRecord.getValue('totalCount') || 0) - 1,
+        'totalCount'
       );
       if (completed) {
         connectionRecord.setValue(
-          +(connectionRecord.getValue("completedCount") || 0) - 1,
-          "completedCount"
+          +(connectionRecord.getValue('completedCount') || 0) - 1,
+          'completedCount'
         );
       }
     };

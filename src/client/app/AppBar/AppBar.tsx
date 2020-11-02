@@ -8,33 +8,33 @@ import {
   MenuItem,
   Toolbar,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 import {
   bindMenu,
   bindTrigger,
   usePopupState,
-} from "material-ui-popup-state/hooks";
-import React, { useCallback, useContext } from "react";
-import Progress from "../../components/Progress/Progress";
-import signOut from "../../utils/signOut";
-import { AppContext } from "../App";
+} from 'material-ui-popup-state/hooks';
+import React, { useCallback, useContext } from 'react';
+import Progress from '../../components/Progress/Progress';
+import signOut from '../../utils/signOut';
+import { AppContext } from '../App';
 
 const useStyles = makeStyles((theme) => ({
-  toolbar: { justifyContent: "space-between" },
-  titleLink: { textDecoration: "none", color: "inherit" },
-  avatarButton: { "&:hover": { backgroundColor: "rgba(0,0,0,0.1)" } },
+  toolbar: { justifyContent: 'space-between' },
+  titleLink: { textDecoration: 'none', color: 'inherit' },
+  avatarButton: { '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' } },
   avatar: {
     width: theme.spacing(4),
     height: theme.spacing(4),
-    backgroundColor: "#4791db",
+    backgroundColor: '#4791db',
   },
 }));
 
 const AppBar = () => {
   const context = useContext(AppContext);
   const popupState = usePopupState({
-    variant: "popover",
-    popupId: "account-menu",
+    variant: 'popover',
+    popupId: 'account-menu',
   });
 
   const handleSignOut = useCallback(() => {
@@ -67,12 +67,12 @@ const AppBar = () => {
                 {...bindMenu(popupState)}
                 getContentAnchorEl={null}
                 anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
+                  vertical: 'bottom',
+                  horizontal: 'right',
                 }}
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
               >
                 <MenuItem onClick={handleSignOut}>Sign out</MenuItem>

@@ -2,7 +2,7 @@ export default async ({ destroySession = false } = {}) => {
   const promises = [];
 
   if (destroySession) {
-    promises.push(fetch("/signout", { method: "POST" }));
+    promises.push(fetch('/signout', { method: 'POST' }));
   }
 
   if (window.__CONTEXT__.supportsGoogleOneTap) {
@@ -13,5 +13,5 @@ export default async ({ destroySession = false } = {}) => {
 
   await Promise.all(promises);
 
-  window.location.href = "/signin";
+  window.location.href = '/signin';
 };

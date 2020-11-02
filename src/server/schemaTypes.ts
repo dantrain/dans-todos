@@ -4,59 +4,59 @@ import {
   mutationType,
   objectType,
   queryType,
-} from "@nexus/schema";
-import { toGlobalId } from "graphql-relay";
+} from '@nexus/schema';
+import { toGlobalId } from 'graphql-relay';
 
 export const Todo = objectType({
-  name: "Todo",
+  name: 'Todo',
   definition: (t) => {
-    t.id("id", { resolve: ({ id }: any) => toGlobalId("Todo", id) });
-    t.model.id({ alias: "todoid" });
+    t.id('id', { resolve: ({ id }: any) => toGlobalId('Todo', id) });
+    t.model.id({ alias: 'todoid' });
     t.model.text();
     t.model.completed();
   },
 });
 
 export const Filter = enumType({
-  name: "Filter",
-  members: ["ALL", "ACTIVE", "COMPLETED"],
+  name: 'Filter',
+  members: ['ALL', 'ACTIVE', 'COMPLETED'],
 });
 
 export const User = objectType({
-  name: "User",
+  name: 'User',
   definition: (t) => {
-    t.id("id", { resolve: ({ id }: any) => toGlobalId("User", id) });
+    t.id('id', { resolve: ({ id }: any) => toGlobalId('User', id) });
 
-    t.connectionField("todos", {
+    t.connectionField('todos', {
       type: Todo,
       additionalArgs: {
-        filter: arg({ type: Filter, default: "ALL" }),
+        filter: arg({ type: Filter, default: 'ALL' }),
       },
       nodes: ({ id: userid }: any, { filter }, { prisma }) => {
         switch (filter) {
-          case "ACTIVE":
+          case 'ACTIVE':
             return prisma.todo.findMany({
               where: { userid, completed: false },
-              orderBy: { createdat: "asc" },
+              orderBy: { createdat: 'asc' },
             });
-          case "COMPLETED":
+          case 'COMPLETED':
             return prisma.todo.findMany({
               where: { userid, completed: true },
-              orderBy: { createdat: "asc" },
+              orderBy: { createdat: 'asc' },
             });
           default:
             return prisma.todo.findMany({
               where: { userid },
-              orderBy: { createdat: "asc" },
+              orderBy: { createdat: 'asc' },
             });
         }
       },
       extendConnection: (t) => {
-        t.int("totalCount", {
+        t.int('totalCount', {
           resolve: (_root, _args, { prisma, userid }) =>
             prisma.todo.count({ where: { userid } }),
         });
-        t.int("completedCount", {
+        t.int('completedCount', {
           resolve: (_root, _args, { prisma, userid }) =>
             prisma.todo.count({ where: { userid, completed: true } }),
         });
@@ -67,8 +67,8 @@ export const User = objectType({
 
 export const Query = queryType({
   definition: (t) => {
-    t.field("viewer", {
-      type: "User",
+    t.field('viewer', {
+      type: 'User',
       resolve: (_root, _args, { prisma, userid }) =>
         prisma.user.findOne({ where: { id: userid } }),
     });

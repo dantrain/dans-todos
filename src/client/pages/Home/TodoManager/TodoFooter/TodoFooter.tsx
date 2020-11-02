@@ -6,13 +6,13 @@ import {
   makeStyles,
   Toolbar,
   Typography,
-} from "@material-ui/core";
-import indigo from "@material-ui/core/colors/indigo";
-import React from "react";
-import { graphql, useFragment } from "react-relay/hooks";
-import { NavLink } from "react-router-dom";
-import { TodoFooterFragment$key } from "../../../../__generated__/TodoFooterFragment.graphql";
-import ClearCompleted from "./ClearCompleted/ClearCompleted";
+} from '@material-ui/core';
+import indigo from '@material-ui/core/colors/indigo';
+import React from 'react';
+import { graphql, useFragment } from 'react-relay/hooks';
+import { NavLink } from 'react-router-dom';
+import { TodoFooterFragment$key } from '../../../../__generated__/TodoFooterFragment.graphql';
+import ClearCompleted from './ClearCompleted/ClearCompleted';
 
 const fragment = graphql`
   fragment TodoFooterFragment on UserTodos_Connection {
@@ -23,23 +23,23 @@ const fragment = graphql`
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
   },
   buttonGroup: {
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('xs')]: {
       order: -1,
-      flex: "1 0 100%",
-      justifyContent: "center",
+      flex: '1 0 100%',
+      justifyContent: 'center',
       padding: `${theme.spacing(1)}px 0 ${theme.spacing(2)}px`,
       margin: `0 -${theme.spacing(3)}px ${theme.spacing(1)}px`,
-      borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+      borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
     },
   },
   incompleteCount: {
-    minWidth: "100px",
+    minWidth: '100px',
   },
   active: {
     border: `1px solid ${indigo[500]} !important`,
@@ -62,7 +62,7 @@ const TodoFooter = ({ todos }: TodoFooterProps) => {
       <Divider />
       <Toolbar className={s.toolbar}>
         <Typography className={s.incompleteCount} color="textSecondary">
-          {incompleteCount} item{incompleteCount !== 1 && "s"} left
+          {incompleteCount} item{incompleteCount !== 1 && 's'} left
         </Typography>
         <ButtonGroup color="primary" size="small" className={s.buttonGroup}>
           <Button component={NavLink} to="/" activeClassName={s.active} end>

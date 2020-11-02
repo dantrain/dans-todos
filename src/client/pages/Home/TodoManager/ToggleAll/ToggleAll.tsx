@@ -1,15 +1,15 @@
-import { IconButton, makeStyles } from "@material-ui/core";
-import DoneAllIcon from "@material-ui/icons/DoneAll";
-import React, { useCallback } from "react";
-import { graphql, useFragment, useMutation } from "react-relay/hooks";
-import { SelectorStoreUpdater } from "relay-runtime";
-import { useConnectionContext } from "../../../../utils/connectionContext";
-import { ToggleAllFragment$key } from "../../../../__generated__/ToggleAllFragment.graphql";
+import { IconButton, makeStyles } from '@material-ui/core';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+import React, { useCallback } from 'react';
+import { graphql, useFragment, useMutation } from 'react-relay/hooks';
+import { SelectorStoreUpdater } from 'relay-runtime';
+import { useConnectionContext } from '../../../../utils/connectionContext';
+import { ToggleAllFragment$key } from '../../../../__generated__/ToggleAllFragment.graphql';
 import {
   ToggleAllSetAllCompletedMutation,
   ToggleAllSetAllCompletedMutationResponse,
-} from "../../../../__generated__/ToggleAllSetAllCompletedMutation.graphql";
-import { TodosConnectionContext } from "../TodoManager";
+} from '../../../../__generated__/ToggleAllSetAllCompletedMutation.graphql';
+import { TodosConnectionContext } from '../TodoManager';
 
 const fragment = graphql`
   fragment ToggleAllFragment on UserTodos_Connection {
@@ -54,13 +54,13 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
     ) => {
       const connectionRecord = getConnectionRecord(store);
       connectionRecord
-        .getLinkedRecords("edges")
+        .getLinkedRecords('edges')
         ?.forEach((edge) =>
-          edge.getLinkedRecord("node")?.setValue(!allCompleted, "completed")
+          edge.getLinkedRecord('node')?.setValue(!allCompleted, 'completed')
         );
       connectionRecord.setValue(
-        allCompleted ? 0 : connectionRecord.getValue("totalCount"),
-        "completedCount"
+        allCompleted ? 0 : connectionRecord.getValue('totalCount'),
+        'completedCount'
       );
     };
 

@@ -11,6 +11,7 @@
     "test": "razzle test --env=jsdom",
     "clean": "rimraf build",
     "type-check": "tsc --noEmit",
+    "prettify": "prettier --write 'src/**/*.ts' 'src/**/*.tsx'",
     "start:prod": "NODE_ENV=production node build/server.js",
     "start:db": "docker-compose run --publish 5432:5432 db",
     "start:redis": "docker-compose run --publish 6379:6379 redis",
@@ -22,7 +23,8 @@
     "docker:build": "docker-compose build",
     "docker:up": "docker-compose up",
     "docker:down": "docker-compose down --rmi all --volumes",
-    "heroku:db:schema": "heroku pg:psql --app dans-todos -f schema.sql"
+    "heroku:db:schema": "heroku pg:psql --app dans-todos -f schema.sql",
+    "report": "source-map-explorer build/public/static/js/*.js"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -89,11 +91,13 @@
     "apollo-server-plugin-base": "^0.10.2",
     "babel-plugin-relay": "^10.0.1",
     "concurrently": "^5.3.0",
+    "prettier": "^2.1.2",
     "razzle": "^3.3.7",
     "relay-compiler": "^10.0.1",
     "relay-compiler-language-typescript": "^13.0.1",
     "relay-config": "^10.0.1",
     "rimraf": "^3.0.2",
+    "source-map-explorer": "^2.5.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3",
     "typescript-plugin-css-modules": "^2.7.0",

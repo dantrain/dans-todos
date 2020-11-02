@@ -1,28 +1,28 @@
-import express from "express";
-import { ServerStyleSheets } from "@material-ui/core";
-import useragent from "useragent";
-import React from "react";
-import { renderToStaticMarkup, renderToString } from "react-dom/server";
-import { StaticRouter } from "react-router-dom/server";
-import App, { AppContext } from "../client/app/App";
-import Index from "./Index/Index";
+import express from 'express';
+import { ServerStyleSheets } from '@material-ui/core';
+import useragent from 'useragent';
+import React from 'react';
+import { renderToStaticMarkup, renderToString } from 'react-dom/server';
+import { StaticRouter } from 'react-router-dom/server';
+import App, { AppContext } from '../client/app/App';
+import Index from './Index/Index';
 
 const uiRouter = express.Router();
 
-uiRouter.get("/*", (req, res) => {
+uiRouter.get('/*', (req, res) => {
   const context: AppContext = {};
 
-  if (!req.session?.userid && req.path !== "/signin") {
-    return res.redirect("/signin");
+  if (!req.session?.userid && req.path !== '/signin') {
+    return res.redirect('/signin');
   }
 
-  if (req.path === "/signin") {
-    const agent = useragent.parse(req.headers["user-agent"]);
+  if (req.path === '/signin') {
+    const agent = useragent.parse(req.headers['user-agent']);
 
     context.supportsGoogleOneTap =
       !req.query.noonetap &&
-      ((agent.family.includes("Chrome") && +agent.major >= 85) ||
-        (agent.family.includes("Firefox") && +agent.major >= 80));
+      ((agent.family.includes('Chrome') && +agent.major >= 85) ||
+        (agent.family.includes('Firefox') && +agent.major >= 80));
   } else if (req.session?.userid) {
     context.signedIn = true;
     context.name = req.session.name;

@@ -1,16 +1,16 @@
-import { CardHeader, Divider, List } from "@material-ui/core";
-import React from "react";
-import { graphql, useLazyLoadQuery } from "react-relay/hooks";
-import { useLocation } from "react-router-dom";
-import { createConnectionContext } from "../../../utils/connectionContext";
+import { CardHeader, Divider, List } from '@material-ui/core';
+import React from 'react';
+import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
+import { useLocation } from 'react-router-dom';
+import { createConnectionContext } from '../../../utils/connectionContext';
 import {
   Filter,
   TodoManagerQuery,
-} from "../../../__generated__/TodoManagerQuery.graphql";
-import TodoFooter from "./TodoFooter/TodoFooter";
-import TodoInput from "./TodoInput/TodoInput";
-import TodoListItem from "./TodoListItem/TodoListItem";
-import ToggleAll from "./ToggleAll/ToggleAll";
+} from '../../../__generated__/TodoManagerQuery.graphql';
+import TodoFooter from './TodoFooter/TodoFooter';
+import TodoInput from './TodoInput/TodoInput';
+import TodoListItem from './TodoListItem/TodoListItem';
+import ToggleAll from './ToggleAll/ToggleAll';
 
 export const TodosConnectionContext = createConnectionContext();
 
@@ -34,7 +34,7 @@ const query = graphql`
 `;
 const TodoManager = () => {
   const { pathname } = useLocation();
-  const filter = (pathname.replace("/", "").toUpperCase() || "ALL") as Filter;
+  const filter = (pathname.replace('/', '').toUpperCase() || 'ALL') as Filter;
 
   const { viewer } = useLazyLoadQuery<TodoManagerQuery>(query, { filter });
   const { id, todos } = viewer!;
@@ -43,7 +43,7 @@ const TodoManager = () => {
     <TodosConnectionContext.Provider
       value={{
         parentId: id!,
-        connectionKey: "TodoManagerQuery_todos",
+        connectionKey: 'TodoManagerQuery_todos',
         filters: { filter },
       }}
     >

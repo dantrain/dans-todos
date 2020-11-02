@@ -1,9 +1,9 @@
-import React, { createContext, useCallback, useContext } from "react";
+import React, { createContext, useCallback, useContext } from 'react';
 import {
   ConnectionHandler,
   RecordSourceSelectorProxy,
   Variables,
-} from "relay-runtime";
+} from 'relay-runtime';
 
 type ConnectionContextValue = {
   parentId: string;
@@ -12,7 +12,7 @@ type ConnectionContextValue = {
 };
 
 export const createConnectionContext = () =>
-  createContext<ConnectionContextValue>({ parentId: "", connectionKey: "" });
+  createContext<ConnectionContextValue>({ parentId: '', connectionKey: '' });
 
 export const useConnectionContext = (
   context: React.Context<ConnectionContextValue>

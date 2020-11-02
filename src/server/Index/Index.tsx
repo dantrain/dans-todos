@@ -1,9 +1,9 @@
-import React from "react";
-import { AppContext } from "../../client/app/App";
-import serialize from "serialize-javascript";
+import React from 'react';
+import { AppContext } from '../../client/app/App';
+import serialize from 'serialize-javascript';
 
 const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
@@ -115,7 +115,7 @@ const Index = ({ css, content, context }: IndexProps) => {
         <script
           src={assets.client.js}
           defer
-          crossOrigin={isProduction ? undefined : "anonymous"}
+          crossOrigin={isProduction ? undefined : 'anonymous'}
         />
         {context.supportsGoogleOneTap && (
           <>

@@ -1,16 +1,16 @@
-import { InputBase, makeStyles } from "@material-ui/core";
+import { InputBase, makeStyles } from '@material-ui/core';
 import React, {
   ChangeEvent,
   KeyboardEvent,
   useCallback,
   useRef,
   useState,
-} from "react";
-import { graphql, useMutation } from "react-relay/hooks";
-import { ConnectionHandler } from "relay-runtime";
-import { useConnectionContext } from "../../../../utils/connectionContext";
-import { TodoInputCreateMutation } from "../../../../__generated__/TodoInputCreateMutation.graphql";
-import { TodosConnectionContext } from "../TodoManager";
+} from 'react';
+import { graphql, useMutation } from 'react-relay/hooks';
+import { ConnectionHandler } from 'relay-runtime';
+import { useConnectionContext } from '../../../../utils/connectionContext';
+import { TodoInputCreateMutation } from '../../../../__generated__/TodoInputCreateMutation.graphql';
+import { TodosConnectionContext } from '../TodoManager';
 
 const createMutation = graphql`
   mutation TodoInputCreateMutation($text: String!) {
@@ -24,12 +24,12 @@ const createMutation = graphql`
 
 const useStyles = makeStyles({
   inputBase: {
-    width: "100%",
+    width: '100%',
   },
 });
 
 const TodoInput = () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const ref = useRef<HTMLInputElement | null>(null);
 
   const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
@@ -41,12 +41,12 @@ const TodoInput = () => {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" && value.length) {
+      if (e.key === 'Enter' && value.length) {
         e.preventDefault();
         commit({
           variables: { text: value.trim() },
           updater: (store) => {
-            const payload = store.getRootField("createOneTodo");
+            const payload = store.getRootField('createOneTodo');
 
             const connectionRecord = getConnectionRecord(store);
 
@@ -54,21 +54,21 @@ const TodoInput = () => {
               store,
               connectionRecord,
               payload,
-              "TodoEdge"
+              'TodoEdge'
             );
 
             ConnectionHandler.insertEdgeAfter(connectionRecord, edge);
 
             connectionRecord.setValue(
-              +(connectionRecord.getValue("totalCount") || 0) + 1,
-              "totalCount"
+              +(connectionRecord.getValue('totalCount') || 0) + 1,
+              'totalCount'
             );
           },
         });
-        setValue("");
-      } else if (e.key === "Escape") {
+        setValue('');
+      } else if (e.key === 'Escape') {
         e.preventDefault();
-        setValue("");
+        setValue('');
         ref?.current?.blur();
       }
     },

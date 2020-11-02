@@ -9,28 +9,28 @@ import {
   ListItemText,
   makeStyles,
   Toolbar,
-} from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
-import React from "react";
+} from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px ${theme.spacing(
       1.2
     )}px`,
   },
   buttonGroup: {
-    [theme.breakpoints.down("xs")]: {
-      display: "inline-flex",
+    [theme.breakpoints.down('xs')]: {
+      display: 'inline-flex',
       order: -1,
-      flex: "1 0 100%",
-      justifyContent: "center",
+      flex: '1 0 100%',
+      justifyContent: 'center',
       padding: `${theme.spacing(0.5)}px 0 ${theme.spacing(2)}px`,
       margin: `0 -${theme.spacing(3)}px ${theme.spacing(1)}px`,
-      borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+      borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
     },
   },
 }));

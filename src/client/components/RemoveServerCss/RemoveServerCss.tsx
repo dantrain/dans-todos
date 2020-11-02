@@ -1,8 +1,8 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect } from 'react';
 
 const RemoveServerCss: FC = ({ children }) => {
   useEffect(() => {
-    const jssStyles = document.getElementById("jss-server-side");
+    const jssStyles = document.getElementById('jss-server-side');
 
     if (jssStyles) {
       jssStyles.parentElement?.removeChild(jssStyles);

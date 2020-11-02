@@ -1,5 +1,5 @@
-import { InputBase, makeStyles } from "@material-ui/core";
-import { fromGlobalId } from "graphql-relay";
+import { InputBase, makeStyles } from '@material-ui/core';
+import { fromGlobalId } from 'graphql-relay';
 import React, {
   ChangeEvent,
   KeyboardEvent,
@@ -7,9 +7,9 @@ import React, {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { graphql, useMutation } from "react-relay/hooks";
-import { TodoEditInputEditMutation } from "../../../../../__generated__/TodoEditInputEditMutation.graphql";
+} from 'react';
+import { graphql, useMutation } from 'react-relay/hooks';
+import { TodoEditInputEditMutation } from '../../../../../__generated__/TodoEditInputEditMutation.graphql';
 
 const editMutation = graphql`
   mutation TodoEditInputEditMutation($id: Int, $text: String!) {
@@ -21,7 +21,7 @@ const editMutation = graphql`
 
 const useStyles = makeStyles((theme) => ({
   inputBase: {
-    width: "100%",
+    width: '100%',
     paddingRight: `${theme.spacing(1)}px`,
   },
 }));
@@ -58,7 +58,7 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
   }, []);
 
   const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === "Escape") {
+    if (e.key === 'Enter' || e.key === 'Escape') {
       e.preventDefault();
       ref?.current?.blur();
     }

@@ -1,5 +1,5 @@
-import { ApolloServerPlugin } from "apollo-server-plugin-base";
-import logger from "./logger";
+import { ApolloServerPlugin } from 'apollo-server-plugin-base';
+import logger from './logger';
 
 const logPlugin: ApolloServerPlugin = {
   requestDidStart: (requestContext) => {

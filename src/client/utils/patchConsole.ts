@@ -1,8 +1,8 @@
 export default (regex: RegExp) => {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     const patch = (func: typeof console.log) => (...args: any[]) => {
       if (
-        !(args && typeof args[0] === "string" && args[0].search(regex) > -1)
+        !(args && typeof args[0] === 'string' && args[0].search(regex) > -1)
       ) {
         func(...args);
       }

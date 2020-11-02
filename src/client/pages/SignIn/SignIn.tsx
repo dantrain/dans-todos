@@ -3,9 +3,9 @@ import React, {
   useContext,
   useLayoutEffect,
   useState,
-} from "react";
-import { AppContext } from "../../app/App";
-import PubSub from "pubsub-js";
+} from 'react';
+import { AppContext } from '../../app/App';
+import PubSub from 'pubsub-js';
 
 declare global {
   interface Window {
@@ -18,15 +18,15 @@ declare global {
 const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
 
 const SignIn = () => {
-  const [status, setStatus] = useState("check");
+  const [status, setStatus] = useState('check');
 
   const el = (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <div id="google-sign-in" />
     </div>
   );
 
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return el;
   }
 
@@ -34,26 +34,26 @@ const SignIn = () => {
 
   const signIn = useCallback(
     async (credential: string) => {
-      PubSub.publish("FETCH_START");
+      PubSub.publish('FETCH_START');
       const response = await fetch(
-        `/tokensignin${supportsGoogleOneTap ? "?onetap=true" : ""}`,
+        `/tokensignin${supportsGoogleOneTap ? '?onetap=true' : ''}`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
-            SameSite: "Strict",
+            'Content-Type': 'application/json',
+            SameSite: 'Strict',
           },
-          credentials: "same-origin",
+          credentials: 'same-origin',
           body: JSON.stringify({ credential }),
         }
       );
 
-      PubSub.publish("FETCH_END");
+      PubSub.publish('FETCH_END');
 
       if (response.status === 204) {
-        window.location.href = "/";
+        window.location.href = '/';
       } else {
-        throw new Error("Sign-in failed");
+        throw new Error('Sign-in failed');
       }
     },
     [supportsGoogleOneTap]
@@ -62,13 +62,13 @@ const SignIn = () => {
   useLayoutEffect(() => {
     let timeout: NodeJS.Timeout;
 
-    if (status === "loaded") {
+    if (status === 'loaded') {
       if (supportsGoogleOneTap) {
         window.google.accounts.id.initialize({
           client_id: CLIENT_ID,
           auto_select: true,
           cancel_on_tap_outside: false,
-          prompt_parent_id: "google-sign-in",
+          prompt_parent_id: 'google-sign-in',
           callback: ({ credential }: { credential: string }) => {
             signIn(credential);
           },
@@ -76,11 +76,11 @@ const SignIn = () => {
 
         window.google.accounts.id.prompt((notification: any) => {
           if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-            window.location.href = "/signin?noonetap=true";
+            window.location.href = '/signin?noonetap=true';
           }
         });
       } else {
-        window.gapi.signin2.render("google-sign-in", {
+        window.gapi.signin2.render('google-sign-in', {
           width: 250,
           height: 50,
           longtitle: true,
@@ -91,10 +91,10 @@ const SignIn = () => {
       }
     } else {
       if (window.__GOOGLE_LOADED__) {
-        setStatus("loaded");
+        setStatus('loaded');
       } else {
-        setStatus("wait");
-        timeout = setTimeout(() => setStatus("check"), 50);
+        setStatus('wait');
+        timeout = setTimeout(() => setStatus('check'), 50);
       }
     }
 
