@@ -1,4 +1,5 @@
 import { ApolloServer } from "apollo-server-express";
+import compression from "compression";
 import express from "express";
 import "express-async-errors";
 import helmet from "helmet";
@@ -19,6 +20,8 @@ if (process.env.NODE_ENV === "production") {
     })
   );
 }
+
+app.use(compression);
 
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
 
