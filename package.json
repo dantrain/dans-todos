@@ -58,7 +58,8 @@
     "redis": "^3.0.2",
     "relay-runtime": "^10.0.1",
     "serialize-javascript": "^5.0.1",
-    "useragent": "^2.3.0"
+    "useragent": "^2.3.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@prisma/cli": "2.9.0",
