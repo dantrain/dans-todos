@@ -43,6 +43,7 @@ const SignIn = () => {
             "Content-Type": "application/json",
             SameSite: "Strict",
           },
+          credentials: "same-origin",
           body: JSON.stringify({ credential }),
         }
       );

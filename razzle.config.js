@@ -10,6 +10,11 @@ module.exports = {
           {
             urlPattern: /^(?:(?!google\.com|graphql|tokensignin|signin|signout).)+$/,
             handler: "StaleWhileRevalidate",
+            options: {
+              cacheableResponse: {
+                statuses: [200],
+              },
+            },
           },
         ],
       },

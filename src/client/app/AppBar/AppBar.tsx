@@ -58,6 +58,7 @@ const AppBar = () => {
                 className={s.avatarButton}
                 color="inherit"
                 size="small"
+                disableRipple
                 {...bindTrigger(popupState)}
               >
                 <Avatar className={s.avatar} src={context.avatar} />
