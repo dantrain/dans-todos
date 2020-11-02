@@ -26,6 +26,7 @@ const query = graphql`
             ...TodoListItemFragment
           }
         }
+        ...ToggleAllFragment
         ...TodoFooterFragment
       }
     }
@@ -46,7 +47,7 @@ const TodoManager = () => {
         filters: { filter },
       }}
     >
-      <CardHeader avatar={<ToggleAll />} title={<TodoInput />} />
+      <CardHeader avatar={<ToggleAll todos={todos!} />} title={<TodoInput />} />
       {todos!.edges && todos!.edges.length ? (
         <>
           <Divider />

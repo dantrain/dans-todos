@@ -18,7 +18,7 @@ export type TodoManagerQueryResponse = {
                     readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
                 } | null;
             } | null> | null;
-            readonly " $fragmentRefs": FragmentRefs<"TodoFooterFragment">;
+            readonly " $fragmentRefs": FragmentRefs<"ToggleAllFragment" | "TodoFooterFragment">;
         } | null;
     } | null;
 };
@@ -44,6 +44,7 @@ query TodoManagerQuery(
         }
         cursor
       }
+      ...ToggleAllFragment
       ...TodoFooterFragment
       pageInfo {
         endCursor
@@ -62,6 +63,11 @@ fragment TodoListItemFragment on Todo {
   id
   text
   completed
+}
+
+fragment ToggleAllFragment on UserTodos_Connection {
+  totalCount
+  completedCount
 }
 */
 
@@ -192,6 +198,11 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
+                "name": "ToggleAllFragment"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
                 "name": "TodoFooterFragment"
               }
             ],
@@ -301,7 +312,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80a2bc555ddfdeca94b83d9e0b6d1ec2",
+    "cacheID": "e5590df22e9b286b660ff0cb0aee9e3c",
     "id": null,
     "metadata": {
       "connection": [
@@ -318,9 +329,9 @@ return {
     },
     "name": "TodoManagerQuery",
     "operationKind": "query",
-    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      ...TodoFooterFragment\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoFooterFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n"
+    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      ...ToggleAllFragment\n      ...TodoFooterFragment\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoFooterFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n\nfragment ToggleAllFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n"
   }
 };
 })();
-(node as any).hash = '0766b14571eb6c015cab89206124e30c';
+(node as any).hash = 'bdd9b0d0207391e53df55e537333d675';
 export default node;
