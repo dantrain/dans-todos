@@ -1,3 +1,4 @@
+import PubSub from 'pubsub-js';
 import {
   Environment,
   Network,
@@ -6,29 +7,36 @@ import {
   Store,
   Variables,
 } from 'relay-runtime';
-import PubSub from 'pubsub-js';
+import { AuthenticationError, NetworkError } from './utils/errors';
 import signOut from './utils/signOut';
 
 async function fetchFn(params: RequestParameters, variables: Variables) {
   PubSub.publish('FETCH_START');
 
   try {
-    const response = await fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: params.text,
-        variables,
-      }),
-    });
+    let response: any;
+
+    try {
+      response = await fetch('/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: params.text,
+          variables,
+        }),
+      });
+    } catch (err) {
+      throw new NetworkError(err.message);
+    }
 
     const data = await response.json();
 
-    if (response.status >= 400) {
+    if (!response.ok) {
       if (data.errors[0].extensions.code === 'UNAUTHENTICATED') {
         signOut();
+        throw new AuthenticationError(data.errors[0].message);
       }
 
       throw new Error(data.errors[0].message || 'Something went wrong');

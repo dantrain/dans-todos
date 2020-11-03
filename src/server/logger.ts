@@ -1,14 +1,10 @@
 import { createLogger, transports, format } from 'winston';
-const { combine, colorize, timestamp, printf } = format;
-
-const logFormat = printf(({ level, message, timestamp }) => {
-  return `${timestamp} ${level}: ${message}`;
-});
+const { combine, colorize, simple } = format;
 
 const logger = createLogger({
   transports: [
     new transports.Console({
-      format: combine(colorize(), timestamp(), logFormat),
+      format: combine(colorize(), simple()),
       handleExceptions: true,
     }),
   ],
