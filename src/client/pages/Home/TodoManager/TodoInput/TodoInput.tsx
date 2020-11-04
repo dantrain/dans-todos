@@ -72,7 +72,7 @@ const TodoInput = () => {
         ref?.current?.blur();
       }
     },
-    [value, getConnectionRecord]
+    [value, commit, getConnectionRecord]
   );
 
   const s = useStyles();

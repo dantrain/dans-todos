@@ -51,7 +51,7 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
     } else {
       setValue(initialValue);
     }
-  }, [id, value]);
+  }, [commit, id, initialValue, value]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);

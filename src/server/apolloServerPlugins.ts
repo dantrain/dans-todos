@@ -5,10 +5,12 @@ const logPlugin: ApolloServerPlugin = {
   requestDidStart: (requestContext) => {
     logger.info(
       `GraphQL ${
-        requestContext.request.query?.match(/^[a-z]+\s[^\s\({\\]+/)?.[0]
+        requestContext.request.query?.match(/^[a-z]+\s[^\s({\\]+/)?.[0]
       } ${JSON.stringify(requestContext.request.variables)}`
     );
   },
 };
 
-export default [logPlugin];
+const plugins = [logPlugin];
+
+export default plugins;

@@ -69,7 +69,7 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
       optimisticUpdater: updater,
       updater,
     });
-  }, [getConnectionRecord, allCompleted]);
+  }, [commit, allCompleted, getConnectionRecord]);
 
   return (
     <IconButton className={s.icon} onClick={handleClick}>

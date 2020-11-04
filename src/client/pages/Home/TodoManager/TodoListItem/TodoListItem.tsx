@@ -88,7 +88,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         updater,
       });
     },
-    [id, completed, getConnectionRecord]
+    [commitToggle, id, getConnectionRecord, completed]
   );
 
   const [commitDelete] = useMutation<TodoListItemDeleteMutation>(
@@ -118,7 +118,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       optimisticUpdater: updater,
       updater,
     });
-  }, [id, completed, getConnectionRecord]);
+  }, [commitDelete, id, getConnectionRecord, completed]);
 
   return (
     <ListItem>

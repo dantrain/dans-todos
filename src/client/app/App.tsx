@@ -33,14 +33,14 @@ declare global {
 let defaultContext: AppContext =
   typeof window !== 'undefined' && window.__CONTEXT__ ? window.__CONTEXT__ : {};
 
-export const AppContext = createContext<AppContext>(defaultContext);
+export const Context = createContext<AppContext>(defaultContext);
 
 const theme = createMuiTheme({
   palette: { primary: { main: '#1976d2' }, secondary: pink },
 });
 
 const App = ({ context = defaultContext }: { context?: AppContext }) => (
-  <AppContext.Provider value={context}>
+  <Context.Provider value={context}>
     <ThemeProvider theme={theme}>
       <RelayEnvironmentProvider environment={relayEnvironment}>
         <Helmet
@@ -69,7 +69,7 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => (
         </SnackbarProvider>
       </RelayEnvironmentProvider>
     </ThemeProvider>
-  </AppContext.Provider>
+  </Context.Provider>
 );
 
 export default App;

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { Helmet } from 'react-helmet';
-import { AppContext } from '../../app/App';
+import { Context } from '../../app/App';
 
 declare global {
   interface Window {
@@ -18,25 +18,12 @@ declare global {
 
 const CLIENT_ID = process.env.RAZZLE_CLIENT_ID;
 
+const useLayoutEffectClient =
+  typeof window !== 'undefined' ? useLayoutEffect : () => {};
+
 const SignIn = () => {
   const [status, setStatus] = useState('check');
-
-  const el = (
-    <>
-      <Helmet>
-        <title>Sign in</title>
-      </Helmet>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div id="google-sign-in" />
-      </div>
-    </>
-  );
-
-  if (typeof window === 'undefined') {
-    return el;
-  }
-
-  const { supportsGoogleOneTap } = useContext(AppContext);
+  const { supportsGoogleOneTap } = useContext(Context);
 
   const signIn = useCallback(
     async (credential: string) => {
@@ -65,7 +52,7 @@ const SignIn = () => {
     [supportsGoogleOneTap]
   );
 
-  useLayoutEffect(() => {
+  useLayoutEffectClient(() => {
     let timeout: NodeJS.Timeout;
 
     if (status === 'loaded') {
@@ -107,9 +94,18 @@ const SignIn = () => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [status]);
+  }, [signIn, status, supportsGoogleOneTap]);
 
-  return el;
+  return (
+    <>
+      <Helmet>
+        <title>Sign in</title>
+      </Helmet>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div id="google-sign-in" />
+      </div>
+    </>
+  );
 };
 
 export default SignIn;

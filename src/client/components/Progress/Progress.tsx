@@ -30,6 +30,7 @@ const useStyles = makeStyles({
 
 const Progress = () => {
   const [noInFlight, setNoInFlight] = useState(0);
+  const someInFlight = noInFlight > 0;
 
   const s = useStyles();
 
@@ -52,7 +53,7 @@ const Progress = () => {
   const delayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (noInFlight > 0) {
+    if (someInFlight) {
       delayTimeoutRef.current = setTimeout(() => setLoading(true), 200);
     } else {
       setLoading(false);
@@ -63,7 +64,7 @@ const Progress = () => {
         clearTimeout(delayTimeoutRef.current);
       }
     };
-  }, [noInFlight > 0]);
+  }, [someInFlight]);
 
   return (
     <CSSTransition

@@ -17,7 +17,7 @@ import {
 import React, { useCallback, useContext } from 'react';
 import Progress from '../../components/Progress/Progress';
 import signOut from '../../utils/signOut';
-import { AppContext } from '../App';
+import { Context } from '../App';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: { justifyContent: 'space-between' },
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AppBar = () => {
-  const context = useContext(AppContext);
+  const context = useContext(Context);
   const popupState = usePopupState({
     variant: 'popover',
     popupId: 'account-menu',

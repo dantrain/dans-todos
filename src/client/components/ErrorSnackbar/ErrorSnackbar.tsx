@@ -24,7 +24,7 @@ const ErrorSnackbar: FC = ({ children }) => {
     return () => {
       PubSub.unsubscribe(token);
     };
-  }, []);
+  }, [enqueueSnackbar]);
 
   return <>{children}</>;
 };

@@ -51,7 +51,7 @@ const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
     };
 
     commit({ variables: {}, optimisticUpdater: updater, updater });
-  }, [getConnectionRecord]);
+  }, [commit, getConnectionRecord]);
 
   return (
     <Button color="primary" disabled={disabled} onClick={handleClick}>

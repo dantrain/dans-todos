@@ -1,4 +1,4 @@
-export default (regex: RegExp) => {
+const patchConsole = (regex: RegExp) => {
   if (process.env.NODE_ENV !== 'production') {
     const patch = (func: typeof console.log) => (...args: any[]) => {
       if (
@@ -12,3 +12,5 @@ export default (regex: RegExp) => {
     console.warn = patch(console.warn);
   }
 };
+
+export default patchConsole;

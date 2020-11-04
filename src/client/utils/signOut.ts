@@ -1,4 +1,4 @@
-export default async ({ destroySession = false } = {}) => {
+const signOut = async ({ destroySession = false } = {}) => {
   const promises = [];
 
   if (destroySession) {
@@ -15,3 +15,5 @@ export default async ({ destroySession = false } = {}) => {
 
   window.location.href = '/signin';
 };
+
+export default signOut;
