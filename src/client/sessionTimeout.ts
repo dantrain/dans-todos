@@ -21,7 +21,7 @@ if (window.__CONTEXT__.signedIn) {
       new Date().getTime();
 
     if (delta < 0) {
-      signOut();
+      signOut({ disableAuto: true });
     } else {
       sessionTimeoutCheck = setTimeout(
         checkAndRedirect,

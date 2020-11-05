@@ -38,7 +38,7 @@ const AppBar = () => {
   });
 
   const handleSignOut = useCallback(() => {
-    signOut({ destroySession: true });
+    signOut({ destroySession: true, disableAuto: true });
   }, []);
 
   const s = useStyles();
