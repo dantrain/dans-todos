@@ -125,7 +125,11 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       <ListItemIcon>
         <Checkbox checked={completed} onChange={handleToggle} />
       </ListItemIcon>
-      <ListItemText primary={<TodoEditInput id={id!} initialValue={text} />} />
+      <ListItemText
+        primary={
+          <TodoEditInput id={id!} initialValue={text} completed={completed} />
+        }
+      />
       <ListItemSecondaryAction>
         <IconButton onClick={handleDelete}>
           <DeleteIcon />

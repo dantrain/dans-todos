@@ -1,4 +1,5 @@
 import { InputBase, makeStyles } from '@material-ui/core';
+import cn from 'classnames';
 import { fromGlobalId } from 'graphql-relay';
 import React, {
   ChangeEvent,
@@ -24,14 +25,21 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     paddingRight: `${theme.spacing(1)}px`,
   },
+  completed: {
+    color: theme.palette.text.secondary,
+    '& textarea:focus': {
+      color: theme.palette.text.primary,
+    },
+  },
 }));
 
 type TodoEditInputProps = {
   id: string;
   initialValue: string;
+  completed: boolean;
 };
 
-const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
+const TodoEditInput = ({ id, initialValue, completed }: TodoEditInputProps) => {
   const [value, setValue] = useState(initialValue);
   const ref = useRef<HTMLInputElement | null>(null);
   const s = useStyles();
@@ -67,7 +75,7 @@ const TodoEditInput = ({ id, initialValue }: TodoEditInputProps) => {
   return (
     <InputBase
       inputRef={ref}
-      className={s.inputBase}
+      className={cn(s.inputBase, { [s.completed]: completed })}
       value={value}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
