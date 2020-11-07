@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
+import hasTouchScreen from '../../../utils/hasTouchScreen';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -64,9 +65,11 @@ const SkeletonTodoManager = () => {
               />
             </ListItemText>
             <ListItemSecondaryAction>
-              <Box mx="14px">
-                <Skeleton width={20} height={34} animation="wave" />
-              </Box>
+              {hasTouchScreen && (
+                <Box mx="14px">
+                  <Skeleton width={20} height={34} animation="wave" />
+                </Box>
+              )}
             </ListItemSecondaryAction>
           </ListItem>
         ))}

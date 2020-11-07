@@ -5,14 +5,19 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  makeStyles,
   Tooltip,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import cn from 'classnames';
 import { fromGlobalId } from 'graphql-relay';
-import React, { ChangeEvent, useCallback } from 'react';
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { graphql, useFragment, useMutation } from 'react-relay/hooks';
+import { CSSTransition } from 'react-transition-group';
+import useHoverDirty from 'react-use/lib/useHoverDirty';
 import { ConnectionHandler, SelectorStoreUpdater } from 'relay-runtime';
 import { useConnectionContext } from '../../../../utils/connectionContext';
+import hasTouchScreen from '../../../../utils/hasTouchScreen';
 import {
   TodoListItemDeleteMutation,
   TodoListItemDeleteMutationResponse,
@@ -51,6 +56,36 @@ const deleteMutation = graphql`
     }
   }
 `;
+
+const useStyles = makeStyles((theme) => ({
+  deleteButtonHide: {
+    opacity: 0,
+  },
+  deleteButtonEnter: {
+    opacity: 0,
+    '& svg': {
+      transform: 'scale(0.8)',
+    },
+  },
+  deleteButtonEnterActive: {
+    opacity: 1,
+    transition: 'opacity 150ms',
+    '& svg': {
+      transform: 'scale(1)',
+      transition: 'transform 150ms',
+    },
+  },
+  deleteButtonExit: {
+    opacity: 1,
+  },
+  deleteButtonExitActive: {
+    opacity: 0,
+    transition: 'opacity 75ms',
+  },
+  deleteButtonExitDone: {
+    opacity: 0,
+  },
+}));
 
 type TodoListItemProps = {
   todo: TodoListItemFragment$key;
@@ -121,8 +156,15 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     });
   }, [commitDelete, id, getConnectionRecord, completed]);
 
+  const listItemRef = useRef(null);
+  const hovered = useHoverDirty(listItemRef);
+  const [focussed, setFocus] = useState(false);
+  const showDeleteButton = hasTouchScreen || focussed || hovered;
+
+  const s = useStyles();
+
   return (
-    <ListItem>
+    <ListItem ref={listItemRef}>
       <ListItemIcon>
         <Checkbox checked={completed} onChange={handleToggle} />
       </ListItemIcon>
@@ -132,11 +174,28 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         }
       />
       <ListItemSecondaryAction>
-        <Tooltip title="Delete">
-          <IconButton onClick={handleDelete}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        <CSSTransition
+          in={showDeleteButton}
+          timeout={{ enter: 150, exit: 75 }}
+          classNames={{
+            enter: s.deleteButtonEnter,
+            enterActive: s.deleteButtonEnterActive,
+            exit: s.deleteButtonExit,
+            exitActive: s.deleteButtonExitActive,
+            exitDone: s.deleteButtonExitDone,
+          }}
+        >
+          <Tooltip title="Delete">
+            <IconButton
+              onFocusVisible={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+              className={cn({ [s.deleteButtonHide]: !showDeleteButton })}
+              onClick={handleDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </CSSTransition>
       </ListItemSecondaryAction>
     </ListItem>
   );
