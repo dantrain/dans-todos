@@ -43,28 +43,33 @@ const TodoInput = () => {
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && value.length) {
         e.preventDefault();
-        commit({
-          variables: { text: value.trim() },
-          updater: (store) => {
-            const payload = store.getRootField('createOneTodo');
+        const text = value.trim();
 
-            const connectionRecord = getConnectionRecord(store);
+        if (text) {
+          commit({
+            variables: { text },
+            updater: (store) => {
+              const payload = store.getRootField('createOneTodo');
 
-            const edge = ConnectionHandler.createEdge(
-              store,
-              connectionRecord,
-              payload,
-              'TodoEdge'
-            );
+              const connectionRecord = getConnectionRecord(store);
 
-            ConnectionHandler.insertEdgeAfter(connectionRecord, edge);
+              const edge = ConnectionHandler.createEdge(
+                store,
+                connectionRecord,
+                payload,
+                'TodoEdge'
+              );
 
-            connectionRecord.setValue(
-              +(connectionRecord.getValue('totalCount') || 0) + 1,
-              'totalCount'
-            );
-          },
-        });
+              ConnectionHandler.insertEdgeAfter(connectionRecord, edge);
+
+              connectionRecord.setValue(
+                +(connectionRecord.getValue('totalCount') || 0) + 1,
+                'totalCount'
+              );
+            },
+          });
+        }
+
         setValue('');
       } else if (e.key === 'Escape') {
         e.preventDefault();

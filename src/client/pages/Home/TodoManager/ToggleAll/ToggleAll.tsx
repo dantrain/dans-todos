@@ -72,7 +72,11 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
   }, [commit, allCompleted, getConnectionRecord]);
 
   return (
-    <Tooltip title="Mark all complete" placement="top" enterDelay={500}>
+    <Tooltip
+      title={`Mark all ${allCompleted ? 'in' : ''}complete`}
+      placement="top"
+      enterDelay={500}
+    >
       <IconButton className={s.icon} onClick={handleClick}>
         <DoneAllIcon />
       </IconButton>
