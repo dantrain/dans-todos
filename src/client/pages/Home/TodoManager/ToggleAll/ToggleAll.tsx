@@ -1,4 +1,4 @@
-import { IconButton, makeStyles } from '@material-ui/core';
+import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import React, { useCallback } from 'react';
 import { graphql, useFragment, useMutation } from 'react-relay/hooks';
@@ -72,9 +72,11 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
   }, [commit, allCompleted, getConnectionRecord]);
 
   return (
-    <IconButton className={s.icon} onClick={handleClick}>
-      <DoneAllIcon />
-    </IconButton>
+    <Tooltip title="Mark all complete" placement="top" enterDelay={500}>
+      <IconButton className={s.icon} onClick={handleClick}>
+        <DoneAllIcon />
+      </IconButton>
+    </Tooltip>
   );
 };
 

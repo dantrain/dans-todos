@@ -5,6 +5,7 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  Tooltip,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { fromGlobalId } from 'graphql-relay';
@@ -131,9 +132,11 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         }
       />
       <ListItemSecondaryAction>
-        <IconButton onClick={handleDelete}>
-          <DeleteIcon />
-        </IconButton>
+        <Tooltip title="Delete">
+          <IconButton onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       </ListItemSecondaryAction>
     </ListItem>
   );
