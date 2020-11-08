@@ -15,9 +15,9 @@ import {
   usePopupState,
 } from 'material-ui-popup-state/hooks';
 import React, { useCallback, useContext } from 'react';
-import Progress from './Progress/Progress';
-import signOut from '../../utils/signOut';
-import { Context } from '../App';
+import Progress from '../../../components/Progress/Progress';
+import signOut from '../../../utils/signOut';
+import { Context } from '../../App';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: { justifyContent: 'space-between' },

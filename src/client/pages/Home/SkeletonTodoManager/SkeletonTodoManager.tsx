@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px ${theme.spacing(
-      1.2
-    )}px`,
   },
   buttonGroup: {
     [theme.breakpoints.down('xs')]: {

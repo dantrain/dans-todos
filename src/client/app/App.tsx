@@ -55,15 +55,15 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => (
           TransitionComponent={Grow as FC<TransitionProps>}
         >
           <ErrorSnackbar />
-          <Page>
-            <Routes>
-              <Route path="/signin" element={<SignIn />} />
+          <Routes>
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/" element={<Page />}>
               <Route path="/" element={<Home />} />
               <Route path="/active" element={<Home />} />
               <Route path="/completed" element={<Home />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Page>
+            </Route>
+          </Routes>
         </SnackbarProvider>
       </RelayEnvironmentProvider>
     </ThemeProvider>
