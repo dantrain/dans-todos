@@ -57,7 +57,7 @@ const deleteMutation = graphql`
   }
 `;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   deleteButtonHide: {
     opacity: 0,
   },
@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
   deleteButtonExitDone: {
     opacity: 0,
   },
-}));
+});
 
 type TodoListItemProps = {
   todo: TodoListItemFragment$key;

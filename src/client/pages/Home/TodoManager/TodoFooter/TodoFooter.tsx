@@ -26,15 +26,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    padding: '8px 16px',
   },
   buttonGroup: {
     [theme.breakpoints.down('xs')]: {
       order: -1,
       flex: '1 0 100%',
       justifyContent: 'center',
-      padding: `${theme.spacing(1)}px 0 ${theme.spacing(2)}px`,
-      margin: `0 -${theme.spacing(3)}px ${theme.spacing(1)}px`,
+      padding: '8px 0 16px',
+      margin: '0 -24px 8px',
       borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
     },
   },

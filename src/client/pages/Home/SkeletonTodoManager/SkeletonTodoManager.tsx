@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
       order: -1,
       flex: '1 0 100%',
       justifyContent: 'center',
-      padding: `${theme.spacing(0.5)}px 0 ${theme.spacing(2)}px`,
-      margin: `0 -${theme.spacing(3)}px ${theme.spacing(1)}px`,
+      padding: '4px 0 16px',
+      margin: '0 -24px 8px',
       borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
     },
   },
@@ -72,7 +72,7 @@ const SkeletonTodoManager = () => {
         ))}
       </List>
       <Divider />
-      <Toolbar className={s.toolbar}>
+      <Toolbar className={s.toolbar} style={{ padding: '8px 16px 10px' }}>
         <Skeleton width={90} height={34} animation="wave" />
         <div className={s.buttonGroup}>
           <Skeleton width={210} height={34} animation="wave" />
