@@ -22,6 +22,7 @@ import { Context } from '../../App';
 const useStyles = makeStyles((theme) => ({
   safeArea: {
     height: 'env(safe-area-inset-top)',
+    backgroundColor: theme.palette.primary.dark,
   },
   toolbar: { justifyContent: 'space-between' },
   titleLink: { textDecoration: 'none', color: 'inherit' },

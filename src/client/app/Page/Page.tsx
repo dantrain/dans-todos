@@ -9,13 +9,11 @@ const useStyles = makeStyles((theme) => ({
   '@global': {
     body: {
       minHeight: '100vh',
-      backgroundColor: theme.palette.primary.dark,
     },
   },
   '@global #root': {
     minHeight: '100vh',
     padding: '0.02px 0',
-    backgroundColor: theme.palette.background.default,
   },
   main: {
     minWidth: '300px',
