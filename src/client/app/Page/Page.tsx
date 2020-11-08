@@ -1,7 +1,8 @@
 import { Container, makeStyles } from '@material-ui/core';
 import React, { FC } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import Error from '../Error/Error';
+import AppBar from '../AppBar/AppBar';
+import Error from './Error/Error';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -13,15 +14,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Main: FC = ({ children }) => {
+const Page: FC = ({ children }) => {
   const s = useStyles();
   return (
-    <Container maxWidth="sm">
-      <main className={s.main}>
-        <ErrorBoundary FallbackComponent={Error}>{children}</ErrorBoundary>
-      </main>
-    </Container>
+    <>
+      <AppBar />
+      <Container maxWidth="sm">
+        <main className={s.main}>
+          <ErrorBoundary FallbackComponent={Error}>{children}</ErrorBoundary>
+        </main>
+      </Container>
+    </>
   );
 };
 
-export default Main;
+export default Page;

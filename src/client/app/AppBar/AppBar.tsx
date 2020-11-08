@@ -15,7 +15,7 @@ import {
   usePopupState,
 } from 'material-ui-popup-state/hooks';
 import React, { useCallback, useContext } from 'react';
-import Progress from '../../components/Progress/Progress';
+import Progress from './Progress/Progress';
 import signOut from '../../utils/signOut';
 import { Context } from '../App';
 

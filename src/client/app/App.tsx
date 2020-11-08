@@ -7,14 +7,13 @@ import React, { createContext, FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import { Route, Routes } from 'react-router-dom';
-import ErrorSnackbar from '../components/ErrorSnackbar/ErrorSnackbar';
-import Main from '../components/Main/Main';
-import NotFound from '../components/NotFound/NotFound';
-import RemoveServerCss from '../components/RemoveServerCss/RemoveServerCss';
 import Home from '../pages/Home/Home';
+import NotFound from '../pages/NotFound/NotFound';
 import SignIn from '../pages/SignIn/SignIn';
 import relayEnvironment from '../relayEnvironment';
-import AppBar from './AppBar/AppBar';
+import ErrorSnackbar from './ErrorSnackbar/ErrorSnackbar';
+import Page from './Page/Page';
+import RemoveServerCss from './RemoveServerCss/RemoveServerCss';
 
 export type AppContext = {
   statusCode?: number;
@@ -56,8 +55,7 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => (
           TransitionComponent={Grow as FC<TransitionProps>}
         >
           <ErrorSnackbar />
-          <AppBar />
-          <Main>
+          <Page>
             <Routes>
               <Route path="/signin" element={<SignIn />} />
               <Route path="/" element={<Home />} />
@@ -65,7 +63,7 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => (
               <Route path="/completed" element={<Home />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </Main>
+          </Page>
         </SnackbarProvider>
       </RelayEnvironmentProvider>
     </ThemeProvider>
