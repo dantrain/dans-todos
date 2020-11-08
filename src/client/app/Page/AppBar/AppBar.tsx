@@ -20,6 +20,9 @@ import signOut from '../../../utils/signOut';
 import { Context } from '../../App';
 
 const useStyles = makeStyles((theme) => ({
+  safeArea: {
+    height: 'env(safe-area-inset-top)',
+  },
   toolbar: { justifyContent: 'space-between' },
   titleLink: { textDecoration: 'none', color: 'inherit' },
   avatarButton: { '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' } },
@@ -45,6 +48,7 @@ const AppBar = () => {
 
   return (
     <MaterialAppBar position="sticky">
+      <div className={s.safeArea} />
       <Container maxWidth="sm">
         <Toolbar className={s.toolbar}>
           <a className={s.titleLink} title="Home" href="/">
