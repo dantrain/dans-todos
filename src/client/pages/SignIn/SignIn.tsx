@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
   '@global': {
     body: {
       backgroundColor: theme.palette.primary.main,
+      overflow: 'hidden',
     },
   },
   main: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    maxHeight: '800px',
+    maxHeight: '700px',
   },
 }));
 
@@ -40,6 +41,7 @@ const SignIn = () => {
       </Helmet>
       <main className={s.main}>
         <Box
+          mt={8}
           mb={3}
           style={{ height: 100, width: 100 }}
           color="primary.contrastText"
