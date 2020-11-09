@@ -69,10 +69,10 @@ const useStyles = makeStyles({
   },
   deleteButtonEnterActive: {
     opacity: 1,
-    transition: 'opacity 150ms',
+    transition: 'opacity 150ms cubic-bezier(0.4, 0.0, 0.2, 1)',
     '& svg': {
       transform: 'scale(1)',
-      transition: 'transform 150ms',
+      transition: 'transform 150ms cubic-bezier(0.4, 0.0, 0.2, 1)',
     },
   },
   deleteButtonExit: {
@@ -80,7 +80,7 @@ const useStyles = makeStyles({
   },
   deleteButtonExitActive: {
     opacity: 0,
-    transition: 'opacity 75ms',
+    transition: 'opacity 75ms cubic-bezier(0.4, 0.0, 0.2, 1)',
   },
   deleteButtonExitDone: {
     opacity: 0,
