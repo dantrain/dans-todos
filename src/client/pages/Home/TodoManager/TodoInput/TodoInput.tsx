@@ -12,6 +12,7 @@ import { graphql, useMutation } from 'react-relay/hooks';
 import { CSSTransition } from 'react-transition-group';
 import { ConnectionHandler } from 'relay-runtime';
 import { useConnectionContext } from '../../../../utils/connectionContext';
+import hasTouchScreen from '../../../../utils/hasTouchScreen';
 import { TodoInputCreateMutation } from '../../../../__generated__/TodoInputCreateMutation.graphql';
 import { TodosConnectionContext } from '../TodoManager';
 
@@ -120,7 +121,10 @@ const TodoInput = () => {
   const [rippling, setRippling] = useState(false);
 
   const handleClick = useCallback(() => {
-    setRippling(true);
+    if (!hasTouchScreen) {
+      setRippling(true);
+    }
+
     saveText(text);
   }, [saveText, text]);
 
