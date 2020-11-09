@@ -4,6 +4,7 @@ import React, {
   ChangeEvent,
   KeyboardEvent,
   useCallback,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -31,11 +32,13 @@ const useStyles = makeStyles({
   },
   inputBase: {
     width: '100%',
+    marginRight: '16px',
   },
   addButtonWrapper: {
     flex: '0 0 48px',
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   addButtonEnter: {
     opacity: 0,
@@ -114,9 +117,20 @@ const TodoInput = () => {
     [saveText, text]
   );
 
+  const [rippling, setRippling] = useState(false);
+
   const handleClick = useCallback(() => {
+    setRippling(true);
     saveText(text);
   }, [saveText, text]);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (rippling) {
+      timeout = setTimeout(() => setRippling(false), 300);
+    }
+    return () => clearTimeout(timeout);
+  }, [rippling]);
 
   const s = useStyles();
 
@@ -134,7 +148,7 @@ const TodoInput = () => {
       />
       <div className={s.addButtonWrapper}>
         <CSSTransition
-          in={!!text.length}
+          in={!!text.length || rippling}
           timeout={{ enter: 150, exit: 75 }}
           classNames={{
             enter: s.addButtonEnter,
