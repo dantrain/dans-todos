@@ -14,7 +14,7 @@ import {
   bindTrigger,
   usePopupState,
 } from 'material-ui-popup-state/hooks';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Progress from '../../../components/Progress/Progress';
 import signOut from '../../../utils/signOut';
 import { Context } from '../../App';
@@ -44,6 +44,28 @@ const AppBar = () => {
   const handleSignOut = useCallback(() => {
     signOut({ destroySession: true, disableAuto: true });
   }, []);
+
+  const [
+    installPrompt,
+    setInstallPrompt,
+  ] = useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        setInstallPrompt(e as BeforeInstallPromptEvent);
+      });
+
+      window.addEventListener('appinstalled', () => {
+        setInstallPrompt(null);
+      });
+    }
+  }, []);
+
+  const handleInstall = useCallback(() => {
+    installPrompt?.prompt();
+  }, [installPrompt]);
 
   const s = useStyles();
 
@@ -80,6 +102,9 @@ const AppBar = () => {
                   horizontal: 'right',
                 }}
               >
+                {!!installPrompt && (
+                  <MenuItem onClick={handleInstall}>Install app</MenuItem>
+                )}
                 <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
               </Menu>
             </>
