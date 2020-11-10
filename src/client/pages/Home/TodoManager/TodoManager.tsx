@@ -1,9 +1,6 @@
 import { CardHeader, Divider, List } from '@material-ui/core';
-import capitalize from 'lodash/capitalize';
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
-import { useLocation } from 'react-router-dom';
 import { createConnectionContext } from '../../../utils/connectionContext';
 import {
   Filter,
@@ -34,10 +31,12 @@ const query = graphql`
     }
   }
 `;
-const TodoManager = () => {
-  const { pathname } = useLocation();
-  const filter = (pathname.replace('/', '').toUpperCase() || 'ALL') as Filter;
 
+type TodoManagerProps = {
+  filter: Filter;
+};
+
+const TodoManager = ({ filter }: TodoManagerProps) => {
   const { viewer } = useLazyLoadQuery<TodoManagerQuery>(query, { filter });
   const { id, todos } = viewer!;
 
@@ -49,7 +48,6 @@ const TodoManager = () => {
         filters: { filter },
       }}
     >
-      <Helmet>{filter !== 'ALL' && <title>{capitalize(filter)}</title>}</Helmet>
       <CardHeader avatar={<ToggleAll todos={todos!} />} title={<TodoInput />} />
       {todos!.edges && todos!.edges.length ? (
         <>
