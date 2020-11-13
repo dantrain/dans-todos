@@ -9,6 +9,7 @@ export type TodoInputCreateMutationVariables = {
 export type TodoInputCreateMutationResponse = {
     readonly createOneTodo: {
         readonly id: string | null;
+        readonly ownId: number;
         readonly text: string;
         readonly completed: boolean;
     };
@@ -26,6 +27,7 @@ mutation TodoInputCreateMutation(
 ) {
   createOneTodo(data: {text: $text, completed: false}) {
     id
+    ownId
     text
     completed
   }
@@ -77,6 +79,13 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
+        "name": "ownId",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
         "name": "text",
         "storageKey": null
       },
@@ -109,14 +118,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "d735baf0a180acedf575c713b84ddeb4",
+    "cacheID": "1da40fffbdc95e2ee48f45902bcbdc30",
     "id": null,
     "metadata": {},
     "name": "TodoInputCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation TodoInputCreateMutation(\n  $text: String!\n) {\n  createOneTodo(data: {text: $text, completed: false}) {\n    id\n    text\n    completed\n  }\n}\n"
+    "text": "mutation TodoInputCreateMutation(\n  $text: String!\n) {\n  createOneTodo(data: {text: $text, completed: false}) {\n    id\n    ownId\n    text\n    completed\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2117664640611a2c9de21e64142bb419';
+(node as any).hash = '8e362d9d50edd4838c986f49cd0e189b';
 export default node;

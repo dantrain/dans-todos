@@ -20,6 +20,7 @@ const createMutation = graphql`
   mutation TodoInputCreateMutation($text: String!) {
     createOneTodo(data: { text: $text, completed: false }) {
       id
+      ownId
       text
       completed
     }

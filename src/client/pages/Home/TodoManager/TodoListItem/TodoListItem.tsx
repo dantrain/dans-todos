@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import cn from 'classnames';
-import { fromGlobalId } from 'graphql-relay';
 import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { graphql, useFragment, useMutation } from 'react-relay/hooks';
 import { CSSTransition } from 'react-transition-group';
@@ -33,8 +32,9 @@ import TodoEditInput from './TodoEditInput/TodoEditInput';
 const todoListItemFragment = graphql`
   fragment TodoListItemFragment on Todo {
     id
-    text
+    ownId
     completed
+    ...TodoEditInputFragment
   }
 `;
 
@@ -92,7 +92,8 @@ type TodoListItemProps = {
 };
 
 const TodoListItem = ({ todo }: TodoListItemProps) => {
-  const { id, text, completed } = useFragment(todoListItemFragment, todo);
+  const todoData = useFragment(todoListItemFragment, todo);
+  const { id, ownId, completed } = todoData;
   const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
 
   const [commitToggle] = useMutation<TodoListItemSetCompletedMutation>(
@@ -114,7 +115,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
 
       commitToggle({
         variables: {
-          id: +fromGlobalId(id!).id,
+          id: ownId,
           completed: event.target.checked,
         },
         optimisticResponse: {
@@ -124,7 +125,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         updater,
       });
     },
-    [commitToggle, id, getConnectionRecord, completed]
+    [commitToggle, id, ownId, getConnectionRecord, completed]
   );
 
   const [commitDelete] = useMutation<TodoListItemDeleteMutation>(
@@ -150,11 +151,11 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     };
 
     commitDelete({
-      variables: { id: +fromGlobalId(id!).id },
+      variables: { id: ownId },
       optimisticUpdater: updater,
       updater,
     });
-  }, [commitDelete, id, getConnectionRecord, completed]);
+  }, [commitDelete, id, ownId, getConnectionRecord, completed]);
 
   const listItemRef = useRef(null);
   const hovered = useHoverDirty(listItemRef);
@@ -168,11 +169,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       <ListItemIcon>
         <Checkbox checked={completed} onChange={handleToggle} />
       </ListItemIcon>
-      <ListItemText
-        primary={
-          <TodoEditInput id={id!} initialValue={text} completed={completed} />
-        }
-      />
+      <ListItemText primary={<TodoEditInput todo={todoData} />} />
       <ListItemSecondaryAction>
         <CSSTransition
           in={showDeleteButton}

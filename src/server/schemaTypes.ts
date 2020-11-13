@@ -11,7 +11,7 @@ export const Todo = objectType({
   name: 'Todo',
   definition: (t) => {
     t.id('id', { resolve: ({ id }: any) => toGlobalId('Todo', id) });
-    t.model.id({ alias: 'todoid' });
+    t.model.id({ alias: 'ownId' });
     t.model.text();
     t.model.completed();
   },

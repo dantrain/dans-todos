@@ -277,8 +277,8 @@ export interface NexusGenFieldTypes {
   Todo: { // field return type
     completed: boolean; // Boolean!
     id: string | null; // ID
+    ownId: number; // Int!
     text: string; // String!
-    todoid: number; // Int!
   }
   TodoEdge: { // field return type
     cursor: string; // String!
@@ -319,8 +319,8 @@ export interface NexusGenFieldTypeNames {
   Todo: { // field return type name
     completed: 'Boolean'
     id: 'ID'
+    ownId: 'Int'
     text: 'String'
-    todoid: 'Int'
   }
   TodoEdge: { // field return type name
     cursor: 'String'

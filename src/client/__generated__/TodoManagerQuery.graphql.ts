@@ -54,6 +54,13 @@ query TodoManagerQuery(
   }
 }
 
+fragment TodoEditInputFragment on Todo {
+  id
+  ownId
+  text
+  completed
+}
+
 fragment TodoFooterFragment on UserTodos_Connection {
   totalCount
   completedCount
@@ -61,8 +68,9 @@ fragment TodoFooterFragment on UserTodos_Connection {
 
 fragment TodoListItemFragment on Todo {
   id
-  text
+  ownId
   completed
+  ...TodoEditInputFragment
 }
 
 fragment ToggleAllFragment on UserTodos_Connection {
@@ -259,7 +267,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "text",
+                        "name": "ownId",
                         "storageKey": null
                       },
                       {
@@ -267,6 +275,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "completed",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "text",
                         "storageKey": null
                       },
                       (v3/*: any*/)
@@ -312,7 +327,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e5590df22e9b286b660ff0cb0aee9e3c",
+    "cacheID": "c6d81aba9fb5bed211a82eff7de18b6a",
     "id": null,
     "metadata": {
       "connection": [
@@ -329,7 +344,7 @@ return {
     },
     "name": "TodoManagerQuery",
     "operationKind": "query",
-    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      ...ToggleAllFragment\n      ...TodoFooterFragment\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoFooterFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  text\n  completed\n}\n\nfragment ToggleAllFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n"
+    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    id\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n          __typename\n        }\n        cursor\n      }\n      ...ToggleAllFragment\n      ...TodoFooterFragment\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment TodoEditInputFragment on Todo {\n  id\n  ownId\n  text\n  completed\n}\n\nfragment TodoFooterFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  ownId\n  completed\n  ...TodoEditInputFragment\n}\n\nfragment ToggleAllFragment on UserTodos_Connection {\n  totalCount\n  completedCount\n}\n"
   }
 };
 })();

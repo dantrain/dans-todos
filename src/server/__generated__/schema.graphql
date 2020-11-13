@@ -154,8 +154,8 @@ input StringFilter {
 type Todo {
   completed: Boolean!
   id: ID
+  ownId: Int!
   text: String!
-  todoid: Int!
 }
 
 input TodoCreateInput {

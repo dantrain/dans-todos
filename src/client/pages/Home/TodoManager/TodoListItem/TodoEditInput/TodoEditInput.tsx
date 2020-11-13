@@ -1,6 +1,5 @@
 import { InputBase, makeStyles } from '@material-ui/core';
 import cn from 'classnames';
-import { fromGlobalId } from 'graphql-relay';
 import React, {
   ChangeEvent,
   KeyboardEvent,
@@ -9,8 +8,18 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { graphql, useMutation } from 'react-relay/hooks';
+import { graphql, useFragment, useMutation } from 'react-relay/hooks';
 import { TodoEditInputEditMutation } from '../../../../../__generated__/TodoEditInputEditMutation.graphql';
+import { TodoEditInputFragment$key } from '../../../../../__generated__/TodoEditInputFragment.graphql';
+
+const todoEditInputFragment = graphql`
+  fragment TodoEditInputFragment on Todo {
+    id
+    ownId
+    text
+    completed
+  }
+`;
 
 const editMutation = graphql`
   mutation TodoEditInputEditMutation($id: Int, $text: String!) {
@@ -34,32 +43,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type TodoEditInputProps = {
-  id: string;
-  initialValue: string;
-  completed: boolean;
+  todo: TodoEditInputFragment$key;
 };
 
-const TodoEditInput = ({ id, initialValue, completed }: TodoEditInputProps) => {
-  const [value, setValue] = useState(initialValue);
+const TodoEditInput = ({ todo }: TodoEditInputProps) => {
+  const { id, ownId, text, completed } = useFragment(
+    todoEditInputFragment,
+    todo
+  );
+
+  const [value, setValue] = useState(text);
   const ref = useRef<HTMLInputElement | null>(null);
   const s = useStyles();
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+    setValue(text);
+  }, [text]);
 
   const [commit] = useMutation<TodoEditInputEditMutation>(editMutation);
 
   const handleBlur = useCallback(() => {
     if (value.length) {
       commit({
-        variables: { id: +fromGlobalId(id).id, text: value.trim() },
+        variables: { id: ownId, text: value.trim() },
         optimisticResponse: { updateOneTodo: { id, text: value.trim() } },
       });
     } else {
-      setValue(initialValue);
+      setValue(text);
     }
-  }, [commit, id, initialValue, value]);
+  }, [commit, id, ownId, text, value]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
