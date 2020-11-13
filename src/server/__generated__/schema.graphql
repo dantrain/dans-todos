@@ -225,6 +225,11 @@ type User {
   ): UserTodos_Connection
 }
 
+input UserCreateOrConnectWithouttodosInput {
+  create: UserCreateWithoutTodosInput!
+  where: UserWhereUniqueInput!
+}
+
 input UserCreateWithoutTodosInput {
   id: String!
 }
@@ -246,18 +251,19 @@ type UserTodos_Connection {
 
 input UserUpdateOneRequiredWithoutTodosInput {
   connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithouttodosInput
   create: UserCreateWithoutTodosInput
-  update: UserUpdateWithoutTodosDataInput
+  update: UserUpdateWithoutTodosInput
   upsert: UserUpsertWithoutTodosInput
 }
 
-input UserUpdateWithoutTodosDataInput {
+input UserUpdateWithoutTodosInput {
   id: StringFieldUpdateOperationsInput
 }
 
 input UserUpsertWithoutTodosInput {
   create: UserCreateWithoutTodosInput!
-  update: UserUpdateWithoutTodosDataInput!
+  update: UserUpdateWithoutTodosInput!
 }
 
 input UserWhereInput {
