@@ -23,7 +23,7 @@ const schema = makeSchema({
     typegen: path.join(__dirname, '/__generated__/nexus.ts'),
   },
   contextType: {
-    module: path.join(__dirname, 'context.ts'),
+    module: path.join(process.cwd(), './src/server/context.ts'),
     export: 'Context',
   },
 });
