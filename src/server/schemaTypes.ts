@@ -77,33 +77,8 @@ export const Mutation = mutationType({
       },
     });
 
-    t.crud.updateOneTodo({
-      resolve: async (root, args, ctx, info, originalResolve) => {
-        const todo = await ctx.prisma.todo.findUnique({
-          where: { id: args.where.id || undefined },
-        });
-
-        if (todo?.userid !== ctx.userid) {
-          throw new Error("That's not your Todo mate is it?");
-        }
-
-        return originalResolve(root, args, ctx, info);
-      },
-    });
-
-    t.crud.deleteOneTodo({
-      resolve: async (root, args, ctx, info, originalResolve) => {
-        const todo = await ctx.prisma.todo.findUnique({
-          where: { id: args.where.id || undefined },
-        });
-
-        if (todo?.userid !== ctx.userid) {
-          throw new Error("That's not your Todo mate is it?");
-        }
-
-        return originalResolve(root, args, ctx, info);
-      },
-    });
+    t.crud.updateOneTodo();
+    t.crud.deleteOneTodo();
 
     t.crud.updateManyTodo({
       resolve: (root, args, ctx, info, originalResolve) =>
