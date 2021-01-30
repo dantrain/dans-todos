@@ -1,4 +1,3 @@
-import { CircularProgress } from '@material-ui/core';
 import React, {
   useCallback,
   useContext,

@@ -1,5 +1,6 @@
-import { connectionPlugin, makeSchema } from '@nexus/schema';
+import { connectionPlugin, makeSchema } from 'nexus';
 import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema';
+import path from 'path';
 import * as schemaTypes from './schemaTypes';
 
 const schema = makeSchema({
@@ -9,21 +10,21 @@ const schema = makeSchema({
       experimentalCRUD: true,
       // See https://github.com/graphql-nexus/nexus-plugin-prisma/issues/531
       outputs: {
-        typegen: __dirname + '/__generated__/typegen-nexus-plugin-prisma.d.ts',
+        typegen: path.join(
+          __dirname,
+          '/__generated__/typegen-nexus-plugin-prisma.d.ts'
+        ),
       },
     }),
     connectionPlugin(),
   ],
   outputs: {
-    schema: __dirname + '/__generated__/schema.graphql',
-    typegen: __dirname + '/__generated__/nexus.ts',
+    schema: path.join(__dirname, '/__generated__/schema.graphql'),
+    typegen: path.join(__dirname, '/__generated__/nexus.ts'),
   },
-  typegenAutoConfig: {
-    contextType: 'Context.Context',
-    sources: [
-      { source: '@prisma/client', alias: 'prisma' },
-      { source: require.resolve('./context'), alias: 'Context' },
-    ],
+  contextType: {
+    module: path.join(__dirname, 'context.ts'),
+    export: 'Context',
   },
 });
 

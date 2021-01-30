@@ -1,10 +1,4 @@
-import {
-  arg,
-  enumType,
-  mutationType,
-  objectType,
-  queryType,
-} from '@nexus/schema';
+import { arg, enumType, mutationType, objectType, queryType } from 'nexus';
 import { toGlobalId } from 'graphql-relay';
 
 export const Todo = objectType({
@@ -70,7 +64,7 @@ export const Query = queryType({
     t.field('viewer', {
       type: 'User',
       resolve: (_root, _args, { prisma, userid }) =>
-        prisma.user.findOne({ where: { id: userid } }),
+        prisma.user.findUnique({ where: { id: userid } }),
     });
   },
 });
@@ -85,7 +79,7 @@ export const Mutation = mutationType({
 
     t.crud.updateOneTodo({
       resolve: async (root, args, ctx, info, originalResolve) => {
-        const todo = await ctx.prisma.todo.findOne({
+        const todo = await ctx.prisma.todo.findUnique({
           where: { id: args.where.id || undefined },
         });
 
@@ -99,7 +93,7 @@ export const Mutation = mutationType({
 
     t.crud.deleteOneTodo({
       resolve: async (root, args, ctx, info, originalResolve) => {
-        const todo = await ctx.prisma.todo.findOne({
+        const todo = await ctx.prisma.todo.findUnique({
           where: { id: args.where.id || undefined },
         });
 

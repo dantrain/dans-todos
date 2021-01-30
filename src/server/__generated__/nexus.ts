@@ -3,15 +3,21 @@
  * Do not make changes to this file directly
  */
 
-import * as Context from "../context"
-import { core, connectionPluginCore } from "@nexus/schema"
+
+import { Context } from "./../context"
+import { core, connectionPluginCore } from "nexus"
 
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * Adds a Relay-style connection to the type, with numerous options for configuration
+     *
+     * @see https://nexusjs.org/docs/plugins/connection
+     */
     connectionField<FieldName extends string>(
-            fieldName: FieldName, 
-            config: connectionPluginCore.ConnectionFieldConfig<TypeName, FieldName> 
-          ): void
+      fieldName: FieldName,
+      config: connectionPluginCore.ConnectionFieldConfig<TypeName, FieldName>
+    ): void
   }
 }
 declare global {
@@ -133,11 +139,11 @@ export interface NexusGenInputs {
   }
   TodoWhereInput: { // input type
     AND?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
+    NOT?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
+    OR?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
     completed?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
     createdat?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
-    NOT?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
-    OR?: NexusGenInputs['TodoWhereInput'][] | null; // [TodoWhereInput!]
     text?: NexusGenInputs['StringFilter'] | null; // StringFilter
     user?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
     userid?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -168,9 +174,9 @@ export interface NexusGenInputs {
   }
   UserWhereInput: { // input type
     AND?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
-    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     NOT?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
     OR?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     todos?: NexusGenInputs['TodoListRelationFilter'] | null; // TodoListRelationFilter
   }
   UserWhereUniqueInput: { // input type
@@ -192,7 +198,7 @@ export interface NexusGenScalars {
   DateTime: any
 }
 
-export interface NexusGenRootTypes {
+export interface NexusGenObjects {
   BatchPayload: { // root type
     count: number; // Int!
   }
@@ -219,40 +225,15 @@ export interface NexusGenRootTypes {
   }
 }
 
-export interface NexusGenAllTypes extends NexusGenRootTypes {
-  BoolFieldUpdateOperationsInput: NexusGenInputs['BoolFieldUpdateOperationsInput'];
-  BoolFilter: NexusGenInputs['BoolFilter'];
-  DateTimeFieldUpdateOperationsInput: NexusGenInputs['DateTimeFieldUpdateOperationsInput'];
-  DateTimeFilter: NexusGenInputs['DateTimeFilter'];
-  IntFilter: NexusGenInputs['IntFilter'];
-  NestedBoolFilter: NexusGenInputs['NestedBoolFilter'];
-  NestedDateTimeFilter: NexusGenInputs['NestedDateTimeFilter'];
-  NestedIntFilter: NexusGenInputs['NestedIntFilter'];
-  NestedStringFilter: NexusGenInputs['NestedStringFilter'];
-  StringFieldUpdateOperationsInput: NexusGenInputs['StringFieldUpdateOperationsInput'];
-  StringFilter: NexusGenInputs['StringFilter'];
-  TodoCreateInput: NexusGenInputs['TodoCreateInput'];
-  TodoListRelationFilter: NexusGenInputs['TodoListRelationFilter'];
-  TodoUpdateInput: NexusGenInputs['TodoUpdateInput'];
-  TodoUpdateManyMutationInput: NexusGenInputs['TodoUpdateManyMutationInput'];
-  TodoWhereInput: NexusGenInputs['TodoWhereInput'];
-  TodoWhereUniqueInput: NexusGenInputs['TodoWhereUniqueInput'];
-  UserCreateOrConnectWithouttodosInput: NexusGenInputs['UserCreateOrConnectWithouttodosInput'];
-  UserCreateWithoutTodosInput: NexusGenInputs['UserCreateWithoutTodosInput'];
-  UserUpdateOneRequiredWithoutTodosInput: NexusGenInputs['UserUpdateOneRequiredWithoutTodosInput'];
-  UserUpdateWithoutTodosInput: NexusGenInputs['UserUpdateWithoutTodosInput'];
-  UserUpsertWithoutTodosInput: NexusGenInputs['UserUpsertWithoutTodosInput'];
-  UserWhereInput: NexusGenInputs['UserWhereInput'];
-  UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
-  Filter: NexusGenEnums['Filter'];
-  QueryMode: NexusGenEnums['QueryMode'];
-  String: NexusGenScalars['String'];
-  Int: NexusGenScalars['Int'];
-  Float: NexusGenScalars['Float'];
-  Boolean: NexusGenScalars['Boolean'];
-  ID: NexusGenScalars['ID'];
-  DateTime: NexusGenScalars['DateTime'];
+export interface NexusGenInterfaces {
 }
+
+export interface NexusGenUnions {
+}
+
+export type NexusGenRootTypes = NexusGenObjects
+
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   BatchPayload: { // field return type
@@ -369,32 +350,46 @@ export interface NexusGenArgTypes {
   }
 }
 
-export interface NexusGenAbstractResolveReturnTypes {
+export interface NexusGenAbstractTypeMembers {
 }
 
-export interface NexusGenInheritedFields {}
+export interface NexusGenTypeInterfaces {
+}
 
-export type NexusGenObjectNames = "BatchPayload" | "Mutation" | "PageInfo" | "Query" | "Todo" | "TodoEdge" | "User" | "UserTodos_Connection";
+export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = "BoolFieldUpdateOperationsInput" | "BoolFilter" | "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "IntFilter" | "NestedBoolFilter" | "NestedDateTimeFilter" | "NestedIntFilter" | "NestedStringFilter" | "StringFieldUpdateOperationsInput" | "StringFilter" | "TodoCreateInput" | "TodoListRelationFilter" | "TodoUpdateInput" | "TodoUpdateManyMutationInput" | "TodoWhereInput" | "TodoWhereUniqueInput" | "UserCreateOrConnectWithouttodosInput" | "UserCreateWithoutTodosInput" | "UserUpdateOneRequiredWithoutTodosInput" | "UserUpdateWithoutTodosInput" | "UserUpsertWithoutTodosInput" | "UserWhereInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = "Filter" | "QueryMode";
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = keyof NexusGenScalars;
 
 export type NexusGenUnionNames = never;
 
+export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
+
+export type NexusGenAbstractsUsingStrategyResolveType = never;
+
+export type NexusGenFeaturesConfig = {
+  abstractTypeStrategies: {
+    isTypeOf: false
+    resolveType: true
+    __typename: false
+  }
+}
+
 export interface NexusGenTypes {
-  context: Context.Context;
+  context: Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
+  inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;
   argTypes: NexusGenArgTypes;
   fieldTypes: NexusGenFieldTypes;
   fieldTypeNames: NexusGenFieldTypeNames;
   allTypes: NexusGenAllTypes;
-  inheritedFields: NexusGenInheritedFields;
+  typeInterfaces: NexusGenTypeInterfaces;
   objectNames: NexusGenObjectNames;
   inputNames: NexusGenInputNames;
   enumNames: NexusGenEnumNames;
@@ -405,7 +400,10 @@ export interface NexusGenTypes {
   allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
   allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
-  abstractResolveReturn: NexusGenAbstractResolveReturnTypes;
+  abstractTypeMembers: NexusGenAbstractTypeMembers;
+  objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf;
+  abstractsUsingStrategyResolveType: NexusGenAbstractsUsingStrategyResolveType;
+  features: NexusGenFeaturesConfig;
 }
 
 
@@ -415,6 +413,10 @@ declare global {
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
     
   }
+  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
+  }
   interface NexusGenPluginSchemaConfig {
+  }
+  interface NexusGenPluginArgConfig {
   }
 }

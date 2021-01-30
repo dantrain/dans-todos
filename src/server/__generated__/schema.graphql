@@ -193,11 +193,11 @@ input TodoUpdateManyMutationInput {
 
 input TodoWhereInput {
   AND: [TodoWhereInput!]
+  NOT: [TodoWhereInput!]
+  OR: [TodoWhereInput!]
   completed: BoolFilter
   createdat: DateTimeFilter
   id: IntFilter
-  NOT: [TodoWhereInput!]
-  OR: [TodoWhereInput!]
   text: StringFilter
   user: UserWhereInput
   userid: StringFilter
@@ -268,9 +268,9 @@ input UserUpsertWithoutTodosInput {
 
 input UserWhereInput {
   AND: [UserWhereInput!]
-  id: StringFilter
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
+  id: StringFilter
   todos: TodoListRelationFilter
 }
 

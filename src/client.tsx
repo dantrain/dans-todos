@@ -7,7 +7,7 @@ import './client/sessionTimeout';
 import patchConsole from './client/utils/patchConsole';
 
 reactRoot.render(
-  <BrowserRouter timeoutMs={1000}>
+  <BrowserRouter timeoutMs={500}>
     <App />
   </BrowserRouter>
 );

@@ -3,6 +3,15 @@ import 'express-async-errors';
 import expressSession from 'express-session';
 import redis from 'redis';
 
+declare module 'express-session' {
+  interface Session {
+    userid?: string;
+    name?: string;
+    avatar?: string;
+    supportsGoogleOneTap?: boolean;
+  }
+}
+
 const RedisStore = connectRedis(expressSession);
 const redisClient = redis.createClient({
   url: process.env.REDIS_URL,

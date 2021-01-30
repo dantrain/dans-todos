@@ -34,7 +34,7 @@ authRouter.post('/tokensignin', bodyParser.json(), async (req, res) => {
 
   logger.info(`User signed in: ${userid}`);
 
-  const user = await prisma.user.findOne({ where: { id: userid } });
+  const user = await prisma.user.findUnique({ where: { id: userid } });
 
   if (!user) {
     logger.info(`Creating new user ${userid}`);
