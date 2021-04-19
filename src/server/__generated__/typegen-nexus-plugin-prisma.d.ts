@@ -52,15 +52,15 @@ interface NexusPrismaOutputs {
   Mutation: {
     createOneUser: 'User'
     updateOneUser: 'User'
-    updateManyUser: 'BatchPayload'
+    updateManyUser: 'AffectedRowsOutput'
     deleteOneUser: 'User'
-    deleteManyUser: 'BatchPayload'
+    deleteManyUser: 'AffectedRowsOutput'
     upsertOneUser: 'User'
     createOneTodo: 'Todo'
     updateOneTodo: 'Todo'
-    updateManyTodo: 'BatchPayload'
+    updateManyTodo: 'AffectedRowsOutput'
     deleteOneTodo: 'Todo'
-    deleteManyTodo: 'BatchPayload'
+    deleteManyTodo: 'AffectedRowsOutput'
     upsertOneTodo: 'Todo'
   },
   User: {

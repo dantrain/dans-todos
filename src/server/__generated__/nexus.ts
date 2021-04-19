@@ -151,7 +151,7 @@ export interface NexusGenInputs {
   TodoWhereUniqueInput: { // input type
     id?: number | null; // Int
   }
-  UserCreateOrConnectWithouttodosInput: { // input type
+  UserCreateOrConnectWithoutTodosInput: { // input type
     create: NexusGenInputs['UserCreateWithoutTodosInput']; // UserCreateWithoutTodosInput!
     where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
   }
@@ -160,7 +160,7 @@ export interface NexusGenInputs {
   }
   UserUpdateOneRequiredWithoutTodosInput: { // input type
     connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
-    connectOrCreate?: NexusGenInputs['UserCreateOrConnectWithouttodosInput'] | null; // UserCreateOrConnectWithouttodosInput
+    connectOrCreate?: NexusGenInputs['UserCreateOrConnectWithoutTodosInput'] | null; // UserCreateOrConnectWithoutTodosInput
     create?: NexusGenInputs['UserCreateWithoutTodosInput'] | null; // UserCreateWithoutTodosInput
     update?: NexusGenInputs['UserUpdateWithoutTodosInput'] | null; // UserUpdateWithoutTodosInput
     upsert?: NexusGenInputs['UserUpsertWithoutTodosInput'] | null; // UserUpsertWithoutTodosInput
@@ -199,7 +199,7 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  BatchPayload: { // root type
+  AffectedRowsOutput: { // root type
     count: number; // Int!
   }
   Mutation: {};
@@ -236,14 +236,14 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
-  BatchPayload: { // field return type
+  AffectedRowsOutput: { // field return type
     count: number; // Int!
   }
   Mutation: { // field return type
     createOneTodo: NexusGenRootTypes['Todo']; // Todo!
-    deleteManyTodo: NexusGenRootTypes['BatchPayload']; // BatchPayload!
+    deleteManyTodo: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     deleteOneTodo: NexusGenRootTypes['Todo'] | null; // Todo
-    updateManyTodo: NexusGenRootTypes['BatchPayload']; // BatchPayload!
+    updateManyTodo: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     updateOneTodo: NexusGenRootTypes['Todo'] | null; // Todo
   }
   PageInfo: { // field return type
@@ -278,14 +278,14 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
-  BatchPayload: { // field return type name
+  AffectedRowsOutput: { // field return type name
     count: 'Int'
   }
   Mutation: { // field return type name
     createOneTodo: 'Todo'
-    deleteManyTodo: 'BatchPayload'
+    deleteManyTodo: 'AffectedRowsOutput'
     deleteOneTodo: 'Todo'
-    updateManyTodo: 'BatchPayload'
+    updateManyTodo: 'AffectedRowsOutput'
     updateOneTodo: 'Todo'
   }
   PageInfo: { // field return type name

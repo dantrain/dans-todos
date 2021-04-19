@@ -2,7 +2,7 @@
 ### Do not make changes to this file directly
 
 
-type BatchPayload {
+type AffectedRowsOutput {
   count: Int!
 }
 
@@ -51,9 +51,9 @@ input IntFilter {
 
 type Mutation {
   createOneTodo(data: TodoCreateInput!): Todo!
-  deleteManyTodo(where: TodoWhereInput): BatchPayload!
+  deleteManyTodo(where: TodoWhereInput): AffectedRowsOutput!
   deleteOneTodo(where: TodoWhereUniqueInput!): Todo
-  updateManyTodo(data: TodoUpdateManyMutationInput!, where: TodoWhereInput): BatchPayload!
+  updateManyTodo(data: TodoUpdateManyMutationInput!, where: TodoWhereInput): AffectedRowsOutput!
   updateOneTodo(data: TodoUpdateInput!, where: TodoWhereUniqueInput!): Todo
 }
 
@@ -225,7 +225,7 @@ type User {
   ): UserTodos_Connection
 }
 
-input UserCreateOrConnectWithouttodosInput {
+input UserCreateOrConnectWithoutTodosInput {
   create: UserCreateWithoutTodosInput!
   where: UserWhereUniqueInput!
 }
@@ -251,7 +251,7 @@ type UserTodos_Connection {
 
 input UserUpdateOneRequiredWithoutTodosInput {
   connect: UserWhereUniqueInput
-  connectOrCreate: UserCreateOrConnectWithouttodosInput
+  connectOrCreate: UserCreateOrConnectWithoutTodosInput
   create: UserCreateWithoutTodosInput
   update: UserUpdateWithoutTodosInput
   upsert: UserUpsertWithoutTodosInput

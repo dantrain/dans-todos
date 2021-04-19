@@ -39,7 +39,7 @@ var v0 = [
         }
       }
     ],
-    "concreteType": "BatchPayload",
+    "concreteType": "AffectedRowsOutput",
     "kind": "LinkedField",
     "name": "deleteManyTodo",
     "plural": false,

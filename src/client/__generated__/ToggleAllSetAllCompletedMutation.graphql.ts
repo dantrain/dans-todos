@@ -58,7 +58,7 @@ v1 = [
         "name": "data"
       }
     ],
-    "concreteType": "BatchPayload",
+    "concreteType": "AffectedRowsOutput",
     "kind": "LinkedField",
     "name": "updateManyTodo",
     "plural": false,
