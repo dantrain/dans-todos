@@ -7,7 +7,7 @@
   "scripts": {
     "start:tsc": "tsc -b -w --preserveWatchOutput",
     "start": "yarn run generate && concurrently -k \"yarn run start:db\" \"yarn run start:redis\" \"wait-on tcp:5432 && yarn run start:tsc\" \"razzle start\"",
-    "build": "yarn run generate && tsc -b && razzle build",
+    "build": "yarn run generate && tsc -b && razzle build --noninteractive",
     "prod": "yarn run clean && yarn run build && yarn run start:prod",
     "test": "razzle test --env=jsdom",
     "clean": "rimraf build",
