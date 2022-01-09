@@ -16,13 +16,13 @@ services:
       - 8080:80
 
   redis:
-    image: redis:6-alpine
+    image: redis:6
     volumes:
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
 
   db:
-    image: postgres:13-alpine
+    image: postgres:14
     restart: always
     environment:
       POSTGRES_PASSWORD: d1rONeFo0KL8ZwC8
