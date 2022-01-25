@@ -17,9 +17,11 @@ export const createConnectionContext = () =>
 export const useConnectionContext = (
   context: React.Context<ConnectionContextValue>
 ) => {
-  const { parentId, connectionKey, filters } = useContext<
-    ConnectionContextValue
-  >(context);
+  const {
+    parentId,
+    connectionKey,
+    filters,
+  } = useContext<ConnectionContextValue>(context);
 
   const getConnectionRecord = useCallback(
     (store: RecordSourceSelectorProxy) => {

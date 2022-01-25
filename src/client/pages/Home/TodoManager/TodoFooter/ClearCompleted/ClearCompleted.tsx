@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import React, { useCallback } from 'react';
 import { graphql, useMutation } from 'react-relay/hooks';
 import { ConnectionHandler, SelectorStoreUpdater } from 'relay-runtime';

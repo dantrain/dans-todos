@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PubSub from 'pubsub-js';
 import { CSSTransition } from 'react-transition-group';
-import { LinearProgress, makeStyles } from '@material-ui/core';
+import { LinearProgress } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles({
   root: {

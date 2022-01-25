@@ -1,4 +1,4 @@
-import { CardHeader, Divider, List } from '@material-ui/core';
+import { CardHeader, Divider, List } from '@mui/material';
 import React from 'react';
 import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 import { createConnectionContext } from '../../../utils/connectionContext';

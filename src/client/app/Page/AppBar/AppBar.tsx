@@ -3,12 +3,12 @@ import {
   Avatar,
   Container,
   IconButton,
-  makeStyles,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
   bindMenu,
   bindTrigger,
@@ -92,7 +92,6 @@ const AppBar = () => {
               </IconButton>
               <Menu
                 {...bindMenu(popupState)}
-                getContentAnchorEl={null}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'right',

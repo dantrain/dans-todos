@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/material';
 import React, { FC, useEffect } from 'react';
 import { FallbackProps } from 'react-error-boundary';
 import { AuthenticationError, NetworkError } from '../../utils/errors';

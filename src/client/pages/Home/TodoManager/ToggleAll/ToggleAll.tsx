@@ -1,5 +1,6 @@
-import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
+import { IconButton, Tooltip } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 import React, { useCallback } from 'react';
 import { graphql, useFragment, useMutation } from 'react-relay/hooks';
 import { SelectorStoreUpdater } from 'relay-runtime';
@@ -77,7 +78,7 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
       placement="top"
       enterDelay={500}
     >
-      <IconButton className={s.icon} onClick={handleClick}>
+      <IconButton className={s.icon} onClick={handleClick} size="large">
         <DoneAllIcon />
       </IconButton>
     </Tooltip>

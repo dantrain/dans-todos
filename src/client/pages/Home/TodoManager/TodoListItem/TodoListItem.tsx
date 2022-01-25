@@ -5,10 +5,10 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
-  makeStyles,
   Tooltip,
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import DeleteIcon from '@mui/icons-material/Delete';
 import cn from 'classnames';
 import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { graphql, useFragment, useMutation } from 'react-relay/hooks';
@@ -188,6 +188,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
               onBlur={() => setFocus(false)}
               className={cn({ [s.deleteButtonHide]: !showDeleteButton })}
               onClick={handleDelete}
+              size="large"
             >
               <DeleteIcon />
             </IconButton>

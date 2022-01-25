@@ -1,4 +1,5 @@
-import { Container, makeStyles } from '@material-ui/core';
+import { Container } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { FC } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet } from 'react-router-dom';
@@ -17,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     minWidth: '300px',
-    margin: `${theme.spacing(5)}px 0`,
-    [theme.breakpoints.down('xs')]: {
-      margin: `${theme.spacing(2)}px 0`,
+    margin: `${theme.spacing(5)} 0`,
+    [theme.breakpoints.down('sm')]: {
+      margin: `${theme.spacing(2)} 0`,
     },
   },
 }));

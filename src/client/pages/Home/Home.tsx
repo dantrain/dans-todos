@@ -1,4 +1,4 @@
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import capitalize from 'lodash/capitalize';
 import React from 'react';
 import { Helmet } from 'react-helmet';

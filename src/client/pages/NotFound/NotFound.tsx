@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/material';
 import React, { useContext } from 'react';
 import { Context } from '../../app/App';
 

@@ -2,17 +2,17 @@ import {
   Button,
   ButtonGroup,
   Divider,
-  fade,
-  makeStyles,
+  alpha,
   Toolbar,
   Typography,
-} from '@material-ui/core';
-import indigo from '@material-ui/core/colors/indigo';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { graphql, useFragment } from 'react-relay/hooks';
 import { NavLink } from 'react-router-dom';
 import { TodoFooterFragment$key } from '../../../../__generated__/TodoFooterFragment.graphql';
 import ClearCompleted from './ClearCompleted/ClearCompleted';
+import { indigo } from '@mui/material/colors';
 
 const fragment = graphql`
   fragment TodoFooterFragment on UserTodos_Connection {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '8px 16px',
   },
   buttonGroup: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       order: -1,
       flex: '1 0 100%',
       justifyContent: 'center',
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   active: {
     border: `1px solid ${indigo[500]} !important`,
-    backgroundColor: `${fade(indigo[500], 0.12)} !important`,
+    backgroundColor: `${alpha(indigo[500], 0.12)} !important`,
   },
 }));
 

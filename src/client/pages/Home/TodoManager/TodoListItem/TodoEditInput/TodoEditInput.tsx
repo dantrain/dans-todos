@@ -1,4 +1,5 @@
-import { InputBase, makeStyles } from '@material-ui/core';
+import { InputBase } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import cn from 'classnames';
 import React, {
   ChangeEvent,
@@ -32,7 +33,7 @@ const editMutation = graphql`
 const useStyles = makeStyles((theme) => ({
   inputBase: {
     width: '100%',
-    paddingRight: `${theme.spacing(1)}px`,
+    paddingRight: theme.spacing(1),
   },
   completed: {
     color: theme.palette.text.secondary,

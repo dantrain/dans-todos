@@ -1,4 +1,4 @@
-import { ServerStyleSheets } from '@material-ui/core';
+import ServerStyleSheets from '@mui/styles/ServerStyleSheets';
 import express from 'express';
 import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';

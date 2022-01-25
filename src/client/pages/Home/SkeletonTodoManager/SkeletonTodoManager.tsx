@@ -7,10 +7,10 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
-  makeStyles,
   Toolbar,
-} from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Skeleton } from '@mui/material';
 import React from 'react';
 import hasTouchScreen from '../../../utils/hasTouchScreen';
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
   },
   buttonGroup: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'inline-flex',
       order: -1,
       flex: '1 0 100%',
