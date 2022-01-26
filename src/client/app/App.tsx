@@ -19,7 +19,7 @@ import relayEnvironment from '../relayEnvironment';
 import ErrorSnackbar from './ErrorSnackbar/ErrorSnackbar';
 import Page from './Page/Page';
 import RemoveServerCss from './RemoveServerCss/RemoveServerCss';
-import { pink } from '@mui/material/colors';
+import { blue, grey, pink } from '@mui/material/colors';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -46,7 +46,11 @@ let defaultContext: AppContext =
 export const Context = createContext<AppContext>(defaultContext);
 
 const theme = createTheme({
-  palette: { primary: { main: '#1976d2' }, secondary: pink },
+  palette: {
+    primary: { main: blue[700] },
+    secondary: { main: pink[500] },
+    background: { default: grey[50] },
+  },
 });
 
 const App = ({ context = defaultContext }: { context?: AppContext }) => (

@@ -167,7 +167,11 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
   return (
     <ListItem ref={listItemRef}>
       <ListItemIcon>
-        <Checkbox checked={completed} onChange={handleToggle} />
+        <Checkbox
+          checked={completed}
+          onChange={handleToggle}
+          color="secondary"
+        />
       </ListItemIcon>
       <ListItemText primary={<TodoEditInput todo={todoData} />} />
       <ListItemSecondaryAction>
