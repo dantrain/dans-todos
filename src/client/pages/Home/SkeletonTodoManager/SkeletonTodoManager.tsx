@@ -1,48 +1,25 @@
 import {
-  Box,
   CardHeader,
+  css,
   Divider,
   List,
   ListItem,
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  Skeleton,
   Toolbar,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { Skeleton } from '@mui/material';
-import React from 'react';
 import hasTouchScreen from '../../../utils/hasTouchScreen';
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-  },
-  buttonGroup: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'inline-flex',
-      order: -1,
-      flex: '1 0 100%',
-      justifyContent: 'center',
-      padding: '4px 0 16px',
-      margin: '0 -24px 8px',
-      borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    },
-  },
-}));
-
 const SkeletonTodoManager = () => {
-  const s = useStyles();
-
   return (
     <>
       <CardHeader
         avatar={
-          <Box mx="11px" py="7px">
+          <div tw="mx-[11px] py-[7px]">
             <Skeleton width={20} height={34} animation="wave" />
-          </Box>
+          </div>
         }
       />
       <Divider />
@@ -50,9 +27,9 @@ const SkeletonTodoManager = () => {
         {Array.from({ length: 3 }).map((_, index) => (
           <ListItem key={index}>
             <ListItemIcon>
-              <Box mx="11px">
+              <div tw="mx-[11px]">
                 <Skeleton width={20} height={34} animation="wave" />
-              </Box>
+              </div>
             </ListItemIcon>
             <ListItemText>
               <Skeleton
@@ -63,18 +40,27 @@ const SkeletonTodoManager = () => {
             </ListItemText>
             <ListItemSecondaryAction>
               {hasTouchScreen && (
-                <Box mx="14px">
+                <div tw="mx-[14px]">
                   <Skeleton width={20} height={34} animation="wave" />
-                </Box>
+                </div>
               )}
             </ListItemSecondaryAction>
           </ListItem>
         ))}
       </List>
       <Divider />
-      <Toolbar className={s.toolbar} style={{ padding: '8px 16px 10px' }}>
+      <Toolbar
+        tw="flex justify-between flex-wrap"
+        style={{ padding: '8px 16px 10px' }}
+      >
         <Skeleton width={90} height={34} animation="wave" />
-        <div className={s.buttonGroup}>
+        <div
+          tw="inline-flex order-first justify-center pt-1 pb-4 -mx-6 mb-2 sm:flex-initial sm:order-none sm:border-none sm:m-auto sm:p-0"
+          css={css`
+            flex: 1 0 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          `}
+        >
           <Skeleton width={210} height={34} animation="wave" />
         </div>
         <Skeleton width={140} height={34} animation="wave" />

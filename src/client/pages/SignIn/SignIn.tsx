@@ -1,27 +1,10 @@
-import { Box, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { css, Global } from '@emotion/react';
+import { Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
 import Error from '../../components/Error/Error';
 import GoogleSignIn from './GoogleSignIn/GoogleSignIn';
-
-const useStyles = makeStyles((theme) => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.primary.main,
-      overflow: 'hidden',
-    },
-  },
-  main: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    maxHeight: '700px',
-  },
-}));
 
 const Logo = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -33,27 +16,30 @@ const Logo = () => (
 );
 
 const SignIn = () => {
-  const s = useStyles();
+  const theme = useTheme();
 
   return (
     <>
       <Helmet>
         <title>Sign in</title>
       </Helmet>
-      <main className={s.main}>
-        <Box
-          mt={8}
-          mb={3}
-          style={{ height: 100, width: 100 }}
-          color="primary.contrastText"
-        >
+      <Global
+        styles={css`
+          body {
+            background-color: ${theme.palette.primary.main};
+            overflow: hidden;
+          }
+        `}
+      />
+      <main tw="flex flex-col justify-center items-center h-screen max-h-[700px]">
+        <div tw="mt-16 mb-6 h-[100px] w-[100px] text-white">
           <Logo />
-        </Box>
-        <Box mb={8} color="primary.contrastText">
+        </div>
+        <div tw="mb-16 text-white">
           <Typography variant="h4" component="h1">
             Dan's Todos
           </Typography>
-        </Box>
+        </div>
         <ErrorBoundary FallbackComponent={Error}>
           <GoogleSignIn />
         </ErrorBoundary>
