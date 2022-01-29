@@ -1,40 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import PubSub from 'pubsub-js';
-import { CSSTransition } from 'react-transition-group';
+import { ClassNames } from '@emotion/react';
 import { LinearProgress } from '@mui/material';
-
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles({
-  root: {
-    marginTop: '-4px',
-    transformOrigin: 'bottom',
-  },
-  enter: {
-    opacity: 0,
-    transform: 'scaleY(0)',
-  },
-  enterActive: {
-    opacity: 1,
-    transform: 'scaleY(1)',
-    transition: 'all 200ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-  },
-  exit: {
-    opacity: 1,
-    transform: 'scaleY(1)',
-  },
-  exitActive: {
-    opacity: 0,
-    transform: 'scaleY(0)',
-    transition: 'all 250ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-  },
-});
+import PubSub from 'pubsub-js';
+import React, { useEffect, useRef, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import tw from 'twin.macro';
 
 const Progress = () => {
   const [noInFlight, setNoInFlight] = useState(0);
   const someInFlight = noInFlight > 0;
-
-  const s = useStyles();
 
   useEffect(() => {
     const startToken = PubSub.subscribe('FETCH_START', () => {
@@ -69,19 +42,33 @@ const Progress = () => {
   }, [someInFlight]);
 
   return (
-    <CSSTransition
-      in={loading}
-      timeout={{ enter: 200, exit: 250 }}
-      classNames={{
-        enter: s.enter,
-        enterActive: s.enterActive,
-        exit: s.exit,
-        exitActive: s.exitActive,
-      }}
-      unmountOnExit
-    >
-      <LinearProgress className={s.root} />
-    </CSSTransition>
+    <ClassNames>
+      {({ css }) => (
+        <CSSTransition
+          in={loading}
+          timeout={{ enter: 200, exit: 250 }}
+          classNames={{
+            enter: css`
+              ${tw`opacity-0 scale-y-0`}
+            `,
+            enterActive: css`
+              ${tw`opacity-100 scale-y-100`}
+              transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            `,
+            exit: css`
+              ${tw`opacity-100 scale-y-100`}
+            `,
+            exitActive: css`
+              ${tw`opacity-0 scale-y-0`}
+              transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            `,
+          }}
+          unmountOnExit
+        >
+          <LinearProgress tw="-mt-1 origin-bottom" />
+        </CSSTransition>
+      )}
+    </ClassNames>
   );
 };
 
