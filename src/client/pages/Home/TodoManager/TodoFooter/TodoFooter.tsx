@@ -1,18 +1,18 @@
 import {
+  alpha,
   Button,
   ButtonGroup,
+  css,
   Divider,
-  alpha,
   Toolbar,
   Typography,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { indigo } from '@mui/material/colors';
 import React from 'react';
 import { graphql, useFragment } from 'react-relay/hooks';
 import { NavLink } from 'react-router-dom';
 import { TodoFooterFragment$key } from '../../../../__generated__/TodoFooterFragment.graphql';
 import ClearCompleted from './ClearCompleted/ClearCompleted';
-import { indigo } from '@mui/material/colors';
 
 const fragment = graphql`
   fragment TodoFooterFragment on UserTodos_Connection {
@@ -21,31 +21,10 @@ const fragment = graphql`
   }
 `;
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    padding: '8px 16px',
-  },
-  buttonGroup: {
-    [theme.breakpoints.down('sm')]: {
-      order: -1,
-      flex: '1 0 100%',
-      justifyContent: 'center',
-      padding: '8px 0 16px',
-      margin: '0 -24px 8px',
-      borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    },
-  },
-  incompleteCount: {
-    minWidth: '100px',
-  },
-  active: {
-    border: `1px solid ${indigo[500]} !important`,
-    backgroundColor: `${alpha(indigo[500], 0.12)} !important`,
-  },
-}));
+const activeStyle = {
+  border: `1px solid ${indigo[500]}`,
+  backgroundColor: alpha(indigo[500], 0.12),
+};
 
 type TodoFooterProps = {
   todos: TodoFooterFragment$key;
@@ -55,27 +34,29 @@ const TodoFooter = ({ todos }: TodoFooterProps) => {
   const { totalCount, completedCount } = useFragment(fragment, todos);
   const incompleteCount = totalCount! - completedCount!;
 
-  const s = useStyles();
-
   return totalCount ? (
     <>
       <Divider />
-      <Toolbar className={s.toolbar}>
-        <Typography className={s.incompleteCount} color="textSecondary">
+      <Toolbar tw="flex flex-wrap justify-between px-4 py-2">
+        <Typography tw="min-w-[100px]" color="textSecondary">
           {incompleteCount} item{incompleteCount !== 1 && 's'} left
         </Typography>
-        <ButtonGroup color="primary" size="small" className={s.buttonGroup}>
-          <Button component={NavLink} to="/" activeClassName={s.active} end>
+        <ButtonGroup
+          color="primary"
+          size="small"
+          tw="justify-center order-first pt-1 pb-4 mb-2 -mx-6 sm:flex-initial sm:order-none sm:border-none sm:m-auto sm:p-0"
+          css={css`
+            flex: 1 0 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          `}
+        >
+          <Button component={NavLink} to="/" activeStyle={activeStyle} end>
             All
           </Button>
-          <Button component={NavLink} to="/active" activeClassName={s.active}>
+          <Button component={NavLink} to="/active" activeStyle={activeStyle}>
             Active
           </Button>
-          <Button
-            component={NavLink}
-            to="/completed"
-            activeClassName={s.active}
-          >
+          <Button component={NavLink} to="/completed" activeStyle={activeStyle}>
             Completed
           </Button>
         </ButtonGroup>

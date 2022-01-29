@@ -1,6 +1,5 @@
-import { IconButton, Tooltip } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import { css, IconButton, Tooltip, useTheme } from '@mui/material';
 import React, { useCallback } from 'react';
 import { graphql, useFragment, useMutation } from 'react-relay/hooks';
 import { SelectorStoreUpdater } from 'relay-runtime';
@@ -27,14 +26,6 @@ const setAllCompletedMutation = graphql`
   }
 `;
 
-const useStyles = makeStyles((theme) => ({
-  icon: ({ allCompleted }: { allCompleted: boolean }) => ({
-    color: allCompleted
-      ? theme.palette.text.primary
-      : theme.palette.text.secondary,
-  }),
-}));
-
 type ToggleAllProps = {
   todos: ToggleAllFragment$key;
 };
@@ -43,7 +34,7 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
   const { totalCount, completedCount } = useFragment(fragment, todos);
   const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
   const allCompleted = totalCount! > 0 && completedCount === totalCount;
-  const s = useStyles({ allCompleted });
+  const theme = useTheme();
 
   const [commit] = useMutation<ToggleAllSetAllCompletedMutation>(
     setAllCompletedMutation
@@ -78,7 +69,15 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
       placement="top"
       enterDelay={500}
     >
-      <IconButton className={s.icon} onClick={handleClick} size="large">
+      <IconButton
+        css={css`
+          color: ${allCompleted
+            ? theme.palette.text.primary
+            : theme.palette.text.secondary};
+        `}
+        onClick={handleClick}
+        size="large"
+      >
         <DoneAllIcon />
       </IconButton>
     </Tooltip>
