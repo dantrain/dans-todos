@@ -1,12 +1,13 @@
+import { css } from '@emotion/react';
 import { Container } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { FC } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet } from 'react-router-dom';
-import AppBar from './AppBar/AppBar';
 import Error from '../../components/Error/Error';
+import AppBar from './AppBar/AppBar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   '@global': {
     body: {
       minHeight: '100vh',
@@ -16,23 +17,21 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     padding: '0.02px 0',
   },
-  main: {
-    minWidth: '300px',
-    margin: `${theme.spacing(5)} 0`,
-    [theme.breakpoints.down('sm')]: {
-      margin: `${theme.spacing(2)} 0`,
-    },
-  },
 }));
 
 const Page: FC = () => {
-  const s = useStyles();
+  useStyles();
 
   return (
     <>
       <AppBar />
       <Container maxWidth="sm">
-        <main className={s.main}>
+        <main
+          tw="my-4 sm:my-10"
+          css={css`
+            min-width: 300px;
+          `}
+        >
           <ErrorBoundary FallbackComponent={Error}>
             <Outlet />
           </ErrorBoundary>

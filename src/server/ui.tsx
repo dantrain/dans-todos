@@ -41,11 +41,15 @@ uiRouter.get('/*', (req, res) => {
     )
   );
 
-  const css = sheets.toString();
   const helmet = Helmet.renderStatic();
 
   const html = renderToStaticMarkup(
-    <Index css={css} helmet={helmet} content={content} context={context} />
+    <Index
+      sheets={sheets.toString()}
+      helmet={helmet}
+      content={content}
+      context={context}
+    />
   );
 
   res.status(context.statusCode || 200).send(`<!DOCTYPE html>\n${html}`);

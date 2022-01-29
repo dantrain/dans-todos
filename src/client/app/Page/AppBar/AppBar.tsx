@@ -2,13 +2,14 @@ import {
   AppBar as MaterialAppBar,
   Avatar,
   Container,
+  css,
   IconButton,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
+  useTheme,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   bindMenu,
   bindTrigger,
@@ -18,21 +19,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Progress from '../../../components/Progress/Progress';
 import signOut from '../../../utils/signOut';
 import { Context } from '../../App';
-
-const useStyles = makeStyles((theme) => ({
-  safeArea: {
-    height: 'env(safe-area-inset-top)',
-    backgroundColor: theme.palette.primary.dark,
-  },
-  toolbar: { justifyContent: 'space-between' },
-  titleLink: { textDecoration: 'none', color: 'inherit' },
-  avatarButton: { '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' } },
-  avatar: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    backgroundColor: '#4791db',
-  },
-}));
 
 const AppBar = () => {
   const context = useContext(Context);
@@ -67,14 +53,26 @@ const AppBar = () => {
     installPrompt?.prompt();
   }, [installPrompt]);
 
-  const s = useStyles();
+  const theme = useTheme();
 
   return (
     <MaterialAppBar position="sticky">
-      <div className={s.safeArea} />
+      <div
+        css={css`
+          height: env(safe-area-inset-top);
+          background-color: ${theme.palette.primary.dark};
+        `}
+      />
       <Container maxWidth="sm">
-        <Toolbar className={s.toolbar}>
-          <a className={s.titleLink} title="Home" href="/">
+        <Toolbar tw="justify-between">
+          <a
+            tw="no-underline"
+            css={css`
+              color: inherit;
+            `}
+            title="Home"
+            href="/"
+          >
             <Typography variant="h5" component="h1">
               {context.name ? `${context.name}'s Todos` : "Dan's Todos"}
             </Typography>
@@ -82,13 +80,13 @@ const AppBar = () => {
           {context.avatar && context.name ? (
             <>
               <IconButton
-                className={s.avatarButton}
+                tw="hover:bg-[rgba(0,0,0,0.1)]"
                 color="inherit"
                 size="small"
                 disableRipple
                 {...bindTrigger(popupState)}
               >
-                <Avatar className={s.avatar} src={context.avatar} />
+                <Avatar tw="w-8 h-8 bg-[#4791db]" src={context.avatar} />
               </IconButton>
               <Menu
                 {...bindMenu(popupState)}

@@ -20,6 +20,7 @@ import ErrorSnackbar from './ErrorSnackbar/ErrorSnackbar';
 import Page from './Page/Page';
 import RemoveServerCss from './RemoveServerCss/RemoveServerCss';
 import { blue, grey, pink } from '@mui/material/colors';
+import 'twin.macro';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

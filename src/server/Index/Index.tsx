@@ -9,13 +9,13 @@ const isProduction = process.env.NODE_ENV === 'production';
 let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 type IndexProps = {
-  css: string;
+  sheets: string;
   helmet: HelmetData;
   content: string;
   context: AppContext;
 };
 
-const Index = ({ css, helmet, content, context }: IndexProps) => {
+const Index = ({ sheets, helmet, content, context }: IndexProps) => {
   const contextJs = `window.__CONTEXT__ = ${serialize(context, {
     isJSON: true,
   })}`;
@@ -49,7 +49,10 @@ const Index = ({ css, helmet, content, context }: IndexProps) => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=block"
         />
-        <style id="jss-server-side" dangerouslySetInnerHTML={{ __html: css }} />
+        <style
+          id="jss-server-side"
+          dangerouslySetInnerHTML={{ __html: sheets }}
+        />
         {assets?.client?.css && (
           <link rel="stylesheet" href={assets.client.css} />
         )}
