@@ -5,7 +5,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import { SnackbarProvider } from 'notistack';
 import React, { createContext, FC } from 'react';
 import { Helmet } from 'react-helmet';
-import { RelayEnvironmentProvider } from 'react-relay/hooks';
+import { Environment, RelayEnvironmentProvider } from 'react-relay/hooks';
 import { Route, Routes } from 'react-router-dom';
 import 'twin.macro';
 import Home from '../pages/Home/Home';
@@ -45,7 +45,9 @@ const theme = createTheme({
 const App = ({ context = defaultContext }: { context?: AppContext }) => (
   <Context.Provider value={context}>
     <ThemeProvider theme={theme}>
-      <RelayEnvironmentProvider environment={relayEnvironment}>
+      <RelayEnvironmentProvider
+        environment={(relayEnvironment as unknown) as Environment}
+      >
         <Helmet
           titleTemplate={`${context.name || 'Dan'}'s Todos · %s`}
           defaultTitle={`${context.name || 'Dan'}'s Todos`}
