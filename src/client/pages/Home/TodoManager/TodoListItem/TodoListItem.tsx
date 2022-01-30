@@ -66,15 +66,14 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
   const { id, ownId, completed } = todoData;
   const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
 
-  const [commitToggle] = useMutation<TodoListItemSetCompletedMutation>(
-    setCompletedMutation
-  );
+  const [commitToggle] =
+    useMutation<TodoListItemSetCompletedMutation>(setCompletedMutation);
 
   const handleToggle = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      const updater: SelectorStoreUpdater<TodoListItemSetCompletedMutationResponse> = (
-        store
-      ) => {
+      const updater: SelectorStoreUpdater<
+        TodoListItemSetCompletedMutationResponse
+      > = (store) => {
         const connectionRecord = getConnectionRecord(store);
         connectionRecord.setValue(
           +(connectionRecord.getValue('completedCount') || 0) +
@@ -98,9 +97,8 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     [commitToggle, id, ownId, getConnectionRecord, completed]
   );
 
-  const [commitDelete] = useMutation<TodoListItemDeleteMutation>(
-    deleteMutation
-  );
+  const [commitDelete] =
+    useMutation<TodoListItemDeleteMutation>(deleteMutation);
 
   const handleDelete = useCallback(() => {
     const updater: SelectorStoreUpdater<TodoListItemDeleteMutationResponse> = (

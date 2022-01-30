@@ -122,7 +122,7 @@
     "html-webpack-plugin": "5.3.1",
     "mini-css-extract-plugin": "1.5.0",
     "postcss": "8.2.10",
-    "prettier": "^2.2.1",
+    "prettier": "^2.5.1",
     "prisma": "^2.21.2",
     "razzle": "^4.0.4",
     "razzle-dev-utils": "^4.0.4",

@@ -31,10 +31,8 @@ const AppBar = () => {
     signOut({ destroySession: true, disableAuto: true });
   }, []);
 
-  const [
-    installPrompt,
-    setInstallPrompt,
-  ] = useState<BeforeInstallPromptEvent | null>(null);
+  const [installPrompt, setInstallPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

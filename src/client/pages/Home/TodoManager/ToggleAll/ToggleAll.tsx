@@ -41,9 +41,9 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
   );
 
   const handleClick = useCallback(() => {
-    const updater: SelectorStoreUpdater<ToggleAllSetAllCompletedMutationResponse> = (
-      store
-    ) => {
+    const updater: SelectorStoreUpdater<
+      ToggleAllSetAllCompletedMutationResponse
+    > = (store) => {
       const connectionRecord = getConnectionRecord(store);
       connectionRecord
         .getLinkedRecords('edges')
