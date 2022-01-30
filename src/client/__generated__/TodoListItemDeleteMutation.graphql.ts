@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type TodoListItemDeleteMutationVariables = {
-    id?: number | null;
+    id?: number | null | undefined;
 };
 export type TodoListItemDeleteMutationResponse = {
     readonly deleteOneTodo: {

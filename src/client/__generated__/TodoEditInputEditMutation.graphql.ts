@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type TodoEditInputEditMutationVariables = {
-    id?: number | null;
+    id?: number | null | undefined;
     text: string;
 };
 export type TodoEditInputEditMutationResponse = {

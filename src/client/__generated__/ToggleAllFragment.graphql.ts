@@ -11,7 +11,7 @@ export type ToggleAllFragment = {
 };
 export type ToggleAllFragment$data = ToggleAllFragment;
 export type ToggleAllFragment$key = {
-    readonly " $data"?: ToggleAllFragment$data;
+    readonly " $data"?: ToggleAllFragment$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ToggleAllFragment">;
 };
 

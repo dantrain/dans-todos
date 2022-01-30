@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Filter = "ACTIVE" | "ALL" | "COMPLETED" | "%future added value";
 export type TodoManagerQueryVariables = {
-    filter?: Filter | null;
+    filter?: Filter | null | undefined;
 };
 export type TodoManagerQueryResponse = {
     readonly viewer: {

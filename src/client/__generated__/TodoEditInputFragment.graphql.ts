@@ -13,7 +13,7 @@ export type TodoEditInputFragment = {
 };
 export type TodoEditInputFragment$data = TodoEditInputFragment;
 export type TodoEditInputFragment$key = {
-    readonly " $data"?: TodoEditInputFragment$data;
+    readonly " $data"?: TodoEditInputFragment$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TodoEditInputFragment">;
 };
 

@@ -14,7 +14,7 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
   PubSub.publish('FETCH_START');
 
   try {
-    let response: any;
+    let response: Response;
 
     try {
       response = await fetch('/graphql', {
@@ -28,7 +28,7 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
         }),
       });
     } catch (err) {
-      throw new NetworkError(err.message);
+      throw new NetworkError(err instanceof Error ? err.message : '');
     }
 
     const data = await response.json();

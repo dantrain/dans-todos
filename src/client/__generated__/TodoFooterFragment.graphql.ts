@@ -11,7 +11,7 @@ export type TodoFooterFragment = {
 };
 export type TodoFooterFragment$data = TodoFooterFragment;
 export type TodoFooterFragment$key = {
-    readonly " $data"?: TodoFooterFragment$data;
+    readonly " $data"?: TodoFooterFragment$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TodoFooterFragment">;
 };
 

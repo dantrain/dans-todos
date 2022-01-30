@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type ToggleAllSetAllCompletedMutationVariables = {
-    completed?: boolean | null;
+    completed?: boolean | null | undefined;
 };
 export type ToggleAllSetAllCompletedMutationResponse = {
     readonly updateManyTodo: {

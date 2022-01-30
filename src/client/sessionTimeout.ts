@@ -1,12 +1,6 @@
 import PubSub from 'pubsub-js';
 import signOut from './utils/signOut';
 
-declare global {
-  interface Window {
-    requestIdleCallback: any;
-  }
-}
-
 if (window.__CONTEXT__.signedIn) {
   const MAX_AGE = +process.env.RAZZLE_SESSION_MAX_AGE!;
   const MAX_WAIT = Math.min(MAX_AGE + 1000, 43200000);

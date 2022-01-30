@@ -13,7 +13,7 @@ export type TodoListItemFragment = {
 };
 export type TodoListItemFragment$data = TodoListItemFragment;
 export type TodoListItemFragment$key = {
-    readonly " $data"?: TodoListItemFragment$data;
+    readonly " $data"?: TodoListItemFragment$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
 };
 

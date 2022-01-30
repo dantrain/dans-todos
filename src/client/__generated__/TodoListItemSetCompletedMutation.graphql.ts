@@ -4,8 +4,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type TodoListItemSetCompletedMutationVariables = {
-    id?: number | null;
-    completed?: boolean | null;
+    id?: number | null | undefined;
+    completed?: boolean | null | undefined;
 };
 export type TodoListItemSetCompletedMutationResponse = {
     readonly updateOneTodo: {
