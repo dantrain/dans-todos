@@ -4,8 +4,8 @@
  */
 
 
-import { Context } from "./../context"
-import { core, connectionPluginCore } from "nexus"
+import type { Context } from "./../context"
+import type { core, connectionPluginCore } from "nexus"
 
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
@@ -409,6 +409,8 @@ export interface NexusGenTypes {
 
 declare global {
   interface NexusGenPluginTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
     
