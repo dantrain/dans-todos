@@ -1,6 +1,6 @@
-import { Fab, InputBase, Tooltip } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { ClassNames, css } from '@emotion/react';
 import AddIcon from '@mui/icons-material/Add';
+import { Fab, InputBase, Tooltip } from '@mui/material';
 import React, {
   ChangeEvent,
   KeyboardEvent,
@@ -27,40 +27,6 @@ const createMutation = graphql`
     }
   }
 `;
-
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    width: '100%',
-  },
-  inputBase: {
-    width: '100%',
-    marginRight: '16px',
-  },
-  addButtonWrapper: {
-    flex: '0 0 48px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  addButtonEnter: {
-    opacity: 0,
-    transform: 'scale(0.8)',
-  },
-  addButtonEnterActive: {
-    opacity: 1,
-    transition:
-      'opacity 150ms cubic-bezier(0.4, 0.0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-    transform: 'scale(1)',
-  },
-  addButtonExit: {
-    opacity: 1,
-  },
-  addButtonExitActive: {
-    opacity: 0,
-    transition: 'opacity 75ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-  },
-});
 
 const TodoInput = () => {
   const [value, setValue] = useState('');
@@ -138,13 +104,11 @@ const TodoInput = () => {
     return () => clearTimeout(timeout);
   }, [rippling]);
 
-  const s = useStyles();
-
   return (
-    <div className={s.root}>
+    <div tw="flex w-full">
       <InputBase
         inputRef={ref}
-        className={s.inputBase}
+        tw="w-full mr-4"
         placeholder="What needs to be done?"
         value={value}
         onChange={handleChange}
@@ -152,25 +116,47 @@ const TodoInput = () => {
         autoFocus
         multiline
       />
-      <div className={s.addButtonWrapper}>
-        <CSSTransition
-          in={!!text.length || rippling}
-          timeout={{ enter: 150, exit: 75 }}
-          classNames={{
-            enter: s.addButtonEnter,
-            enterActive: s.addButtonEnterActive,
-            exit: s.addButtonExit,
-            exitActive: s.addButtonExitActive,
-          }}
-          mountOnEnter
-          unmountOnExit
-        >
-          <Tooltip title="Add todo" placement="top">
-            <Fab size="small" color="secondary" onClick={handleClick}>
-              <AddIcon />
-            </Fab>
-          </Tooltip>
-        </CSSTransition>
+      <div
+        tw="flex items-center justify-center"
+        css={css`
+          flex: 0 0 48px;
+        `}
+      >
+        <ClassNames>
+          {({ css }) => (
+            <CSSTransition
+              in={!!text.length || rippling}
+              timeout={{ enter: 200, exit: 100 }}
+              classNames={{
+                enter: css`
+                  opacity: 0;
+                  transform: scale(0.8);
+                `,
+                enterActive: css`
+                  opacity: 1;
+                  transform: scale(1);
+                  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+                `,
+                exit: css`
+                  opacity: 1;
+                `,
+                exitActive: css`
+                  opacity: 0;
+                  transition: opacity 100ms cubic-bezier(0.4, 0, 0.2, 1);
+                `,
+              }}
+              mountOnEnter
+              unmountOnExit
+            >
+              <Tooltip title="Add todo" placement="top">
+                <Fab size="small" color="secondary" onClick={handleClick}>
+                  <AddIcon />
+                </Fab>
+              </Tooltip>
+            </CSSTransition>
+          )}
+        </ClassNames>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { ClassNames } from '@emotion/react';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Checkbox,
   IconButton,
@@ -7,14 +9,12 @@ import {
   ListItemText,
   Tooltip,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import DeleteIcon from '@mui/icons-material/Delete';
-import cn from 'classnames';
 import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { graphql, useFragment, useMutation } from 'react-relay/hooks';
 import { CSSTransition } from 'react-transition-group';
 import useHoverDirty from 'react-use/lib/useHoverDirty';
 import { ConnectionHandler, SelectorStoreUpdater } from 'relay-runtime';
+import tw from 'twin.macro';
 import { useConnectionContext } from '../../../../utils/connectionContext';
 import hasTouchScreen from '../../../../utils/hasTouchScreen';
 import {
@@ -56,36 +56,6 @@ const deleteMutation = graphql`
     }
   }
 `;
-
-const useStyles = makeStyles({
-  deleteButtonHide: {
-    opacity: 0,
-  },
-  deleteButtonEnter: {
-    opacity: 0,
-    '& svg': {
-      transform: 'scale(0.8)',
-    },
-  },
-  deleteButtonEnterActive: {
-    opacity: 1,
-    transition: 'opacity 150ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-    '& svg': {
-      transform: 'scale(1)',
-      transition: 'transform 150ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-    },
-  },
-  deleteButtonExit: {
-    opacity: 1,
-  },
-  deleteButtonExitActive: {
-    opacity: 0,
-    transition: 'opacity 75ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-  },
-  deleteButtonExitDone: {
-    opacity: 0,
-  },
-});
 
 type TodoListItemProps = {
   todo: TodoListItemFragment$key;
@@ -162,8 +132,6 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
   const [focussed, setFocus] = useState(false);
   const showDeleteButton = hasTouchScreen || focussed || hovered;
 
-  const s = useStyles();
-
   return (
     <ListItem ref={listItemRef}>
       <ListItemIcon>
@@ -175,29 +143,52 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       </ListItemIcon>
       <ListItemText primary={<TodoEditInput todo={todoData} />} />
       <ListItemSecondaryAction>
-        <CSSTransition
-          in={showDeleteButton}
-          timeout={{ enter: 150, exit: 75 }}
-          classNames={{
-            enter: s.deleteButtonEnter,
-            enterActive: s.deleteButtonEnterActive,
-            exit: s.deleteButtonExit,
-            exitActive: s.deleteButtonExitActive,
-            exitDone: s.deleteButtonExitDone,
-          }}
-        >
-          <Tooltip title="Delete">
-            <IconButton
-              onFocusVisible={() => setFocus(true)}
-              onBlur={() => setFocus(false)}
-              className={cn({ [s.deleteButtonHide]: !showDeleteButton })}
-              onClick={handleDelete}
-              size="large"
+        <ClassNames>
+          {({ css }) => (
+            <CSSTransition
+              in={showDeleteButton}
+              timeout={{ enter: 150, exit: 75 }}
+              classNames={{
+                enter: css`
+                  opacity: 0;
+                  & svg {
+                    transform: scale(0.8);
+                  }
+                `,
+                enterActive: css`
+                  opacity: 1;
+                  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+                  & svg {
+                    transform: scale(1);
+                    transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+                  }
+                `,
+                exit: css`
+                  opacity: 1;
+                `,
+                exitActive: css`
+                  opacity: 0;
+                  transition: opacity 75ms cubic-bezier(0.4, 0, 0.2, 1);
+                `,
+                exitDone: css`
+                  opacity: 0;
+                `,
+              }}
             >
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        </CSSTransition>
+              <Tooltip title="Delete">
+                <IconButton
+                  onFocusVisible={() => setFocus(true)}
+                  onBlur={() => setFocus(false)}
+                  css={[!showDeleteButton && tw`opacity-0`]}
+                  onClick={handleDelete}
+                  size="large"
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </CSSTransition>
+          )}
+        </ClassNames>
       </ListItemSecondaryAction>
     </ListItem>
   );

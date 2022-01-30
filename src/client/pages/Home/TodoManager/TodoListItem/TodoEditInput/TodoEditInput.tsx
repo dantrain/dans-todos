@@ -1,6 +1,4 @@
-import { InputBase } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import cn from 'classnames';
+import { css, InputBase, useTheme } from '@mui/material';
 import React, {
   ChangeEvent,
   KeyboardEvent,
@@ -10,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { graphql, useFragment, useMutation } from 'react-relay/hooks';
+import tw from 'twin.macro';
 import { TodoEditInputEditMutation } from '../../../../../__generated__/TodoEditInputEditMutation.graphql';
 import { TodoEditInputFragment$key } from '../../../../../__generated__/TodoEditInputFragment.graphql';
 
@@ -30,19 +29,6 @@ const editMutation = graphql`
   }
 `;
 
-const useStyles = makeStyles((theme) => ({
-  inputBase: {
-    width: '100%',
-    paddingRight: theme.spacing(1),
-  },
-  completed: {
-    color: theme.palette.text.secondary,
-    '& textarea:focus': {
-      color: theme.palette.text.primary,
-    },
-  },
-}));
-
 type TodoEditInputProps = {
   todo: TodoEditInputFragment$key;
 };
@@ -55,7 +41,7 @@ const TodoEditInput = ({ todo }: TodoEditInputProps) => {
 
   const [value, setValue] = useState(text);
   const ref = useRef<HTMLInputElement | null>(null);
-  const s = useStyles();
+  const theme = useTheme();
 
   useEffect(() => {
     setValue(text);
@@ -88,7 +74,16 @@ const TodoEditInput = ({ todo }: TodoEditInputProps) => {
   return (
     <InputBase
       inputRef={ref}
-      className={cn(s.inputBase, { [s.completed]: completed })}
+      css={[
+        tw`w-full pr-2`,
+        completed &&
+          css`
+            color: ${theme.palette.text.secondary};
+            & textarea:focus {
+              color: ${theme.palette.text.primary};
+            }
+          `,
+      ]}
       value={value}
       onChange={handleChange}
       onKeyDown={handleKeyDown}

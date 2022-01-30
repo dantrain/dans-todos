@@ -3,7 +3,6 @@ import { LinearProgress } from '@mui/material';
 import PubSub from 'pubsub-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import tw from 'twin.macro';
 
 const Progress = () => {
   const [noInFlight, setNoInFlight] = useState(0);
@@ -49,17 +48,21 @@ const Progress = () => {
           timeout={{ enter: 200, exit: 250 }}
           classNames={{
             enter: css`
-              ${tw`opacity-0 scale-y-0`}
+              opacity: 0;
+              transform: scaleY(0);
             `,
             enterActive: css`
-              ${tw`opacity-100 scale-y-100`}
+              opacity: 1;
+              transform: scaleY(1);
               transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
             `,
             exit: css`
-              ${tw`opacity-100 scale-y-100`}
+              opacity: 1;
+              transform: scaleY(1);
             `,
             exitActive: css`
-              ${tw`opacity-0 scale-y-0`}
+              opacity: 0;
+              transform: scaleY(0);
               transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
             `,
           }}
