@@ -1,10 +1,10 @@
 import {
   createTheme,
   Grow,
-  ThemeProvider,
-  Theme,
   StyledEngineProvider,
+  ThemeProvider,
 } from '@mui/material';
+import { blue, grey, pink } from '@mui/material/colors';
 import CssBaseline from '@mui/material/CssBaseline';
 import { TransitionProps } from '@mui/material/transitions';
 import { SnackbarProvider } from 'notistack';
@@ -12,6 +12,7 @@ import React, { createContext, FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import { Route, Routes } from 'react-router-dom';
+import 'twin.macro';
 import Home from '../pages/Home/Home';
 import NotFound from '../pages/NotFound/NotFound';
 import SignIn from '../pages/SignIn/SignIn';
@@ -19,13 +20,6 @@ import relayEnvironment from '../relayEnvironment';
 import ErrorSnackbar from './ErrorSnackbar/ErrorSnackbar';
 import Page from './Page/Page';
 import RemoveServerCss from './RemoveServerCss/RemoveServerCss';
-import { blue, grey, pink } from '@mui/material/colors';
-import 'twin.macro';
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 export type AppContext = {
   statusCode?: number;
@@ -64,7 +58,7 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => (
             defaultTitle={`${context.name || 'Dan'}'s Todos`}
           />
           <CssBaseline />
-          <RemoveServerCss />
+          {/* <RemoveServerCss /> */}
           <SnackbarProvider
             maxSnack={3}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

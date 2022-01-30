@@ -1,6 +1,4 @@
-import ServerStyleSheets from '@mui/styles/ServerStyleSheets';
 import express from 'express';
-import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { Helmet } from 'react-helmet';
 import { StaticRouter } from 'react-router-dom/server';
@@ -31,25 +29,16 @@ uiRouter.get('/*', (req, res) => {
     context.supportsGoogleOneTap = req.session.supportsGoogleOneTap;
   }
 
-  const sheets = new ServerStyleSheets();
-
   const content = renderToString(
-    sheets.collect(
-      <StaticRouter location={req.url}>
-        <App context={context} />
-      </StaticRouter>
-    )
+    <StaticRouter location={req.url}>
+      <App context={context} />
+    </StaticRouter>
   );
 
   const helmet = Helmet.renderStatic();
 
   const html = renderToStaticMarkup(
-    <Index
-      sheets={sheets.toString()}
-      helmet={helmet}
-      content={content}
-      context={context}
-    />
+    <Index helmet={helmet} content={content} context={context} />
   );
 
   res.status(context.statusCode || 200).send(`<!DOCTYPE html>\n${html}`);
