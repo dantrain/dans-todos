@@ -11,10 +11,20 @@ let assets: any = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 type IndexProps = {
   helmet: HelmetData;
   content: string;
+  emotion: {
+    key: string;
+    css: string;
+    ids: string[];
+  };
   context: AppContext;
 };
 
-const Index = ({ helmet, content, context }: IndexProps) => {
+const Index = ({
+  helmet,
+  content,
+  emotion: { key, css, ids },
+  context,
+}: IndexProps) => {
   const contextJs = `window.__CONTEXT__ = ${serialize(context, {
     isJSON: true,
   })}`;
@@ -47,6 +57,10 @@ const Index = ({ helmet, content, context }: IndexProps) => {
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=block"
+        />
+        <style
+          data-emotion={`${key} ${ids.join(' ')}`}
+          dangerouslySetInnerHTML={{ __html: css }}
         />
         {assets?.client?.css && (
           <link rel="stylesheet" href={assets.client.css} />

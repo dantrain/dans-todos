@@ -1,9 +1,4 @@
-import {
-  createTheme,
-  Grow,
-  StyledEngineProvider,
-  ThemeProvider,
-} from '@mui/material';
+import { createTheme, Grow, ThemeProvider } from '@mui/material';
 import { blue, grey, pink } from '@mui/material/colors';
 import CssBaseline from '@mui/material/CssBaseline';
 import { TransitionProps } from '@mui/material/transitions';
@@ -19,7 +14,6 @@ import SignIn from '../pages/SignIn/SignIn';
 import relayEnvironment from '../relayEnvironment';
 import ErrorSnackbar from './ErrorSnackbar/ErrorSnackbar';
 import Page from './Page/Page';
-import RemoveServerCss from './RemoveServerCss/RemoveServerCss';
 
 export type AppContext = {
   statusCode?: number;
@@ -50,35 +44,32 @@ const theme = createTheme({
 
 const App = ({ context = defaultContext }: { context?: AppContext }) => (
   <Context.Provider value={context}>
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <RelayEnvironmentProvider environment={relayEnvironment}>
-          <Helmet
-            titleTemplate={`${context.name || 'Dan'}'s Todos · %s`}
-            defaultTitle={`${context.name || 'Dan'}'s Todos`}
-          />
-          <CssBaseline />
-          {/* <RemoveServerCss /> */}
-          <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            autoHideDuration={3000}
-            TransitionComponent={Grow as FC<TransitionProps>}
-          >
-            <ErrorSnackbar />
-            <Routes>
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/" element={<Page />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/active" element={<Home />} />
-                <Route path="/completed" element={<Home />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </SnackbarProvider>
-        </RelayEnvironmentProvider>
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <ThemeProvider theme={theme}>
+      <RelayEnvironmentProvider environment={relayEnvironment}>
+        <Helmet
+          titleTemplate={`${context.name || 'Dan'}'s Todos · %s`}
+          defaultTitle={`${context.name || 'Dan'}'s Todos`}
+        />
+        <CssBaseline />
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          autoHideDuration={3000}
+          TransitionComponent={Grow as FC<TransitionProps>}
+        >
+          <ErrorSnackbar />
+          <Routes>
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/" element={<Page />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/active" element={<Home />} />
+              <Route path="/completed" element={<Home />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </SnackbarProvider>
+      </RelayEnvironmentProvider>
+    </ThemeProvider>
   </Context.Provider>
 );
 
