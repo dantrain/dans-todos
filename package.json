@@ -51,7 +51,7 @@
     "graphql-middleware": "^6.1.13",
     "graphql-relay": "^0.10.0",
     "graphql-shield": "^7.5.0",
-    "helmet": "^4.4.1",
+    "helmet": "^5.0.2",
     "history": "^5.2.0",
     "lodash": "^4.17.20",
     "material-ui-popup-state": "^2.0.0",
@@ -71,7 +71,7 @@
     "react-use": "^17.3.2",
     "redis": "^3.1.2",
     "relay-runtime": "^11.0.2",
-    "serialize-javascript": "^5.0.1",
+    "serialize-javascript": "^6.0.0",
     "useragent": "^2.3.0",
     "winston": "^3.5.0"
   },

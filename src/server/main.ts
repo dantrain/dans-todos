@@ -20,7 +20,6 @@ const getApp = async () => {
     app.use(
       helmet({
         referrerPolicy: { policy: 'origin' },
-        // TODO: Add this back, see https://material-ui.com/styles/advanced/#content-security-policy-csp
         contentSecurityPolicy: false,
       })
     );
