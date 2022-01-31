@@ -13,36 +13,42 @@ import schema from './schema';
 import session from './session';
 import uiRouter from './ui';
 
-const app = express();
+const getApp = async () => {
+  const app = express();
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(
-    helmet({
-      referrerPolicy: { policy: 'origin' },
-      // TODO: Add this back, see https://material-ui.com/styles/advanced/#content-security-policy-csp
-      contentSecurityPolicy: false,
-    })
-  );
-}
+  if (process.env.NODE_ENV === 'production') {
+    app.use(
+      helmet({
+        referrerPolicy: { policy: 'origin' },
+        // TODO: Add this back, see https://material-ui.com/styles/advanced/#content-security-policy-csp
+        contentSecurityPolicy: false,
+      })
+    );
+  }
 
-app.use(compression());
+  app.use(compression());
 
-app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
+  app.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
 
-app.use(session);
+  app.use(session);
 
-app.use(authRouter);
+  app.use(authRouter);
 
-const apolloServer = new ApolloServer({
-  schema: applyMiddleware(schema, permissions),
-  context,
-  plugins,
-});
+  const apolloServer = new ApolloServer({
+    schema: applyMiddleware(schema, permissions),
+    context,
+    plugins,
+  });
 
-apolloServer.applyMiddleware({ app });
+  await apolloServer.start();
 
-app.use(uiRouter);
+  apolloServer.applyMiddleware({ app });
 
-app.use(errorHandler);
+  app.use(uiRouter);
 
-export default app;
+  app.use(errorHandler);
+
+  return app;
+};
+
+export default getApp;

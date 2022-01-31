@@ -1,6 +1,12 @@
 /// <reference types="react-dom/experimental" />
 /// <reference types="react/experimental" />
 
+declare namespace Express {
+  export interface Application {
+    handle: (req: any, res: any) => void;
+  }
+}
+
 declare module '*.module.css' {
   const classes: { [key: string]: string };
   export default classes;
