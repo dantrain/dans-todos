@@ -2239,15 +2239,15 @@
   dependencies:
     "@types/express" "*"
 
-"@types/connect-redis@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@types/connect-redis/-/connect-redis-0.0.16.tgz#fd98a26ffbe6ac3037baa4aecc940951b9f78cdc"
-  integrity sha512-ToZRmwoeqRhzGIqMO9k8Hs1B9pFSGYCjHvMpPlgo+kQ4M7xaPwi2/5HjikJ0MOfPDFcAe9Qwl1SaULYCNE6jYg==
+"@types/connect-redis@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@types/connect-redis/-/connect-redis-0.0.18.tgz#f2dd17607626a741177efa22641cc2030924eda3"
+  integrity sha512-iGygGbXgPIr94DEAuoluWhzre3c2/ew5NPlbW9IWvwCTXMM1YCmc7M9wpXMkYqt6kB9aO1sjZnmDzyugUu+2vQ==
   dependencies:
     "@types/express" "*"
     "@types/express-session" "*"
     "@types/ioredis" "*"
-    "@types/redis" "*"
+    "@types/redis" "^2.8.0"
 
 "@types/connect@*":
   version "3.4.35"
@@ -2332,10 +2332,10 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/gapi.auth2@^0.0.54":
-  version "0.0.54"
-  resolved "https://registry.yarnpkg.com/@types/gapi.auth2/-/gapi.auth2-0.0.54.tgz#812207fb213fde4f2d74e6f0abd9da7ba34782ac"
-  integrity sha512-4HEphaKsGndb9+tnd2PBBmxloaij04iYXVsjgHpFxqbPFt5Le6pasoh5g5BEtwp/YEm9xDbzssp44BYR2/7RcQ==
+"@types/gapi.auth2@^0.0.56":
+  version "0.0.56"
+  resolved "https://registry.yarnpkg.com/@types/gapi.auth2/-/gapi.auth2-0.0.56.tgz#2f7031f79390b8401e7950d8277ada874fd2731c"
+  integrity sha512-kGaBtGVCqGS3Y05L56dGVlBpJflxLfwA0zpMQnQgGRFk1tsMPbQnogG51UQjt1vCuYfRO0Jd9/K5KDtzjAbMkA==
   dependencies:
     "@types/gapi" "*"
 
@@ -2359,12 +2359,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/graphql-relay@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@types/graphql-relay/-/graphql-relay-0.6.0.tgz#c3dac6a2944fe02372e2b8eee44b7ce474234f6d"
-  integrity sha512-/o2GDW22mdggQ9PUSNMbYFJMrCMwwiX8uu1/xS1rbDEdcC6+OVBy9Uz5ePW2zLDzhOznh3Ozm5t09jHqaY8cuw==
+"@types/graphql-relay@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@types/graphql-relay/-/graphql-relay-0.7.0.tgz#e6187e7ba76bbf3dccbef32a21ba5d23affa7160"
+  integrity sha512-LQHsyXFX5ZXFxgrLlRg5skLp17GBVTEzM8IE0iIt9Id5EwxS80qhdj2H01+7GzCPcRxVdQqbIFlTRUU6QFhaFw==
   dependencies:
-    graphql "^14.5.3 || ^15.0.0"
+    graphql-relay "*"
 
 "@types/history@*":
   version "4.7.8"
@@ -2402,21 +2402,13 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@*":
+"@types/jest@*", "@types/jest@^27.4.0":
   version "27.4.0"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.4.0.tgz#037ab8b872067cae842a320841693080f9cb84ed"
   integrity sha512-gHl8XuC1RZ8H2j5sHv/JqsaxXkDDM9iDOgu0Wp8sjs4u/snb2PVehyWXJPr+ORA0RPpgw231mnutWI1+0hgjIQ==
   dependencies:
     jest-diff "^27.0.0"
     pretty-format "^27.0.0"
-
-"@types/jest@^26.0.20":
-  version "26.0.24"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.24.tgz#943d11976b16739185913a1936e0de0c4a7d595a"
-  integrity sha512-E/X5Vib8BWqZNRlDxj9vYXhsDwPYbPINqKF9BsnSoon4RQ0D9moEuLD8txgyypFLH7J4+Lho9Nr/c8H0Fi+17w==
-  dependencies:
-    jest-diff "^26.0.0"
-    pretty-format "^26.0.0"
 
 "@types/js-cookie@^2.2.6":
   version "2.2.6"
@@ -2468,10 +2460,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.60.tgz#35f3d6213daed95da7f0f73e75bcc6980e90597b"
   integrity sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
 
-"@types/node@^14.14.22":
-  version "14.18.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.9.tgz#0e5944eefe2b287391279a19b407aa98bd14436d"
-  integrity sha512-j11XSuRuAlft6vLDEX4RvhqC0KxNxx6QIyMXNb0vHHSNPXTPeiy3algESWmOOIzEtiEL0qiowPU3ewW9hHVa7Q==
+"@types/node@^17.0.14":
+  version "17.0.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.14.tgz#33b9b94f789a8fedd30a68efdbca4dbb06b61f20"
+  integrity sha512-SbjLmERksKOGzWzPNuW7fJM7fk3YXVTFiZWB/Hs99gwhk+/dnrQRPBQjPW9aO+fi1tAffi9PrwFvsmOKmDTyng==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -2583,14 +2575,7 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
-"@types/redis@*":
-  version "2.8.28"
-  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.28.tgz#5862b2b64aa7f7cbc76dafd7e6f06992b52c55e3"
-  integrity sha512-8l2gr2OQ969ypa7hFOeKqtFoY70XkHxISV0pAwmQ2nm6CSPb1brmTmqJCGGrekCo+pAZyWlNXr+Kvo6L/1wijA==
-  dependencies:
-    "@types/node" "*"
-
-"@types/redis@^2.8.28":
+"@types/redis@^2.8.0", "@types/redis@^2.8.28":
   version "2.8.32"
   resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.32.tgz#1d3430219afbee10f8cfa389dad2571a05ecfb11"
   integrity sha512-7jkMKxcGq9p242exlbsVzuJb57KqHRhNl4dHoQu2Y5v9bCAbtIXXH0R3HleSQW4CTOqpHIYUW3t6tpUj4BVQ+w==
@@ -6544,7 +6529,7 @@ graphql-middleware@^6.1.13:
     "@graphql-tools/delegate" "^8.4.3"
     "@graphql-tools/schema" "^8.3.1"
 
-graphql-relay@^0.10.0:
+graphql-relay@*, graphql-relay@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/graphql-relay/-/graphql-relay-0.10.0.tgz#3b661432edf1cb414cd4a132cf595350e524db2b"
   integrity sha512-44yBuw2/DLNEiMypbNZBt1yMDbBmyVPVesPywnteGGALiBmdyy1JP8jSg8ClLePg8ZZxk0O4BLhd1a6U/1jDOQ==
@@ -6569,11 +6554,6 @@ graphql@15.3.0:
   version "15.3.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.3.0.tgz#3ad2b0caab0d110e3be4a5a9b2aa281e362b5278"
   integrity sha512-GTCJtzJmkFLWRfFJuoo9RWWa/FfamUHgiFosxi/X1Ani4AVWbeyBenZTNX6dM+7WSbbFfTo/25eh0LLkwHMw2w==
-
-"graphql@^14.5.3 || ^15.0.0":
-  version "15.5.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.0.tgz#39d19494dbe69d1ea719915b578bf920344a69d5"
-  integrity sha512-OmaM7y0kaK31NKG31q4YbD2beNYa6jBBKtMFT6gLYJljHLJr42IqJ8KX08u3Li/0ifzTU5HjmoOOrwa5BRLeDA==
 
 graphql@^16.3.0:
   version "16.3.0"
@@ -7582,7 +7562,7 @@ jest-config@^26.6.3:
     micromatch "^4.0.2"
     pretty-format "^26.6.2"
 
-jest-diff@^26.0.0, jest-diff@^26.6.2:
+jest-diff@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-26.6.2.tgz#1aa7468b52c3a68d7d5c5fdcdfcd5e49bd164394"
   integrity sha512-6m+9Z3Gv9wN0WFVasqjCL/06+EFCMTqDEUl/b87HYK2rAPTyfz4ZIuSlPhY51PIQRWx5TaxeF1qmXKe9gfN3sA==
@@ -9939,7 +9919,7 @@ pretty-error@^4.0.0:
     lodash "^4.17.20"
     renderkid "^3.0.0"
 
-pretty-format@^26.0.0, pretty-format@^26.6.2:
+pretty-format@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-26.6.2.tgz#e35c2705f14cb7fe2fe94fa078345b444120fc93"
   integrity sha512-7AeGuCYNGmycyQbCqd/3PWH4eOoX/OiCa0uphp57NVTeAGdJGaAliecxwBDHYQCIvrW7aDBZCYeNTP/WX69mkg==
