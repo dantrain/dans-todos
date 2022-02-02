@@ -22,6 +22,7 @@ const getApp = async () => {
       helmet({
         referrerPolicy: { policy: 'origin' },
         contentSecurityPolicy: false,
+        crossOriginEmbedderPolicy: false,
       })
     );
   }
