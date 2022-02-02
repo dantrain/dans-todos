@@ -1,83 +1,39 @@
+/**
+ * @generated SignedSource<<dd1ca05c958f9a7bfea0db88bd53aae2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Filter = "ACTIVE" | "ALL" | "COMPLETED" | "%future added value";
-export type TodoManagerQueryVariables = {
-    filter?: Filter | null | undefined;
+export type TodoManagerQuery$variables = {
+  filter?: Filter | null;
 };
-export type TodoManagerQueryResponse = {
-    readonly viewer: {
-        readonly id: string | null;
-        readonly todos: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly id: string | null;
-                    readonly " $fragmentRefs": FragmentRefs<"TodoListItemFragment">;
-                } | null;
-            } | null> | null;
-            readonly " $fragmentRefs": FragmentRefs<"ToggleAllFragment" | "TodoFooterFragment">;
+export type TodoManagerQueryVariables = TodoManagerQuery$variables;
+export type TodoManagerQuery$data = {
+  readonly viewer: {
+    readonly id: string | null;
+    readonly todos: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string | null;
+          readonly " $fragmentSpreads": FragmentRefs<"TodoListItemFragment">;
         } | null;
+      } | null> | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ToggleAllFragment" | "TodoFooterFragment">;
     } | null;
+  } | null;
 };
+export type TodoManagerQueryResponse = TodoManagerQuery$data;
 export type TodoManagerQuery = {
-    readonly response: TodoManagerQueryResponse;
-    readonly variables: TodoManagerQueryVariables;
+  variables: TodoManagerQueryVariables;
+  response: TodoManagerQuery$data;
 };
-
-
-
-/*
-query TodoManagerQuery(
-  $filter: Filter
-) {
-  viewer {
-    id
-    todos(first: 50, filter: $filter) {
-      edges {
-        node {
-          id
-          ...TodoListItemFragment
-          __typename
-        }
-        cursor
-      }
-      ...ToggleAllFragment
-      ...TodoFooterFragment
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-    }
-  }
-}
-
-fragment TodoEditInputFragment on Todo {
-  id
-  ownId
-  text
-  completed
-}
-
-fragment TodoFooterFragment on UserTodos_Connection {
-  totalCount
-  completedCount
-}
-
-fragment TodoListItemFragment on Todo {
-  id
-  ownId
-  completed
-  ...TodoEditInputFragment
-}
-
-fragment ToggleAllFragment on UserTodos_Connection {
-  totalCount
-  completedCount
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -189,12 +145,12 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v3/*: any*/),
                       {
                         "args": null,
                         "kind": "FragmentSpread",
                         "name": "TodoListItemFragment"
-                      }
+                      },
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -202,7 +158,6 @@ return {
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
@@ -212,7 +167,8 @@ return {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "TodoFooterFragment"
-              }
+              },
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -348,5 +304,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bdd9b0d0207391e53df55e537333d675';
+
+(node as any).hash = "bdd9b0d0207391e53df55e537333d675";
+
 export default node;

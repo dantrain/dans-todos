@@ -1,32 +1,28 @@
+/**
+ * @generated SignedSource<<53d8f3cab687ed46e8fd0789a5ed46fc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type ToggleAllSetAllCompletedMutationVariables = {
-    completed?: boolean | null | undefined;
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type ToggleAllSetAllCompletedMutation$variables = {
+  completed?: boolean | null;
 };
-export type ToggleAllSetAllCompletedMutationResponse = {
-    readonly updateManyTodo: {
-        readonly count: number;
-    };
+export type ToggleAllSetAllCompletedMutationVariables = ToggleAllSetAllCompletedMutation$variables;
+export type ToggleAllSetAllCompletedMutation$data = {
+  readonly updateManyTodo: {
+    readonly count: number;
+  };
 };
+export type ToggleAllSetAllCompletedMutationResponse = ToggleAllSetAllCompletedMutation$data;
 export type ToggleAllSetAllCompletedMutation = {
-    readonly response: ToggleAllSetAllCompletedMutationResponse;
-    readonly variables: ToggleAllSetAllCompletedMutationVariables;
+  variables: ToggleAllSetAllCompletedMutationVariables;
+  response: ToggleAllSetAllCompletedMutation$data;
 };
-
-
-
-/*
-mutation ToggleAllSetAllCompletedMutation(
-  $completed: Boolean
-) {
-  updateManyTodo(data: {completed: {set: $completed}}) {
-    count
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -101,5 +97,7 @@ return {
   }
 };
 })();
-(node as any).hash = '402adcbe9a31eebcaff01829ddf84a2e';
+
+(node as any).hash = "402adcbe9a31eebcaff01829ddf84a2e";
+
 export default node;

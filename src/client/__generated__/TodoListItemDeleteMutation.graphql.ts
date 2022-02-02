@@ -1,32 +1,28 @@
+/**
+ * @generated SignedSource<<af90e751af428d5a58aa05f52c99ffdf>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type TodoListItemDeleteMutationVariables = {
-    id?: number | null | undefined;
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type TodoListItemDeleteMutation$variables = {
+  id?: number | null;
 };
-export type TodoListItemDeleteMutationResponse = {
-    readonly deleteOneTodo: {
-        readonly id: string | null;
-    } | null;
+export type TodoListItemDeleteMutationVariables = TodoListItemDeleteMutation$variables;
+export type TodoListItemDeleteMutation$data = {
+  readonly deleteOneTodo: {
+    readonly id: string | null;
+  } | null;
 };
+export type TodoListItemDeleteMutationResponse = TodoListItemDeleteMutation$data;
 export type TodoListItemDeleteMutation = {
-    readonly response: TodoListItemDeleteMutationResponse;
-    readonly variables: TodoListItemDeleteMutationVariables;
+  variables: TodoListItemDeleteMutationVariables;
+  response: TodoListItemDeleteMutation$data;
 };
-
-
-
-/*
-mutation TodoListItemDeleteMutation(
-  $id: Int
-) {
-  deleteOneTodo(where: {id: $id}) {
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -95,5 +91,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2db35513e6dedb68b1376ba5926a3701';
+
+(node as any).hash = "2db35513e6dedb68b1376ba5926a3701";
+
 export default node;

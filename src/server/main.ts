@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import express from 'express';
 import 'express-async-errors';
+import { GraphQLSchema } from 'graphql';
 import { applyMiddleware } from 'graphql-middleware';
 import helmet from 'helmet';
 import plugins from './apolloServerPlugins';
@@ -34,7 +35,7 @@ const getApp = async () => {
   app.use(authRouter);
 
   const apolloServer = new ApolloServer({
-    schema: applyMiddleware(schema, permissions),
+    schema: applyMiddleware(schema as unknown as GraphQLSchema, permissions),
     context,
     plugins,
   });

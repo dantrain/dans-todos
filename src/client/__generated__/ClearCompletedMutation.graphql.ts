@@ -1,28 +1,26 @@
+/**
+ * @generated SignedSource<<826b9ea0c9a389f00cdf90719352c05c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type ClearCompletedMutationVariables = {};
-export type ClearCompletedMutationResponse = {
-    readonly deleteManyTodo: {
-        readonly count: number;
-    };
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type ClearCompletedMutation$variables = {};
+export type ClearCompletedMutationVariables = ClearCompletedMutation$variables;
+export type ClearCompletedMutation$data = {
+  readonly deleteManyTodo: {
+    readonly count: number;
+  };
 };
+export type ClearCompletedMutationResponse = ClearCompletedMutation$data;
 export type ClearCompletedMutation = {
-    readonly response: ClearCompletedMutationResponse;
-    readonly variables: ClearCompletedMutationVariables;
+  variables: ClearCompletedMutationVariables;
+  response: ClearCompletedMutation$data;
 };
-
-
-
-/*
-mutation ClearCompletedMutation {
-  deleteManyTodo(where: {completed: {equals: true}}) {
-    count
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -82,5 +80,7 @@ return {
   }
 };
 })();
-(node as any).hash = '44c8515860f8e4c2e496bc311573e5cd';
+
+(node as any).hash = "44c8515860f8e4c2e496bc311573e5cd";
+
 export default node;

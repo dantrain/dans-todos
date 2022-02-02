@@ -1,38 +1,31 @@
+/**
+ * @generated SignedSource<<79fcd971229dad9e5b27ee18af1b7a85>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type TodoInputCreateMutationVariables = {
-    text: string;
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type TodoInputCreateMutation$variables = {
+  text: string;
 };
-export type TodoInputCreateMutationResponse = {
-    readonly createOneTodo: {
-        readonly id: string | null;
-        readonly ownId: number;
-        readonly text: string;
-        readonly completed: boolean;
-    };
+export type TodoInputCreateMutationVariables = TodoInputCreateMutation$variables;
+export type TodoInputCreateMutation$data = {
+  readonly createOneTodo: {
+    readonly id: string | null;
+    readonly ownId: number;
+    readonly text: string;
+    readonly completed: boolean;
+  };
 };
+export type TodoInputCreateMutationResponse = TodoInputCreateMutation$data;
 export type TodoInputCreateMutation = {
-    readonly response: TodoInputCreateMutationResponse;
-    readonly variables: TodoInputCreateMutationVariables;
+  variables: TodoInputCreateMutationVariables;
+  response: TodoInputCreateMutation$data;
 };
-
-
-
-/*
-mutation TodoInputCreateMutation(
-  $text: String!
-) {
-  createOneTodo(data: {text: $text, completed: false}) {
-    id
-    ownId
-    text
-    completed
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -127,5 +120,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8e362d9d50edd4838c986f49cd0e189b';
+
+(node as any).hash = "8e362d9d50edd4838c986f49cd0e189b";
+
 export default node;

@@ -1,35 +1,29 @@
+/**
+ * @generated SignedSource<<47e33e1a6e53d9814d7e881fc82f49a0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type TodoListItemSetCompletedMutationVariables = {
-    id?: number | null | undefined;
-    completed?: boolean | null | undefined;
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type TodoListItemSetCompletedMutation$variables = {
+  id?: number | null;
+  completed?: boolean | null;
 };
-export type TodoListItemSetCompletedMutationResponse = {
-    readonly updateOneTodo: {
-        readonly completed: boolean;
-    } | null;
+export type TodoListItemSetCompletedMutationVariables = TodoListItemSetCompletedMutation$variables;
+export type TodoListItemSetCompletedMutation$data = {
+  readonly updateOneTodo: {
+    readonly completed: boolean;
+  } | null;
 };
+export type TodoListItemSetCompletedMutationResponse = TodoListItemSetCompletedMutation$data;
 export type TodoListItemSetCompletedMutation = {
-    readonly response: TodoListItemSetCompletedMutationResponse;
-    readonly variables: TodoListItemSetCompletedMutationVariables;
+  variables: TodoListItemSetCompletedMutationVariables;
+  response: TodoListItemSetCompletedMutation$data;
 };
-
-
-
-/*
-mutation TodoListItemSetCompletedMutation(
-  $id: Int
-  $completed: Boolean
-) {
-  updateOneTodo(where: {id: $id}, data: {completed: {set: $completed}}) {
-    completed
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -145,5 +139,7 @@ return {
   }
 };
 })();
-(node as any).hash = '312bab163ffa6f2a2f20161a723a6b40';
+
+(node as any).hash = "312bab163ffa6f2a2f20161a723a6b40";
+
 export default node;
