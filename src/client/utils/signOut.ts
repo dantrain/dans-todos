@@ -9,11 +9,7 @@ const signOut = async ({
   }
 
   if (disableAuto) {
-    if (window.__CONTEXT__.supportsGoogleOneTap) {
-      window.google.accounts.id.disableAutoSelect();
-    } else {
-      promises.push(window.gapi.auth2.getAuthInstance().signOut());
-    }
+    window.google.accounts.id.disableAutoSelect();
   }
 
   await Promise.all(promises);

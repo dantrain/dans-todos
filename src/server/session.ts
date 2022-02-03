@@ -8,7 +8,6 @@ declare module 'express-session' {
     userid?: string;
     name?: string;
     avatar?: string;
-    supportsGoogleOneTap?: boolean;
   }
 }
 

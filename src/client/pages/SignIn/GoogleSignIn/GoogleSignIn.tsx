@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useLayoutEffect,
-  useState,
-} from 'react';
-import { Context } from '../../../app/App';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 declare global {
   interface Window {
@@ -21,62 +15,48 @@ const useLayoutEffectClient =
 
 const GoogleSignIn = () => {
   const [status, setStatus] = useState('check');
-  const { supportsGoogleOneTap } = useContext(Context);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const signIn = useCallback(
-    async (credential: string) => {
-      const response = await fetch(
-        `/tokensignin${supportsGoogleOneTap ? '?onetap=true' : ''}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            SameSite: 'Strict',
-          },
-          credentials: 'same-origin',
-          body: JSON.stringify({ credential }),
-        }
-      );
+  const signIn = useCallback(async (credential: string) => {
+    const response = await fetch(`/tokensignin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        SameSite: 'Strict',
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({ credential }),
+    });
 
-      if (response.status === 204) {
-        window.location.href = '/';
-      } else {
-        throw new Error('Sign-in failed');
-      }
-    },
-    [supportsGoogleOneTap]
-  );
+    if (response.status === 204) {
+      window.location.href = '/';
+    } else {
+      throw new Error('Sign-in failed');
+    }
+  }, []);
 
   useLayoutEffectClient(() => {
     let timeout: NodeJS.Timeout;
 
     if (status === 'loaded') {
-      if (supportsGoogleOneTap) {
-        window.google.accounts.id.initialize({
-          client_id: CLIENT_ID,
-          auto_select: true,
-          cancel_on_tap_outside: false,
-          prompt_parent_id: 'google-sign-in',
-          callback: ({ credential }: { credential: string }) => {
-            signIn(credential);
-          },
-        });
+      window.google.accounts.id.initialize({
+        client_id: CLIENT_ID,
+        auto_select: true,
+        cancel_on_tap_outside: false,
+        prompt_parent_id: 'google-sign-in',
+        callback: ({ credential }: { credential: string }) => {
+          signIn(credential);
+        },
+      });
 
-        window.google.accounts.id.prompt((notification: any) => {
-          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-            window.location.href = '/signin?noonetap=true';
-          }
-        });
-      } else {
-        window.gapi.signin2.render('google-sign-in', {
-          width: 250,
-          height: 50,
-          longtitle: true,
-          onsuccess: async (user) => {
-            signIn(user.getAuthResponse().id_token);
-          },
-        });
-      }
+      window.google.accounts.id.prompt((notification: any) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          window.google.accounts.id.renderButton(ref.current, {
+            theme: 'outline',
+            size: 'large',
+          });
+        }
+      });
     } else {
       if (window.__GOOGLE_LOADED__) {
         setStatus('loaded');
@@ -89,11 +69,11 @@ const GoogleSignIn = () => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [signIn, status, supportsGoogleOneTap]);
+  }, [signIn, status]);
 
   return (
     <div style={{ height: 300 }}>
-      <div id="google-sign-in" />
+      <div ref={ref} id="google-sign-in" />
     </div>
   );
 };
