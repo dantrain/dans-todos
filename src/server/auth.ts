@@ -45,7 +45,6 @@ authRouter.post('/tokensignin', bodyParser.json(), async (req, res) => {
     req.session.userid = userid;
     req.session.name = payload.given_name;
     req.session.avatar = payload.picture;
-    req.session.supportsGoogleOneTap = !!req.query.onetap;
   }
 
   res.status(204).send();

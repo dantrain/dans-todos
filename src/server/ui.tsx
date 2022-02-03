@@ -5,7 +5,6 @@ import express from 'express';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { Helmet } from 'react-helmet';
 import { StaticRouter } from 'react-router-dom/server';
-import useragent from 'useragent';
 import App, { AppContext } from '../client/app/App';
 import Index from './Index/Index';
 
@@ -15,22 +14,12 @@ const uiRouter = express.Router();
 uiRouter.get('/*', (req, res) => {
   const context: AppContext = {};
 
-  if (!req.session?.userid && req.path !== '/signin') {
-    return res.redirect('/signin');
-  }
-
-  if (req.path === '/signin') {
-    const agent = useragent.parse(req.headers['user-agent']);
-
-    context.supportsGoogleOneTap =
-      !req.query.noonetap &&
-      ((agent.family.includes('Chrome') && +agent.major >= 85) ||
-        (agent.family.includes('Firefox') && +agent.major >= 80));
-  } else if (req.session?.userid) {
+  if (req.session?.userid) {
     context.signedIn = true;
     context.name = req.session.name;
     context.avatar = req.session.avatar;
-    context.supportsGoogleOneTap = req.session.supportsGoogleOneTap;
+  } else if (req.path !== '/signin') {
+    return res.redirect('/signin');
   }
 
   const emotionCache = createCache({ key });

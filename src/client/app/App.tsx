@@ -18,7 +18,6 @@ import Page from './Page/Page';
 export type AppContext = {
   statusCode?: number;
   signedIn?: boolean;
-  supportsGoogleOneTap?: boolean;
   name?: string;
   avatar?: string;
 };
@@ -46,7 +45,7 @@ const App = ({ context = defaultContext }: { context?: AppContext }) => (
   <Context.Provider value={context}>
     <ThemeProvider theme={theme}>
       <RelayEnvironmentProvider
-        environment={(relayEnvironment as unknown) as Environment}
+        environment={relayEnvironment as unknown as Environment}
       >
         <Helmet
           titleTemplate={`${context.name || 'Dan'}'s Todos · %s`}
