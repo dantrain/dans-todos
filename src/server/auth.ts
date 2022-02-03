@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 
 const authRouter = express.Router();
 
-authRouter.post('/tokensignin', bodyParser.json(), async (req, res) => {
+authRouter.post('/signin', bodyParser.urlencoded(), async (req, res) => {
   // Verify the ID token
   if (!req.body.credential) {
     return res.status(400).send('No ID token in post body');
@@ -47,7 +47,11 @@ authRouter.post('/tokensignin', bodyParser.json(), async (req, res) => {
     req.session.avatar = payload.picture;
   }
 
-  res.status(204).send();
+  if (req.body.fetch === 'true') {
+    return res.status(204).send();
+  }
+
+  res.redirect('/');
 });
 
 authRouter.post('/signout', (req, res) => {

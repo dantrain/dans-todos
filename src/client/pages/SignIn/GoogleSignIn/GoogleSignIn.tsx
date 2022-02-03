@@ -18,14 +18,14 @@ const GoogleSignIn = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const signIn = useCallback(async (credential: string) => {
-    const response = await fetch(`/tokensignin`, {
+    const response = await fetch(`/signin`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
         SameSite: 'Strict',
       },
       credentials: 'same-origin',
-      body: JSON.stringify({ credential }),
+      body: `credential=${credential}&fetch=true`,
     });
 
     if (response.status === 204) {
@@ -44,6 +44,7 @@ const GoogleSignIn = () => {
         auto_select: true,
         cancel_on_tap_outside: false,
         prompt_parent_id: 'google-sign-in',
+        ux_mode: 'redirect',
         callback: ({ credential }: { credential: string }) => {
           signIn(credential);
         },
@@ -73,7 +74,8 @@ const GoogleSignIn = () => {
 
   return (
     <div style={{ height: 300 }}>
-      <div ref={ref} id="google-sign-in" />
+      <div id="google-sign-in" />
+      <div ref={ref} style={{ maxHeight: 41, overflow: 'hidden' }} />
     </div>
   );
 };
