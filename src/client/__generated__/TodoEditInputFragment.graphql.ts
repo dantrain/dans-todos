@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2774a378ae921248a5cfe959b7cf4a7>>
+ * @generated SignedSource<<ed355442883e55aa909fb4194262e4fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TodoEditInputFragment$data = {
-  readonly id: string | null;
+  readonly id: string;
   readonly ownId: number;
   readonly text: string;
   readonly completed: boolean;

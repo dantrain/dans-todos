@@ -5,6 +5,7 @@ import * as schemaTypes from './schemaTypes';
 
 const schema = makeSchema({
   types: Object.values(schemaTypes),
+  nonNullDefaults: { output: true },
   plugins: [
     nexusSchemaPrisma({
       experimentalCRUD: true,

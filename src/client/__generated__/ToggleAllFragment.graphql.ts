@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e42ad32b21a85b55256f6e9989557a4>>
+ * @generated SignedSource<<5ca5d3e5f44f107f1f112ea9b53005c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ToggleAllFragment$data = {
-  readonly totalCount: number | null;
-  readonly completedCount: number | null;
+  readonly totalCount: number;
+  readonly completedCount: number;
   readonly " $fragmentType": "ToggleAllFragment";
 };
 export type ToggleAllFragment = ToggleAllFragment$data;

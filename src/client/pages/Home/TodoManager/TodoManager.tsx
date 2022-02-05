@@ -38,25 +38,25 @@ type TodoManagerProps = {
 
 const TodoManager = ({ filter }: TodoManagerProps) => {
   const { viewer } = useLazyLoadQuery<TodoManagerQuery>(query, { filter });
-  const { todos } = viewer!;
+  const { todos } = viewer;
 
   return (
-    <TodosConnectionProvider connectionId={todos?.__id!}>
-      <CardHeader avatar={<ToggleAll todos={todos!} />} title={<TodoInput />} />
-      {todos!.edges && todos!.edges.length ? (
+    <TodosConnectionProvider connectionId={todos.__id}>
+      <CardHeader avatar={<ToggleAll todos={todos} />} title={<TodoInput />} />
+      {todos.edges.length ? (
         <>
           <Divider />
           <List>
-            {todos!.edges.map(
+            {todos.edges.map(
               (edge) =>
-                edge?.node && (
+                edge.node && (
                   <TodoListItem key={edge.node.id} todo={edge.node} />
                 )
             )}
           </List>
         </>
       ) : null}
-      <TodoFooter todos={todos!} />
+      <TodoFooter todos={todos} />
     </TodosConnectionProvider>
   );
 };

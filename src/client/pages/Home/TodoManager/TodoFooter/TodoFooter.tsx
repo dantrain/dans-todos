@@ -32,7 +32,7 @@ type TodoFooterProps = {
 
 const TodoFooter = ({ todos }: TodoFooterProps) => {
   const { totalCount, completedCount } = useFragment(fragment, todos);
-  const incompleteCount = totalCount! - completedCount!;
+  const incompleteCount = totalCount - completedCount;
 
   return totalCount ? (
     <>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af90e751af428d5a58aa05f52c99ffdf>>
+ * @generated SignedSource<<55402586ac6757d8787a03748b57a634>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type TodoListItemDeleteMutation$variables = {
 export type TodoListItemDeleteMutationVariables = TodoListItemDeleteMutation$variables;
 export type TodoListItemDeleteMutation$data = {
   readonly deleteOneTodo: {
-    readonly id: string | null;
+    readonly id: string;
   } | null;
 };
 export type TodoListItemDeleteMutationResponse = TodoListItemDeleteMutation$data;

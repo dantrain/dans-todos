@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79fcd971229dad9e5b27ee18af1b7a85>>
+ * @generated SignedSource<<922f31be085f6971d07ce71557b74fbc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type TodoInputCreateMutation$variables = {
 export type TodoInputCreateMutationVariables = TodoInputCreateMutation$variables;
 export type TodoInputCreateMutation$data = {
   readonly createOneTodo: {
-    readonly id: string | null;
+    readonly id: string;
     readonly ownId: number;
     readonly text: string;
     readonly completed: boolean;

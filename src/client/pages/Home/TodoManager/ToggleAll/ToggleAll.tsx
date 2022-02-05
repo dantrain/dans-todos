@@ -34,7 +34,7 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
   const { totalCount, completedCount } = useFragment(fragment, todos);
   const { getConnectionRecord, invalidateConnectionRecords } =
     useConnectionContext(TodosConnectionContext);
-  const allCompleted = totalCount! > 0 && completedCount === totalCount;
+  const allCompleted = totalCount > 0 && completedCount === totalCount;
   const theme = useTheme();
 
   const [commit] = useMutation<ToggleAllSetAllCompletedMutation>(

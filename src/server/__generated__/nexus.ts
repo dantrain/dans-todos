@@ -216,11 +216,11 @@ export interface NexusGenObjects {
   }
   TodoEdge: { // root type
     cursor: string; // String!
-    node?: NexusGenRootTypes['Todo'] | null; // Todo
+    node: NexusGenRootTypes['Todo']; // Todo!
   }
   User: {};
   UserTodos_Connection: { // root type
-    edges?: Array<NexusGenRootTypes['TodoEdge'] | null> | null; // [TodoEdge]
+    edges: NexusGenRootTypes['TodoEdge'][]; // [TodoEdge!]!
     pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
   }
 }
@@ -253,27 +253,27 @@ export interface NexusGenFieldTypes {
     startCursor: string | null; // String
   }
   Query: { // field return type
-    viewer: NexusGenRootTypes['User'] | null; // User
+    viewer: NexusGenRootTypes['User']; // User!
   }
   Todo: { // field return type
     completed: boolean; // Boolean!
-    id: string | null; // ID
+    id: string; // ID!
     ownId: number; // Int!
     text: string; // String!
   }
   TodoEdge: { // field return type
     cursor: string; // String!
-    node: NexusGenRootTypes['Todo'] | null; // Todo
+    node: NexusGenRootTypes['Todo']; // Todo!
   }
   User: { // field return type
-    id: string | null; // ID
-    todos: NexusGenRootTypes['UserTodos_Connection'] | null; // UserTodos_Connection
+    id: string; // ID!
+    todos: NexusGenRootTypes['UserTodos_Connection']; // UserTodos_Connection!
   }
   UserTodos_Connection: { // field return type
-    completedCount: number | null; // Int
-    edges: Array<NexusGenRootTypes['TodoEdge'] | null> | null; // [TodoEdge]
+    completedCount: number; // Int!
+    edges: NexusGenRootTypes['TodoEdge'][]; // [TodoEdge!]!
     pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
-    totalCount: number | null; // Int
+    totalCount: number; // Int!
   }
 }
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb125d3b8c076cca62f447f415994829>>
+ * @generated SignedSource<<7d0ad59a6acf4a38bf1a799714a7f4df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TodoFooterFragment$data = {
-  readonly totalCount: number | null;
-  readonly completedCount: number | null;
+  readonly totalCount: number;
+  readonly completedCount: number;
   readonly " $fragmentType": "TodoFooterFragment";
 };
 export type TodoFooterFragment = TodoFooterFragment$data;

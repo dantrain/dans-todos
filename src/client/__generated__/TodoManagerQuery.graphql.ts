@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f3aa88082b864f0451f4cd25cf78392>>
+ * @generated SignedSource<<e5a59bc7a9db111d56c87957c20b747c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,13 +21,13 @@ export type TodoManagerQuery$data = {
       readonly __id: string;
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly id: string | null;
+          readonly id: string;
           readonly " $fragmentSpreads": FragmentRefs<"TodoListItemFragment">;
-        } | null;
-      } | null> | null;
+        };
+      }>;
       readonly " $fragmentSpreads": FragmentRefs<"ToggleAllFragment" | "TodoFooterFragment">;
-    } | null;
-  } | null;
+    };
+  };
 };
 export type TodoManagerQueryResponse = TodoManagerQuery$data;
 export type TodoManagerQuery = {
