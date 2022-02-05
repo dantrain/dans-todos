@@ -22,7 +22,8 @@ type ClearCompletedProps = {
 };
 
 const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
-  const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
+  const { getConnectionRecord, invalidateConnectionRecords } =
+    useConnectionContext(TodosConnectionContext);
   const [commit] = useMutation<ClearCompletedMutation>(clearCompletedMutation);
 
   const handleClick = useCallback(() => {
@@ -48,10 +49,12 @@ const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
       );
 
       connection.setValue(0, 'completedCount');
+
+      invalidateConnectionRecords(store);
     };
 
     commit({ variables: {}, optimisticUpdater: updater, updater });
-  }, [commit, getConnectionRecord]);
+  }, [commit, getConnectionRecord, invalidateConnectionRecords]);
 
   return (
     <Button color="primary" disabled={disabled} onClick={handleClick}>

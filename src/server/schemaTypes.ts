@@ -1,5 +1,5 @@
-import { arg, enumType, mutationType, objectType, queryType } from 'nexus';
 import { toGlobalId } from 'graphql-relay';
+import { arg, enumType, mutationType, objectType, queryType } from 'nexus';
 
 export const Todo = objectType({
   name: 'Todo',
@@ -27,23 +27,18 @@ export const User = objectType({
         filter: arg({ type: Filter, default: 'ALL' }),
       },
       nodes: ({ id: userid }: any, { filter }, { prisma }) => {
-        switch (filter) {
-          case 'ACTIVE':
-            return prisma.todo.findMany({
-              where: { userid, completed: false },
-              orderBy: { createdat: 'asc' },
-            });
-          case 'COMPLETED':
-            return prisma.todo.findMany({
-              where: { userid, completed: true },
-              orderBy: { createdat: 'asc' },
-            });
-          default:
-            return prisma.todo.findMany({
-              where: { userid },
-              orderBy: { createdat: 'asc' },
-            });
-        }
+        return prisma.todo.findMany({
+          where: {
+            userid,
+            completed:
+              filter === 'COMPLETED'
+                ? true
+                : filter === 'ACTIVE'
+                ? false
+                : undefined,
+          },
+          orderBy: { createdat: 'asc' },
+        });
       },
       extendConnection: (t) => {
         t.int('totalCount', {

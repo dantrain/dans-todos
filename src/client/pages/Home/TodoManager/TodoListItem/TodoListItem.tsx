@@ -64,7 +64,8 @@ type TodoListItemProps = {
 const TodoListItem = ({ todo }: TodoListItemProps) => {
   const todoData = useFragment(todoListItemFragment, todo);
   const { id, ownId, completed } = todoData;
-  const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
+  const { getConnectionRecord, invalidateConnectionRecords } =
+    useConnectionContext(TodosConnectionContext);
 
   const [commitToggle] =
     useMutation<TodoListItemSetCompletedMutation>(setCompletedMutation);
@@ -75,11 +76,14 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         TodoListItemSetCompletedMutationResponse
       > = (store) => {
         const connectionRecord = getConnectionRecord(store);
+
         connectionRecord.setValue(
           +(connectionRecord.getValue('completedCount') || 0) +
             (completed ? -1 : 1),
           'completedCount'
         );
+
+        invalidateConnectionRecords(store);
       };
 
       commitToggle({
@@ -94,7 +98,14 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
         updater,
       });
     },
-    [commitToggle, id, ownId, getConnectionRecord, completed]
+    [
+      commitToggle,
+      ownId,
+      id,
+      getConnectionRecord,
+      completed,
+      invalidateConnectionRecords,
+    ]
   );
 
   const [commitDelete] =
@@ -105,17 +116,22 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       store
     ) => {
       const connectionRecord = getConnectionRecord(store);
+
       ConnectionHandler.deleteNode(connectionRecord, id!);
+
       connectionRecord.setValue(
         +(connectionRecord.getValue('totalCount') || 0) - 1,
         'totalCount'
       );
+
       if (completed) {
         connectionRecord.setValue(
           +(connectionRecord.getValue('completedCount') || 0) - 1,
           'completedCount'
         );
       }
+
+      invalidateConnectionRecords(store);
     };
 
     commitDelete({
@@ -123,7 +139,14 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
       optimisticUpdater: updater,
       updater,
     });
-  }, [commitDelete, id, ownId, getConnectionRecord, completed]);
+  }, [
+    commitDelete,
+    ownId,
+    getConnectionRecord,
+    id,
+    completed,
+    invalidateConnectionRecords,
+  ]);
 
   const listItemRef = useRef(null);
   const hovered = useHoverDirty(listItemRef);

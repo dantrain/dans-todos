@@ -11,14 +11,14 @@ import TodoInput from './TodoInput/TodoInput';
 import TodoListItem from './TodoListItem/TodoListItem';
 import ToggleAll from './ToggleAll/ToggleAll';
 
-export const TodosConnectionContext = createConnectionContext();
+export const [TodosConnectionContext, TodosConnectionProvider] =
+  createConnectionContext();
 
 const query = graphql`
   query TodoManagerQuery($filter: Filter) {
     viewer {
-      id
-      todos(first: 50, filter: $filter)
-        @connection(key: "TodoManagerQuery_todos") {
+      todos(first: 50, filter: $filter) {
+        __id
         edges {
           node {
             id
@@ -38,16 +38,10 @@ type TodoManagerProps = {
 
 const TodoManager = ({ filter }: TodoManagerProps) => {
   const { viewer } = useLazyLoadQuery<TodoManagerQuery>(query, { filter });
-  const { id, todos } = viewer!;
+  const { todos } = viewer!;
 
   return (
-    <TodosConnectionContext.Provider
-      value={{
-        parentId: id!,
-        connectionKey: 'TodoManagerQuery_todos',
-        filters: { filter },
-      }}
-    >
+    <TodosConnectionProvider connectionId={todos?.__id!}>
       <CardHeader avatar={<ToggleAll todos={todos!} />} title={<TodoInput />} />
       {todos!.edges && todos!.edges.length ? (
         <>
@@ -63,7 +57,7 @@ const TodoManager = ({ filter }: TodoManagerProps) => {
         </>
       ) : null}
       <TodoFooter todos={todos!} />
-    </TodosConnectionContext.Provider>
+    </TodosConnectionProvider>
   );
 };
 

@@ -33,7 +33,8 @@ const TodoInput = () => {
   const ref = useRef<HTMLInputElement | null>(null);
   const text = value.trim();
 
-  const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
+  const { getConnectionRecord, invalidateConnectionRecords } =
+    useConnectionContext(TodosConnectionContext);
   const [commit] = useMutation<TodoInputCreateMutation>(createMutation);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -63,13 +64,15 @@ const TodoInput = () => {
               +(connectionRecord.getValue('totalCount') || 0) + 1,
               'totalCount'
             );
+
+            invalidateConnectionRecords(store);
           },
         });
       }
 
       setValue('');
     },
-    [commit, getConnectionRecord]
+    [commit, getConnectionRecord, invalidateConnectionRecords]
   );
 
   const handleKeyDown = useCallback(

@@ -32,7 +32,8 @@ type ToggleAllProps = {
 
 const ToggleAll = ({ todos }: ToggleAllProps) => {
   const { totalCount, completedCount } = useFragment(fragment, todos);
-  const { getConnectionRecord } = useConnectionContext(TodosConnectionContext);
+  const { getConnectionRecord, invalidateConnectionRecords } =
+    useConnectionContext(TodosConnectionContext);
   const allCompleted = totalCount! > 0 && completedCount === totalCount;
   const theme = useTheme();
 
@@ -45,15 +46,19 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
       ToggleAllSetAllCompletedMutationResponse
     > = (store) => {
       const connectionRecord = getConnectionRecord(store);
+
       connectionRecord
         .getLinkedRecords('edges')
         ?.forEach((edge) =>
           edge.getLinkedRecord('node')?.setValue(!allCompleted, 'completed')
         );
+
       connectionRecord.setValue(
         allCompleted ? 0 : connectionRecord.getValue('totalCount'),
         'completedCount'
       );
+
+      invalidateConnectionRecords(store);
     };
 
     commit({
@@ -61,7 +66,7 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
       optimisticUpdater: updater,
       updater,
     });
-  }, [commit, allCompleted, getConnectionRecord]);
+  }, [commit, allCompleted, getConnectionRecord, invalidateConnectionRecords]);
 
   return (
     <Tooltip
