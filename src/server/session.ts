@@ -17,7 +17,7 @@ const redisClient = redis.createClient({
 });
 
 const session = expressSession({
-  store: new RedisStore({ client: redisClient as Client }),
+  store: new RedisStore({ client: redisClient as unknown as Client }),
   name: 'danstodos.sid',
   secret: process.env.SESSION_SECRETS!.split(' '),
   saveUninitialized: false,
