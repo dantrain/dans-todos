@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3cb95c2902986d895986577c59a115b>>
+ * @generated SignedSource<<c40895ab04f811e658fd5d6c491c05cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,16 +13,14 @@ export type TodoEditInputEditMutation$variables = {
   id?: number | null;
   text: string;
 };
-export type TodoEditInputEditMutationVariables = TodoEditInputEditMutation$variables;
 export type TodoEditInputEditMutation$data = {
   readonly updateOneTodo: {
     readonly text: string;
   } | null;
 };
-export type TodoEditInputEditMutationResponse = TodoEditInputEditMutation$data;
 export type TodoEditInputEditMutation = {
-  variables: TodoEditInputEditMutationVariables;
   response: TodoEditInputEditMutation$data;
+  variables: TodoEditInputEditMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

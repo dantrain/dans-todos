@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53d8f3cab687ed46e8fd0789a5ed46fc>>
+ * @generated SignedSource<<02b9729d6c438b97ebda94606af72999>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,14 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ToggleAllSetAllCompletedMutation$variables = {
   completed?: boolean | null;
 };
-export type ToggleAllSetAllCompletedMutationVariables = ToggleAllSetAllCompletedMutation$variables;
 export type ToggleAllSetAllCompletedMutation$data = {
   readonly updateManyTodo: {
     readonly count: number;
   };
 };
-export type ToggleAllSetAllCompletedMutationResponse = ToggleAllSetAllCompletedMutation$data;
 export type ToggleAllSetAllCompletedMutation = {
-  variables: ToggleAllSetAllCompletedMutationVariables;
   response: ToggleAllSetAllCompletedMutation$data;
+  variables: ToggleAllSetAllCompletedMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

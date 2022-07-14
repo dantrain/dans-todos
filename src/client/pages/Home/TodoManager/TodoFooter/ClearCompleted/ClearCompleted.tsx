@@ -5,7 +5,7 @@ import { ConnectionHandler, SelectorStoreUpdater } from 'relay-runtime';
 import { useConnectionContext } from '../../../../../utils/connectionContext';
 import {
   ClearCompletedMutation,
-  ClearCompletedMutationResponse,
+  ClearCompletedMutation$data,
 } from '../../../../../__generated__/ClearCompletedMutation.graphql';
 import { TodosConnectionContext } from '../../TodoManager';
 
@@ -27,7 +27,7 @@ const ClearCompleted = ({ disabled }: ClearCompletedProps) => {
   const [commit] = useMutation<ClearCompletedMutation>(clearCompletedMutation);
 
   const handleClick = useCallback(() => {
-    const updater: SelectorStoreUpdater<ClearCompletedMutationResponse> = (
+    const updater: SelectorStoreUpdater<ClearCompletedMutation$data> = (
       store
     ) => {
       const connection = getConnectionRecord(store);

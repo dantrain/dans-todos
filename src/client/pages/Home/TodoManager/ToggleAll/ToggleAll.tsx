@@ -7,7 +7,7 @@ import { useConnectionContext } from '../../../../utils/connectionContext';
 import { ToggleAllFragment$key } from '../../../../__generated__/ToggleAllFragment.graphql';
 import {
   ToggleAllSetAllCompletedMutation,
-  ToggleAllSetAllCompletedMutationResponse,
+  ToggleAllSetAllCompletedMutation$data,
 } from '../../../../__generated__/ToggleAllSetAllCompletedMutation.graphql';
 import { TodosConnectionContext } from '../TodoManager';
 
@@ -43,7 +43,7 @@ const ToggleAll = ({ todos }: ToggleAllProps) => {
 
   const handleClick = useCallback(() => {
     const updater: SelectorStoreUpdater<
-      ToggleAllSetAllCompletedMutationResponse
+      ToggleAllSetAllCompletedMutation$data
     > = (store) => {
       const connectionRecord = getConnectionRecord(store);
 

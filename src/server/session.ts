@@ -1,6 +1,6 @@
-import connectRedis, { Client } from 'connect-redis';
+import connectRedis from 'connect-redis';
 import 'express-async-errors';
-import expressSession from 'express-session';
+import expressSession, { Store } from 'express-session';
 import redis from 'redis';
 
 declare module 'express-session' {
@@ -11,13 +11,16 @@ declare module 'express-session' {
   }
 }
 
-const RedisStore = connectRedis(expressSession);
+const RedisStore = connectRedis(
+  expressSession as Parameters<typeof connectRedis>[0]
+);
+
 const redisClient = redis.createClient({
   url: process.env.REDIS_URL,
 });
 
 const session = expressSession({
-  store: new RedisStore({ client: redisClient as unknown as Client }),
+  store: new RedisStore({ client: redisClient }) as unknown as Store,
   name: 'danstodos.sid',
   secret: process.env.SESSION_SECRETS!.split(' '),
   saveUninitialized: false,

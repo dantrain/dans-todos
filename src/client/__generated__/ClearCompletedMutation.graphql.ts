@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<826b9ea0c9a389f00cdf90719352c05c>>
+ * @generated SignedSource<<6d328f3545e45fb93138176c0b1c8d03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,16 +10,14 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ClearCompletedMutation$variables = {};
-export type ClearCompletedMutationVariables = ClearCompletedMutation$variables;
 export type ClearCompletedMutation$data = {
   readonly deleteManyTodo: {
     readonly count: number;
   };
 };
-export type ClearCompletedMutationResponse = ClearCompletedMutation$data;
 export type ClearCompletedMutation = {
-  variables: ClearCompletedMutationVariables;
   response: ClearCompletedMutation$data;
+  variables: ClearCompletedMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

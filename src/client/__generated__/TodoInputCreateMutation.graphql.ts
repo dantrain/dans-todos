@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<922f31be085f6971d07ce71557b74fbc>>
+ * @generated SignedSource<<4023faa63add5f16aea74d0863593e60>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,19 +12,17 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type TodoInputCreateMutation$variables = {
   text: string;
 };
-export type TodoInputCreateMutationVariables = TodoInputCreateMutation$variables;
 export type TodoInputCreateMutation$data = {
   readonly createOneTodo: {
+    readonly completed: boolean;
     readonly id: string;
     readonly ownId: number;
     readonly text: string;
-    readonly completed: boolean;
   };
 };
-export type TodoInputCreateMutationResponse = TodoInputCreateMutation$data;
 export type TodoInputCreateMutation = {
-  variables: TodoInputCreateMutationVariables;
   response: TodoInputCreateMutation$data;
+  variables: TodoInputCreateMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

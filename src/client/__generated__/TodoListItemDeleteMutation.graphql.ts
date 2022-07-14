@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55402586ac6757d8787a03748b57a634>>
+ * @generated SignedSource<<b9722cbb91a7154e970adc64adcfb26e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,14 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type TodoListItemDeleteMutation$variables = {
   id?: number | null;
 };
-export type TodoListItemDeleteMutationVariables = TodoListItemDeleteMutation$variables;
 export type TodoListItemDeleteMutation$data = {
   readonly deleteOneTodo: {
     readonly id: string;
   } | null;
 };
-export type TodoListItemDeleteMutationResponse = TodoListItemDeleteMutation$data;
 export type TodoListItemDeleteMutation = {
-  variables: TodoListItemDeleteMutationVariables;
   response: TodoListItemDeleteMutation$data;
+  variables: TodoListItemDeleteMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

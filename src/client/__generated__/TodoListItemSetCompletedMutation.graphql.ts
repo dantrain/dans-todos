@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47e33e1a6e53d9814d7e881fc82f49a0>>
+ * @generated SignedSource<<0b7e33887ebc19ee47402049c68244c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,19 +10,17 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type TodoListItemSetCompletedMutation$variables = {
-  id?: number | null;
   completed?: boolean | null;
+  id?: number | null;
 };
-export type TodoListItemSetCompletedMutationVariables = TodoListItemSetCompletedMutation$variables;
 export type TodoListItemSetCompletedMutation$data = {
   readonly updateOneTodo: {
     readonly completed: boolean;
   } | null;
 };
-export type TodoListItemSetCompletedMutationResponse = TodoListItemSetCompletedMutation$data;
 export type TodoListItemSetCompletedMutation = {
-  variables: TodoListItemSetCompletedMutationVariables;
   response: TodoListItemSetCompletedMutation$data;
+  variables: TodoListItemSetCompletedMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

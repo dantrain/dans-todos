@@ -19,12 +19,12 @@ import { useConnectionContext } from '../../../../utils/connectionContext';
 import hasTouchScreen from '../../../../utils/hasTouchScreen';
 import {
   TodoListItemDeleteMutation,
-  TodoListItemDeleteMutationResponse,
+  TodoListItemDeleteMutation$data,
 } from '../../../../__generated__/TodoListItemDeleteMutation.graphql';
 import { TodoListItemFragment$key } from '../../../../__generated__/TodoListItemFragment.graphql';
 import {
   TodoListItemSetCompletedMutation,
-  TodoListItemSetCompletedMutationResponse,
+  TodoListItemSetCompletedMutation$data,
 } from '../../../../__generated__/TodoListItemSetCompletedMutation.graphql';
 import { TodosConnectionContext } from '../TodoManager';
 import TodoEditInput from './TodoEditInput/TodoEditInput';
@@ -73,7 +73,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
   const handleToggle = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const updater: SelectorStoreUpdater<
-        TodoListItemSetCompletedMutationResponse
+        TodoListItemSetCompletedMutation$data
       > = (store) => {
         const connectionRecord = getConnectionRecord(store);
 
@@ -112,7 +112,7 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
     useMutation<TodoListItemDeleteMutation>(deleteMutation);
 
   const handleDelete = useCallback(() => {
-    const updater: SelectorStoreUpdater<TodoListItemDeleteMutationResponse> = (
+    const updater: SelectorStoreUpdater<TodoListItemDeleteMutation$data> = (
       store
     ) => {
       const connectionRecord = getConnectionRecord(store);

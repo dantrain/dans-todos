@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e5a59bc7a9db111d56c87957c20b747c>>
+ * @generated SignedSource<<49f256bc3a928d46a0a6c1c10e2955ee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type Filter = "ACTIVE" | "ALL" | "COMPLETED" | "%future added value";
 export type TodoManagerQuery$variables = {
   filter?: Filter | null;
 };
-export type TodoManagerQueryVariables = TodoManagerQuery$variables;
 export type TodoManagerQuery$data = {
   readonly viewer: {
     readonly todos: {
@@ -25,14 +24,13 @@ export type TodoManagerQuery$data = {
           readonly " $fragmentSpreads": FragmentRefs<"TodoListItemFragment">;
         };
       }>;
-      readonly " $fragmentSpreads": FragmentRefs<"ToggleAllFragment" | "TodoFooterFragment">;
+      readonly " $fragmentSpreads": FragmentRefs<"TodoFooterFragment" | "ToggleAllFragment">;
     };
   };
 };
-export type TodoManagerQueryResponse = TodoManagerQuery$data;
 export type TodoManagerQuery = {
-  variables: TodoManagerQueryVariables;
   response: TodoManagerQuery$data;
+  variables: TodoManagerQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
