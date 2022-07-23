@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node --esm src/index.ts",
-    "build": "tsc && vite build",
+    "start": "NODE_ENV=production node dist/server/index.js",
+    "build": "tsc && vite build --outDir dist/client --manifest && vite build --outDir dist/server --ssr src/index.ts --target node16",
     "preview": "vite preview"
   },
   "dependencies": {
