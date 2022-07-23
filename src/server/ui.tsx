@@ -1,7 +1,7 @@
 import express from "express";
-import fs from "fs";
-import path from "path";
+import { renderToStaticMarkup } from "react-dom/server";
 import { createServer as createViteServer } from "vite";
+import Index from "./Index.js";
 
 const uiRouter = express.Router();
 
@@ -21,29 +21,28 @@ uiRouter.get("/*", async (req, res, next) => {
   const url = req.originalUrl;
 
   try {
-    // 1. Read index.html
-    let template = fs.readFileSync(path.resolve("./src/index.html"), "utf-8");
-
-    // 2. Apply Vite HTML transforms. This injects the Vite HMR client, and
-    //    also applies HTML transforms from Vite plugins, e.g. global preambles
-    //    from @vitejs/plugin-react
-    template = await vite.transformIndexHtml(url, template);
-
-    // 3. Load the server entry. vite.ssrLoadModule automatically transforms
+    //    Load the server entry. vite.ssrLoadModule automatically transforms
     //    your ESM source code to be usable in Node.js! There is no bundling
     //    required, and provides efficient invalidation similar to HMR.
     const { render } = await vite.ssrLoadModule("./src/entry-server.tsx");
 
-    // 4. render the app HTML. This assumes entry-server.js's exported `render`
+    //    render the app HTML. This assumes entry-server.js's exported `render`
     //    function calls appropriate framework SSR APIs,
     //    e.g. ReactDOMServer.renderToString()
-    const appHtml = await render(url);
+    const content = await render(url);
 
-    // 5. Inject the app-rendered HTML into the template.
-    const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+    const template = renderToStaticMarkup(<Index content={content} />);
 
-    // 6. Send the rendered HTML back.
-    res.status(200).set({ "Content-Type": "text/html" }).end(html);
+    //    Apply Vite HTML transforms. This injects the Vite HMR client, and
+    //    also applies HTML transforms from Vite plugins, e.g. global preambles
+    //    from @vitejs/plugin-react
+    const html = await vite.transformIndexHtml(url, template);
+
+    //    Send the rendered HTML back.
+    res
+      .status(200)
+      .set({ "Content-Type": "text/html" })
+      .send(`<!DOCTYPE html>\n${html}`);
   } catch (e) {
     // If an error is caught, let Vite fix the stack trace so it maps back to
     // your actual source code.
