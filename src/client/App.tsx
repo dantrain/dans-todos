@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "twin.macro";
+import { css } from "@emotion/react";
+import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import SuspenseTest from "./components/SuspenseTest";
 
@@ -16,7 +16,14 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1 tw="text-center font-sans text-blue-700">Vite + React</h1>
+      <h1
+        tw="text-center font-sans text-blue-700 text-5xl"
+        css={css`
+          letter-spacing: 5px;
+        `}
+      >
+        Vite + React
+      </h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
