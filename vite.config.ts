@@ -7,7 +7,6 @@ export default defineConfig({
     react({
       babel: {
         plugins: [
-          "babel-plugin-twin",
           "babel-plugin-macros",
           [
             "@emotion/babel-plugin-jsx-pragmatic",
@@ -32,8 +31,6 @@ export default defineConfig({
     },
   },
   esbuild: {
-    define: {
-      this: "undefined",
-    },
+    logOverride: { "this-is-undefined-in-esm": "silent" },
   },
 });

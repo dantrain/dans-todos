@@ -16,12 +16,6 @@ const Index = ({ content, manifest }: IndexProps) => (
         name="apple-mobile-web-app-status-bar-style"
         content="black-translucent"
       />
-      {manifest?.["src/entry-client.css"]?.file && (
-        <link
-          rel="stylesheet"
-          href={manifest?.["src/entry-client.css"]?.file}
-        />
-      )}
       <link rel="icon" type="image/svg+xml" href="/vite.svg" />
       <title>Vite + React + TS</title>
     </head>
