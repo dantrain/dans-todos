@@ -14,8 +14,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "paths": {
+      "@emotion/react/jsx-runtime": [
+        "./node_modules/@emotion/react/jsx-runtime/dist/emotion-react-jsx-runtime.esm.js"
+      ]
+    }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src/types"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }
