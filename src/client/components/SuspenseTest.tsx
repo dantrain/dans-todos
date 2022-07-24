@@ -1,3 +1,4 @@
+import React from "react";
 import Suspense from "./Suspense";
 
 let loaded = false;

@@ -7,6 +7,7 @@ export default defineConfig({
     react({
       babel: {
         plugins: [
+          "babel-plugin-twin",
           "babel-plugin-macros",
           [
             "@emotion/babel-plugin-jsx-pragmatic",
@@ -28,6 +29,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: "/src/entry-client.tsx",
+    },
+  },
+  esbuild: {
+    define: {
+      this: "undefined",
     },
   },
 });
