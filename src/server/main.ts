@@ -1,7 +1,6 @@
 import { createServer } from "@graphql-yoga/node";
 import express from "express";
 import path from "path";
-import apiRouter from "./api.js";
 import schema from "./schema.js";
 import uiRouter from "./ui.js";
 
@@ -17,8 +16,6 @@ const getApp = async () => {
   const graphQLServer = createServer({ schema });
 
   app.use("/graphql", graphQLServer);
-
-  app.use(apiRouter);
 
   app.use(uiRouter);
 
