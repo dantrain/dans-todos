@@ -10,7 +10,7 @@
     "dev": "yarn run zx scripts/dev.mjs",
     "start": "NODE_ENV=production node dist/server/index.js",
     "start:db": "docker run --name vite-db --rm --env POSTGRES_PASSWORD=d1rONeFo0KL8ZwC8 -p 5432:5432 postgres:14",
-    "start:dev-server": "ts-node --esm src/index.ts",
+    "start:dev-server": "nodemon --esm src/index.ts",
     "build": "tsc && vite build --outDir dist/client --manifest && vite build --outDir dist/server --ssr src/index.ts --target node16",
     "generate": "yarn run prisma generate",
     "preview": "vite preview"
@@ -32,6 +32,7 @@
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
     "babel-plugin-macros": "^3.1.0",
+    "nodemon": "^2.0.19",
     "prisma": "^4.1.0",
     "tailwindcss": "^3.1.6",
     "ts-node": "^10.9.1",
