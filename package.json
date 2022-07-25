@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "ts-node --esm src/index.ts",
+    "dev": "yarn run zx scripts/dev.mjs",
     "start": "NODE_ENV=production node dist/server/index.js",
+    "start:db": "docker run --name vite-db --rm --env POSTGRES_PASSWORD=d1rONeFo0KL8ZwC8 -p 5432:5432 postgres:14",
+    "start:dev-server": "ts-node --esm src/index.ts",
     "build": "tsc && vite build --outDir dist/client --manifest && vite build --outDir dist/server --ssr src/index.ts --target node16",
     "preview": "vite preview"
   },
@@ -29,6 +31,8 @@
     "tsconfig-paths": "^4.0.0",
     "twin.macro": "^2.8.2",
     "typescript": "^4.6.4",
-    "vite": "^3.0.0"
+    "vite": "^3.0.0",
+    "wait-on": "^6.0.1",
+    "zx": "^7.0.7"
   }
 }
