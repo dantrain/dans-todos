@@ -3,7 +3,10 @@
 - [x] SSR
 - [x] Suspense test
 - [x] Emotion/Tailwind/twin.macro
-- [ ] Pothos/GraphQL Yoga
+- [x] Pothos/GraphQL Yoga
+- [x] Relay
 - [ ] Router/startTransition
+- [ ] PWA/Service Worker
 - [ ] Deploy to Fly.io
 - [ ] Code splitting
+- [ ] ESLint

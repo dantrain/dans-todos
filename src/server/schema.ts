@@ -3,6 +3,10 @@ import PrismaPlugin from "@pothos/plugin-prisma";
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
 import RelayPlugin from "@pothos/plugin-relay";
 import { PrismaClient } from "@prisma/client";
+import { writeFileSync } from "fs";
+import { lexicographicSortSchema, printSchema } from "graphql";
+
+const isProd = process.env.NODE_ENV === "production";
 
 const prisma = new PrismaClient({});
 
@@ -54,5 +58,11 @@ builder.queryType({
 });
 
 const schema = builder.toSchema({});
+
+if (!isProd) {
+  const schemaAsString = printSchema(lexicographicSortSchema(schema));
+
+  writeFileSync("src/server/__generated__/schema.graphql", schemaAsString);
+}
 
 export default schema;

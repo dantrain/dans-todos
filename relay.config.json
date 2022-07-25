@@ -1,0 +1,6 @@
+{
+  "src": "./src/client",
+  "schema": "./src/server/__generated__/schema.graphql",
+  "language": "typescript",
+  "eagerEsModules": true
+}

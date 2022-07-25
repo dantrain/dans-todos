@@ -9,3 +9,5 @@ await sleep(500);
 await $`yarn prisma migrate reset --force`;
 
 $`yarn start:dev-server`;
+
+$`relay-compiler --watch`;

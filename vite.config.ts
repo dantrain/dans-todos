@@ -7,6 +7,7 @@ export default defineConfig({
     react({
       babel: {
         plugins: [
+          "relay",
           "babel-plugin-macros",
           [
             "@emotion/babel-plugin-jsx-pragmatic",
