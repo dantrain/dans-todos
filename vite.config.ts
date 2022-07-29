@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     VitePWA({
       injectRegister: "script",
@@ -53,7 +53,5 @@ export default defineConfig({
   esbuild: {
     logOverride: { "this-is-undefined-in-esm": "silent" },
   },
-  ssr: {
-    noExternal: /^react-relay$/,
-  },
-});
+  ssr: command === "build" ? { noExternal: /^react-relay$/ } : {},
+}));
