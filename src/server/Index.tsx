@@ -1,3 +1,5 @@
+const isProd = process.env.NODE_ENV === "production";
+
 type IndexProps = {
   content: string;
   manifest?: any;
@@ -17,6 +19,7 @@ const Index = ({ content, manifest }: IndexProps) => (
         content="black-translucent"
       />
       <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+      {isProd && <script src="/registerSW.js" />}
       <title>Vite + React + TS</title>
     </head>
     <body>

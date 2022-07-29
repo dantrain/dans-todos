@@ -11,7 +11,7 @@
     "start": "NODE_ENV=production node dist/server/index.js",
     "start:db": "docker run --name vite-db --rm --env POSTGRES_PASSWORD=d1rONeFo0KL8ZwC8 -p 5432:5432 postgres:14",
     "start:dev-server": "nodemon --esm --ignore client/ src/index.ts",
-    "build": "yarn run generate && tsc && vite build --outDir dist/client --manifest && vite build --outDir dist/server --ssr src/index.ts --target node16",
+    "build": "yarn run generate && tsc && vite build --outDir dist/client --manifest && vite build --outDir dist/server --ssr src/index.ts --target node16 && sed -i '' 's/e.registerRoute(new e.NavigationRoute(e.createHandlerBoundToURL(\"index.html\"))),//' dist/client/sw.js",
     "generate:prisma": "prisma generate",
     "generate:relay": "relay-compiler",
     "generate": "yarn run generate:prisma && yarn run generate:relay",
@@ -34,6 +34,7 @@
     "relay-runtime": "^14.0.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.18.6",
     "@emotion/babel-plugin-jsx-pragmatic": "^0.1.5",
     "@types/express": "^4.17.13",
     "@types/node": "^18.6.1",
@@ -54,6 +55,7 @@
     "twin.macro": "^2.8.2",
     "typescript": "^4.6.4",
     "vite": "^3.0.0",
+    "vite-plugin-pwa": "^0.12.3",
     "wait-on": "^6.0.1",
     "zx": "^7.0.7"
   }
