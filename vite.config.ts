@@ -6,6 +6,9 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig(({ command }) => ({
   plugins: [
     VitePWA({
+      manifest: {
+        theme_color: "#115293",
+      },
       injectRegister: "script",
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],

@@ -5,8 +5,8 @@
 - [x] Emotion/Tailwind/twin.macro
 - [x] Pothos/GraphQL Yoga
 - [x] Relay
+- [x] PWA/Service Worker
 - [ ] Router/startTransition
-- [ ] PWA/Service Worker
 - [ ] Deploy to Fly.io
 - [ ] Code splitting
 - [ ] ESLint
