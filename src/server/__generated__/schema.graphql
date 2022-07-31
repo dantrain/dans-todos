@@ -1,3 +1,12 @@
+type Mutation {
+  createOneTodo(text: String!): Todo!
+  updateOneTodo(completed: Boolean!, id: ID!): Todo!
+}
+
+interface Node {
+  id: ID!
+}
+
 type PageInfo {
   endCursor: String
   hasNextPage: Boolean!
@@ -6,18 +15,20 @@ type PageInfo {
 }
 
 type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
   viewer: User!
 }
 
-type Todo {
+type Todo implements Node {
   completed: Boolean!
   createdat: String!
   id: ID!
   text: String!
 }
 
-type User {
-  id: String!
+type User implements Node {
+  id: ID!
   todos(after: String, before: String, first: Int, last: Int): UserTodosConnection!
 }
 

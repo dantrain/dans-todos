@@ -7,6 +7,6 @@
 - [x] Relay
 - [x] PWA/Service Worker
 - [ ] Router/startTransition
-- [ ] Deploy to Fly.io
 - [ ] Code splitting
-- [ ] ESLint
+- [ ] ESLint/Prettier
+- [ ] Deploy to Fly.io

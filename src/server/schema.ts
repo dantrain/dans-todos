@@ -1,7 +1,7 @@
 import SchemaBuilder from "@pothos/core";
 import PrismaPlugin from "@pothos/plugin-prisma";
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
-import RelayPlugin from "@pothos/plugin-relay";
+import RelayPlugin, { decodeGlobalID } from "@pothos/plugin-relay";
 import { PrismaClient } from "@prisma/client";
 import { writeFileSync } from "fs";
 import { lexicographicSortSchema, printSchema } from "graphql";
@@ -23,9 +23,10 @@ const builder = new SchemaBuilder<{
   },
 });
 
-builder.prismaObject("User", {
+builder.prismaNode("User", {
+  id: { field: "id" },
   fields: (t) => ({
-    id: t.exposeString("id"),
+    // ownId: t.exposeString("id"),
     todos: t.relatedConnection("todos", {
       cursor: "id",
       totalCount: true,
@@ -33,9 +34,10 @@ builder.prismaObject("User", {
   }),
 });
 
-builder.prismaObject("Todo", {
+const Todo = builder.prismaNode("Todo", {
+  id: { field: "id" },
   fields: (t) => ({
-    id: t.exposeID("id"),
+    // ownId: t.exposeID("id"),
     text: t.exposeString("text"),
     completed: t.exposeBoolean("completed"),
     createdat: t.string({
@@ -56,6 +58,40 @@ builder.queryType({
     }),
   }),
 });
+
+// createOneTodo
+builder.mutationType({
+  fields: (t) => ({
+    createOneTodo: t.field({
+      type: Todo,
+      args: { text: t.arg.string({ required: true }) },
+      resolve: (_parent, args) =>
+        prisma.todo.create({
+          data: { userid: "parklife", text: args.text },
+        }),
+    }),
+  }),
+});
+
+// updateOneTodo
+builder.mutationField("updateOneTodo", (t) =>
+  t.field({
+    type: Todo,
+    args: {
+      id: t.arg.id({ required: true }),
+      completed: t.arg.boolean({ required: true }),
+    },
+    resolve: (_parent, args) =>
+      prisma.todo.update({
+        where: { id: +decodeGlobalID(args.id as string).id },
+        data: { completed: args.completed },
+      }),
+  })
+);
+// updateManyTodo
+
+// deleteOneTodo
+// deleteManyTodo
 
 const schema = builder.toSchema({});
 
