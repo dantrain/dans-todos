@@ -5,6 +5,7 @@ import RelayPlugin, { decodeGlobalID } from "@pothos/plugin-relay";
 import { PrismaClient } from "@prisma/client";
 import { writeFileSync } from "fs";
 import { lexicographicSortSchema, printSchema } from "graphql";
+import { isNil, omitBy } from "lodash-es";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -23,10 +24,13 @@ const builder = new SchemaBuilder<{
   },
 });
 
+const AffectedRowsOutput = builder
+  .objectRef<{ count: number }>("AffectedRowsOutput")
+  .implement({ fields: (t) => ({ count: t.exposeInt("count") }) });
+
 builder.prismaNode("User", {
   id: { field: "id" },
   fields: (t) => ({
-    // ownId: t.exposeString("id"),
     todos: t.relatedConnection("todos", {
       cursor: "id",
       totalCount: true,
@@ -37,7 +41,6 @@ builder.prismaNode("User", {
 const Todo = builder.prismaNode("Todo", {
   id: { field: "id" },
   fields: (t) => ({
-    // ownId: t.exposeID("id"),
     text: t.exposeString("text"),
     completed: t.exposeBoolean("completed"),
     createdat: t.string({
@@ -59,7 +62,6 @@ builder.queryType({
   }),
 });
 
-// createOneTodo
 builder.mutationType({
   fields: (t) => ({
     createOneTodo: t.field({
@@ -73,25 +75,52 @@ builder.mutationType({
   }),
 });
 
-// updateOneTodo
 builder.mutationField("updateOneTodo", (t) =>
   t.field({
     type: Todo,
     args: {
       id: t.arg.id({ required: true }),
-      completed: t.arg.boolean({ required: true }),
+      text: t.arg.string(),
+      completed: t.arg.boolean(),
     },
+    resolve: (_parent, args) => {
+      const { id, ...rest } = args;
+
+      return prisma.todo.update({
+        where: { id: +decodeGlobalID(id as string).id },
+        data: omitBy(rest, isNil),
+      });
+    },
+  })
+);
+
+builder.mutationField("updateManyTodo", (t) =>
+  t.field({
+    type: AffectedRowsOutput,
+    args: { completed: t.arg.boolean() },
     resolve: (_parent, args) =>
-      prisma.todo.update({
+      prisma.todo.updateMany({ data: omitBy(args, isNil) }),
+  })
+);
+
+builder.mutationField("deleteOneTodo", (t) =>
+  t.field({
+    type: Todo,
+    args: { id: t.arg.id({ required: true }) },
+    resolve: (_parent, args) =>
+      prisma.todo.delete({
         where: { id: +decodeGlobalID(args.id as string).id },
-        data: { completed: args.completed },
       }),
   })
 );
-// updateManyTodo
 
-// deleteOneTodo
-// deleteManyTodo
+builder.mutationField("deleteManyCompletedTodo", (t) =>
+  t.field({
+    type: AffectedRowsOutput,
+    resolve: () =>
+      prisma.todo.deleteMany({ where: { completed: { equals: true } } }),
+  })
+);
 
 const schema = builder.toSchema({});
 
