@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createServer as createViteServer, ViteDevServer } from "vite";
+import type { AppContext } from "../client/App.js";
 import Index from "./Index.js";
 
 const isProd = process.env.NODE_ENV === "production";
@@ -35,9 +36,10 @@ if (!isProd) {
 
 uiRouter.get("/*", async (req, res, next) => {
   const url = req.originalUrl;
+  const context: AppContext = {};
 
   try {
-    let render: (url?: string) => string;
+    let render: (context: AppContext) => string;
 
     if (!isProd) {
       //    Load the server entry. vite.ssrLoadModule automatically transforms
@@ -52,10 +54,10 @@ uiRouter.get("/*", async (req, res, next) => {
     //    render the app HTML. This assumes entry-server.js's exported `render`
     //    function calls appropriate framework SSR APIs,
     //    e.g. ReactDOMServer.renderToString()
-    const content = await render(url);
+    const content = await render(context);
 
     let markup = renderToStaticMarkup(
-      <Index content={content} manifest={manifest} />
+      <Index content={content} manifest={manifest} context={context} />
     );
 
     if (!isProd) {

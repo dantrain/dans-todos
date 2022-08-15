@@ -1,6 +1,6 @@
 import ReactDOMServer from "react-dom/server";
-import App from "./client/App.js";
+import App, { AppContext } from "./client/App.js";
 
-export function render() {
-  return ReactDOMServer.renderToString(<App />);
+export function render(context: AppContext) {
+  return ReactDOMServer.renderToString(<App context={context} />);
 }
