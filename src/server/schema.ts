@@ -28,13 +28,41 @@ const AffectedRowsOutput = builder
   .objectRef<{ count: number }>("AffectedRowsOutput")
   .implement({ fields: (t) => ({ count: t.exposeInt("count") }) });
 
+const Filter = builder.enumType("Filter", {
+  values: ["all", "active", "completed"],
+});
+
 builder.prismaNode("User", {
   id: { field: "id" },
   fields: (t) => ({
-    todos: t.relatedConnection("todos", {
-      cursor: "id",
-      totalCount: true,
-    }),
+    todos: t.relatedConnection(
+      "todos",
+      {
+        cursor: "id",
+        totalCount: true,
+        args: {
+          filter: t.arg({ type: Filter, defaultValue: "all" }),
+        },
+        query: ({ filter }) => ({
+          where: {
+            completed:
+              filter === "completed"
+                ? true
+                : filter === "active"
+                ? false
+                : undefined,
+          },
+          orderBy: { createdat: "asc" },
+        }),
+      },
+      {
+        fields: (t) => ({
+          completedCount: t.int({
+            resolve: () => prisma.todo.count({ where: { completed: true } }),
+          }),
+        }),
+      }
+    ),
   }),
 });
 
@@ -62,18 +90,18 @@ builder.queryType({
   }),
 });
 
-builder.mutationType({
-  fields: (t) => ({
-    createOneTodo: t.field({
-      type: Todo,
-      args: { text: t.arg.string({ required: true }) },
-      resolve: (_parent, args) =>
-        prisma.todo.create({
-          data: { userid: "parklife", text: args.text },
-        }),
-    }),
-  }),
-});
+builder.mutationType({});
+
+builder.mutationField("createOneTodo", (t) =>
+  t.field({
+    type: Todo,
+    args: { text: t.arg.string({ required: true }) },
+    resolve: (_parent, args) =>
+      prisma.todo.create({
+        data: { userid: "parklife", text: args.text },
+      }),
+  })
+);
 
 builder.mutationField("updateOneTodo", (t) =>
   t.field({
