@@ -2,6 +2,7 @@ import { ButtonGroup, css, Divider, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { graphql, useFragment } from "react-relay/hooks";
 import tw from "twin.macro";
+import ClearCompleted from "./ClearCompleted";
 import FilterLink from "./FilterLink";
 import { TodoFooterFragment$key } from "./__generated__/TodoFooterFragment.graphql";
 
@@ -40,7 +41,7 @@ const TodoFooter = ({ todos }: { todos: TodoFooterFragment$key }) => {
           <FilterLink to="/active">Active</FilterLink>
           <FilterLink to="/completed">Completed</FilterLink>
         </ButtonGroup>
-        {/* <ClearCompleted disabled={incompleteCount === totalCount} /> */}
+        {<ClearCompleted disabled={incompleteCount === totalCount} />}
       </Toolbar>
     </>
   ) : null;
