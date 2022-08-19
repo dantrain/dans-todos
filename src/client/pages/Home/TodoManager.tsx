@@ -2,6 +2,7 @@ import { CardHeader, Divider, List } from "@mui/material";
 import React from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 import { createConnectionContext } from "../../utils/connectionContext";
+import TodoFooter from "./TodoFooter";
 import TodoInput from "./TodoInput";
 import TodoListItem from "./TodoListItem";
 import ToggleAll from "./ToggleAll";
@@ -18,13 +19,14 @@ const query = graphql`
     viewer {
       todos(first: 50, filter: $filter) {
         __id
-        ...ToggleAllFragment
         edges {
           node {
             id
             ...TodoListItemFragment
           }
         }
+        ...ToggleAllFragment
+        ...TodoFooterFragment
       }
     }
   }
@@ -48,6 +50,7 @@ const TodoManager = ({ filter }: { filter: Filter }) => {
           </List>
         </>
       ) : null}
+      <TodoFooter todos={todos} />
     </TodosConnectionProvider>
   );
 };
