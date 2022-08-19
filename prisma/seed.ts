@@ -12,12 +12,15 @@ const main = async () => {
         create: [
           {
             text: "Put trousers on",
+            completed: true,
           },
           {
             text: "Have a cup of tea",
+            completed: false,
           },
           {
             text: "Think about leaving the house",
+            completed: false,
           },
         ],
       },

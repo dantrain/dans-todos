@@ -13,6 +13,7 @@ const prisma = new PrismaClient({});
 
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
+  DefaultEdgesNullability: false;
 }>({
   plugins: [PrismaPlugin, RelayPlugin],
   prisma: {
@@ -21,6 +22,9 @@ const builder = new SchemaBuilder<{
   relayOptions: {
     clientMutationId: "omit",
     cursorType: "String",
+    edgesFieldOptions: {
+      nullable: false,
+    },
   },
 });
 

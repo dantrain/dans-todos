@@ -47,7 +47,7 @@ type User implements Node {
 
 type UserTodosConnection {
   completedCount: Int!
-  edges: [UserTodosConnectionEdge]!
+  edges: [UserTodosConnectionEdge!]!
   pageInfo: PageInfo!
   totalCount: Int!
 }

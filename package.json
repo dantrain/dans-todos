@@ -15,7 +15,8 @@
     "generate:prisma": "prisma generate",
     "generate:relay": "relay-compiler",
     "generate": "yarn run generate:prisma && yarn run generate:relay",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "yarn run generate:prisma"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",

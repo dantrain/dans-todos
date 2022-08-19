@@ -6,7 +6,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { RelayEnvironmentProvider } from "react-relay";
 import { Route, Routes } from "react-router-dom";
 import ErrorFallback from "./components/ErrorFallback";
-import Home from "./Home";
+import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import SignIn from "./pages/SignIn/SignIn";
 import relayEnvironment from "./relayEnvironment";
@@ -44,7 +44,11 @@ function App({ context = defaultContext }: { context?: AppContext }) {
             <CssBaseline />
             <Routes>
               <Route path="/signin" element={<SignIn />} />
+
               <Route path="/" element={<Home />} />
+              <Route path="/active" element={<Home />} />
+              <Route path="/completed" element={<Home />} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </RelayEnvironmentProvider>
