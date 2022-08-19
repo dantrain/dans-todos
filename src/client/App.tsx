@@ -9,6 +9,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import relayEnvironment from "./relayEnvironment";
 
 export type AppContext = {
+  statusCode?: number;
   title?: string;
 };
 

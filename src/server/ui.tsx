@@ -69,7 +69,7 @@ uiRouter.get("/*", async (req, res, next) => {
 
     //    Send the rendered HTML back.
     res
-      .status(200)
+      .status(context.statusCode || 200)
       .set({ "Content-Type": "text/html" })
       .send(`<!DOCTYPE html>\n${markup}`);
   } catch (e) {
