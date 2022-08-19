@@ -1,6 +1,7 @@
 import { CardHeader, Divider, List } from "@mui/material";
 import React from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
+import TodoListItem from "./TodoListItem";
 import {
   Filter,
   TodoManagerQuery,
@@ -14,7 +15,7 @@ const query = graphql`
         edges {
           node {
             id
-            text
+            ...TodoListItemFragment
           }
         }
       }
@@ -34,8 +35,8 @@ const TodoManager = ({ filter }: { filter: Filter }) => {
         <>
           <Divider />
           <List>
-            {todos.edges.map((edge) => (
-              <div>{edge.node.text}</div>
+            {todos.edges.map(({ node }) => (
+              <TodoListItem key={node.id} todo={node} />
             ))}
           </List>
         </>
