@@ -7,9 +7,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { useFragment } from "react-relay";
+import { useFragment, useMutation } from "react-relay";
 import { graphql } from "relay-runtime";
 import tw, { css } from "twin.macro";
+import { TodoEditInputEditMutation } from "./__generated__/TodoEditInputEditMutation.graphql";
 import { TodoEditInputFragment$key } from "./__generated__/TodoEditInputFragment.graphql";
 
 const fragment = graphql`
@@ -17,6 +18,14 @@ const fragment = graphql`
     id
     text
     completed
+  }
+`;
+
+const editMutation = graphql`
+  mutation TodoEditInputEditMutation($id: ID!, $text: String!) {
+    updateOneTodo(id: $id, text: $text) {
+      text
+    }
   }
 `;
 
@@ -31,7 +40,18 @@ const TodoEditInput = ({ todo }: { todo: TodoEditInputFragment$key }) => {
     setValue(text);
   }, [text]);
 
-  const handleBlur = () => {};
+  const [commit] = useMutation<TodoEditInputEditMutation>(editMutation);
+
+  const handleBlur = useCallback(() => {
+    if (value.length) {
+      commit({
+        variables: { id, text: value.trim() },
+        optimisticResponse: { updateOneTodo: { id, text: value.trim() } },
+      });
+    } else {
+      setValue(text);
+    }
+  }, [commit, id, text, value]);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);

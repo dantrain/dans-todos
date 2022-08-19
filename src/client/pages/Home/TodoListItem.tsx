@@ -9,15 +9,29 @@ import {
   ListItemText,
   Tooltip,
 } from "@mui/material";
-import { useRef, useState } from "react";
-import { useFragment } from "react-relay";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
+import { useFragment, useMutation } from "react-relay";
 import { CSSTransition } from "react-transition-group";
 import { useHoverDirty } from "react-use";
-import { graphql } from "relay-runtime";
+import {
+  ConnectionHandler,
+  graphql,
+  SelectorStoreUpdater,
+} from "relay-runtime";
 import tw from "twin.macro";
+import { useConnectionContext } from "../../utils/connectionContext";
 import hasTouchScreen from "../../utils/hasTouchScreen";
 import TodoEditInput from "./TodoEditInput";
+import { TodosConnectionContext } from "./TodoManager";
+import {
+  TodoListItemDeleteMutation,
+  TodoListItemDeleteMutation$data,
+} from "./__generated__/TodoListItemDeleteMutation.graphql";
 import { TodoListItemFragment$key } from "./__generated__/TodoListItemFragment.graphql";
+import {
+  TodoListItemSetCompletedMutation,
+  TodoListItemSetCompletedMutation$data,
+} from "./__generated__/TodoListItemSetCompletedMutation.graphql";
 
 const fragment = graphql`
   fragment TodoListItemFragment on Todo {
@@ -27,9 +41,106 @@ const fragment = graphql`
   }
 `;
 
+const setCompletedMutation = graphql`
+  mutation TodoListItemSetCompletedMutation($id: ID!, $completed: Boolean) {
+    updateOneTodo(id: $id, completed: $completed) {
+      completed
+    }
+  }
+`;
+
+const deleteMutation = graphql`
+  mutation TodoListItemDeleteMutation($id: ID!) {
+    deleteOneTodo(id: $id) {
+      id
+    }
+  }
+`;
+
 const TodoListItem = ({ todo }: { todo: TodoListItemFragment$key }) => {
   const todoData = useFragment(fragment, todo);
   const { id, completed } = todoData;
+  const { getConnectionRecord, invalidateConnectionRecords } =
+    useConnectionContext(TodosConnectionContext);
+
+  const [commitToggle] =
+    useMutation<TodoListItemSetCompletedMutation>(setCompletedMutation);
+
+  const handleToggle = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const updater: SelectorStoreUpdater<
+        TodoListItemSetCompletedMutation$data
+      > = (store) => {
+        const connectionRecord = getConnectionRecord(store);
+
+        connectionRecord.setValue(
+          +(connectionRecord.getValue("completedCount") || 0) +
+            (completed ? -1 : 1),
+          "completedCount"
+        );
+
+        invalidateConnectionRecords(store);
+      };
+
+      commitToggle({
+        variables: {
+          id,
+          completed: event.target.checked,
+        },
+        optimisticResponse: {
+          updateOneTodo: { id, completed: event.target.checked },
+        },
+        optimisticUpdater: updater,
+        updater,
+      });
+    },
+    [
+      commitToggle,
+      id,
+      getConnectionRecord,
+      completed,
+      invalidateConnectionRecords,
+    ]
+  );
+
+  const [commitDelete] =
+    useMutation<TodoListItemDeleteMutation>(deleteMutation);
+
+  const handleDelete = useCallback(() => {
+    const updater: SelectorStoreUpdater<TodoListItemDeleteMutation$data> = (
+      store
+    ) => {
+      const connectionRecord = getConnectionRecord(store);
+
+      ConnectionHandler.deleteNode(connectionRecord, id!);
+
+      connectionRecord.setValue(
+        +(connectionRecord.getValue("totalCount") || 0) - 1,
+        "totalCount"
+      );
+
+      if (completed) {
+        connectionRecord.setValue(
+          +(connectionRecord.getValue("completedCount") || 0) - 1,
+          "completedCount"
+        );
+      }
+
+      invalidateConnectionRecords(store);
+    };
+
+    commitDelete({
+      variables: { id },
+      optimisticUpdater: updater,
+      updater,
+    });
+  }, [
+    commitDelete,
+    getConnectionRecord,
+    id,
+    completed,
+    invalidateConnectionRecords,
+  ]);
 
   const listItemRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -37,9 +148,6 @@ const TodoListItem = ({ todo }: { todo: TodoListItemFragment$key }) => {
   const hovered = useHoverDirty(listItemRef);
   const [focussed, setFocus] = useState(false);
   const showDeleteButton = hasTouchScreen || focussed || hovered;
-
-  const handleToggle = () => {};
-  const handleDelete = () => {};
 
   return (
     <ListItem ref={listItemRef}>

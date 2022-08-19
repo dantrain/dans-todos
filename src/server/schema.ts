@@ -56,7 +56,6 @@ builder.prismaNode("User", {
                 ? false
                 : undefined,
           },
-          orderBy: { createdat: "asc" },
         }),
       },
       {
