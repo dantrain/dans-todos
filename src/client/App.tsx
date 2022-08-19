@@ -1,6 +1,4 @@
-import { createTheme, ThemeProvider } from "@mui/material";
-import { blue, grey, pink } from "@mui/material/colors";
-import CssBaseline from "@mui/material/CssBaseline";
+import { colors, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { createContext } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { RelayEnvironmentProvider } from "react-relay";
@@ -29,9 +27,9 @@ export const Context = createContext<AppContext>(defaultContext);
 
 const theme = createTheme({
   palette: {
-    primary: { main: blue[700] },
-    secondary: { main: pink[500] },
-    background: { default: grey[50] },
+    primary: { main: colors.blue[700] },
+    secondary: { main: colors.pink[500] },
+    background: { default: colors.grey[50] },
   },
 });
 
