@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b4a13f1804bcfc7ecf60e2b1d3addc7>>
+ * @generated SignedSource<<96ebe1bbdcbe132190f9ba6b88135da6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type TodoManagerQuery$data = {
           readonly " $fragmentSpreads": FragmentRefs<"TodoListItemFragment">;
         };
       }>;
+      readonly " $fragmentSpreads": FragmentRefs<"ToggleAllFragment">;
     };
   };
 };
@@ -95,6 +96,11 @@ return {
             "plural": false,
             "selections": [
               {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "ToggleAllFragment"
+              },
+              {
                 "alias": null,
                 "args": null,
                 "concreteType": "UserTodosConnectionEdge",
@@ -158,6 +164,20 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "completedCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "UserTodosConnectionEdge",
                 "kind": "LinkedField",
                 "name": "edges",
@@ -203,16 +223,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "24e949661984ed7dacc61d0ac306e85c",
+    "cacheID": "0e2e03f0249887bc90582cef44f54e86",
     "id": null,
     "metadata": {},
     "name": "TodoManagerQuery",
     "operationKind": "query",
-    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment TodoEditInputFragment on Todo {\n  id\n  text\n  completed\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  completed\n  ...TodoEditInputFragment\n}\n"
+    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    todos(first: 50, filter: $filter) {\n      ...ToggleAllFragment\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment TodoEditInputFragment on Todo {\n  id\n  text\n  completed\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  completed\n  ...TodoEditInputFragment\n}\n\nfragment ToggleAllFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n"
   }
 };
 })();
 
-(node as any).hash = "27a8246589ab63be40317243bc573b81";
+(node as any).hash = "20e3335e922d6459a40a2cad92d47e1d";
 
 export default node;
