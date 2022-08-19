@@ -1,3 +1,6 @@
+import { createTheme, ThemeProvider } from "@mui/material";
+import { blue, grey, pink } from "@mui/material/colors";
+import CssBaseline from "@mui/material/CssBaseline";
 import { createContext } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { RelayEnvironmentProvider } from "react-relay";
@@ -24,18 +27,29 @@ let defaultContext: AppContext =
 
 export const Context = createContext<AppContext>(defaultContext);
 
+const theme = createTheme({
+  palette: {
+    primary: { main: blue[700] },
+    secondary: { main: pink[500] },
+    background: { default: grey[50] },
+  },
+});
+
 function App({ context = defaultContext }: { context?: AppContext }) {
   return (
     <Context.Provider value={context}>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <RelayEnvironmentProvider environment={relayEnvironment}>
-          <Routes>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </RelayEnvironmentProvider>
-      </ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <RelayEnvironmentProvider environment={relayEnvironment}>
+            <CssBaseline />
+            <Routes>
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/" element={<Home />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </RelayEnvironmentProvider>
+        </ErrorBoundary>
+      </ThemeProvider>
     </Context.Provider>
   );
 }

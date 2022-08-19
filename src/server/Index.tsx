@@ -28,6 +28,15 @@ const Index = ({ content, manifest, context }: IndexProps) => {
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com/"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=block"
+        />
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         {isProd && <script src="/registerSW.js" />}
         <title>{context.title}</title>
