@@ -5,7 +5,7 @@ import { createContext } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { RelayEnvironmentProvider } from "react-relay";
 import { Route, Routes } from "react-router-dom";
-import ErrorFallback from "./components/ErrorFallback";
+import Error from "./components/Error";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import SignIn from "./pages/SignIn/SignIn";
@@ -39,7 +39,7 @@ function App({ context = defaultContext }: { context?: AppContext }) {
   return (
     <Context.Provider value={context}>
       <ThemeProvider theme={theme}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <ErrorBoundary FallbackComponent={Error}>
           <RelayEnvironmentProvider environment={relayEnvironment}>
             <CssBaseline />
             <Routes>

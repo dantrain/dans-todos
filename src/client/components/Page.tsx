@@ -3,7 +3,7 @@ import { Container } from "@mui/material";
 import React, { ReactNode } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { css } from "twin.macro";
-import ErrorFallback from "./ErrorFallback";
+import Error from "./Error";
 
 const Page = ({ children }: { children: ReactNode }) => {
   return (
@@ -27,9 +27,7 @@ const Page = ({ children }: { children: ReactNode }) => {
             min-width: 300px;
           `}
         >
-          <ErrorBoundary FallbackComponent={ErrorFallback}>
-            {children}
-          </ErrorBoundary>
+          <ErrorBoundary FallbackComponent={Error}>{children}</ErrorBoundary>
         </main>
       </Container>
     </>
