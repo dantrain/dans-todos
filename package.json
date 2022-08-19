@@ -33,6 +33,7 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
     "react-relay": "^14.0.0",
+    "react-router-dom": "^6.3.0",
     "relay-runtime": "^14.0.0",
     "serialize-javascript": "^6.0.0"
   },

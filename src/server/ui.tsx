@@ -39,7 +39,7 @@ uiRouter.get("/*", async (req, res, next) => {
   const context: AppContext = {};
 
   try {
-    let render: (context: AppContext) => string;
+    let render: (url: string, context: AppContext) => string;
 
     if (!isProd) {
       //    Load the server entry. vite.ssrLoadModule automatically transforms
@@ -54,7 +54,7 @@ uiRouter.get("/*", async (req, res, next) => {
     //    render the app HTML. This assumes entry-server.js's exported `render`
     //    function calls appropriate framework SSR APIs,
     //    e.g. ReactDOMServer.renderToString()
-    const content = await render(context);
+    const content = await render(url, context);
 
     let markup = renderToStaticMarkup(
       <Index content={content} manifest={manifest} context={context} />
