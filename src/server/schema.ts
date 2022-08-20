@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import { writeFileSync } from "fs";
 import { lexicographicSortSchema, printSchema } from "graphql";
 import { isNil, omitBy } from "lodash-es";
+import { Context } from "./context";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -14,6 +15,7 @@ const prisma = new PrismaClient({});
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
   DefaultEdgesNullability: false;
+  Context: Context;
 }>({
   plugins: [PrismaPlugin, RelayPlugin],
   prisma: {
@@ -84,10 +86,10 @@ builder.queryType({
   fields: (t) => ({
     viewer: t.prismaField({
       type: "User",
-      resolve: async (query) =>
+      resolve: async (query, _parent, _args, context) =>
         prisma.user.findUniqueOrThrow({
           ...query,
-          where: { id: "parklife" },
+          where: { id: context.userid },
         }),
     }),
   }),
@@ -99,9 +101,9 @@ builder.mutationField("createOneTodo", (t) =>
   t.field({
     type: Todo,
     args: { text: t.arg.string({ required: true }) },
-    resolve: (_parent, args) =>
+    resolve: (_parent, args, context) =>
       prisma.todo.create({
-        data: { userid: "parklife", text: args.text },
+        data: { userid: context.userid, text: args.text },
       }),
   })
 );

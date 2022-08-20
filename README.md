@@ -7,6 +7,8 @@
 - [x] Relay
 - [x] PWA/Service Worker
 - [x] Router/startTransition
-- [ ] Code splitting
+- [x] Code splitting
+- [ ] AuthZ
+- [ ] Request logging
 - [ ] ESLint/Prettier
 - [ ] Deploy to Fly.io

@@ -2,12 +2,14 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const userid = process.env.DEV_USER_ID || "parklife";
+
 const main = async () => {
   await prisma.user.upsert({
-    where: { id: "parklife" },
+    where: { id: userid },
     update: {},
     create: {
-      id: "parklife",
+      id: userid,
       todos: {
         create: [
           {

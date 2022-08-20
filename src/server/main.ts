@@ -1,9 +1,10 @@
-import { createServer } from "@graphql-yoga/node";
+import { createServer, GraphQLYogaError } from "@graphql-yoga/node";
 import compression from "compression";
 import express from "express";
 import "express-async-errors";
 import path from "path";
 import authRouter from "./auth.js";
+import context from "./context.js";
 import errorHandler from "./errorHandler.js";
 import schema from "./schema.js";
 import session from "./session.js";
@@ -24,7 +25,7 @@ const getApp = async () => {
 
   app.use(authRouter);
 
-  const graphQLServer = createServer({ schema });
+  const graphQLServer = createServer({ schema, context });
 
   app.use("/graphql", graphQLServer);
 
