@@ -11,6 +11,7 @@ import relayEnvironment from "./relayEnvironment";
 
 export type AppContext = {
   statusCode?: number;
+  signedIn?: boolean;
   title?: string;
   name?: string;
   avatar?: string;

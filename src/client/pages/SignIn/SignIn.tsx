@@ -1,8 +1,11 @@
 import { Global } from "@emotion/react";
 import { Typography, useTheme } from "@mui/material";
 import React from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { css } from "twin.macro";
+import Error from "../../components/Error";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import GoogleSignIn from "./GoogleSignIn";
 
 const Logo = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -36,6 +39,9 @@ const SignIn = () => {
             Dan's Todos
           </Typography>
         </div>
+        <ErrorBoundary FallbackComponent={Error}>
+          <GoogleSignIn />
+        </ErrorBoundary>
       </main>
     </>
   );

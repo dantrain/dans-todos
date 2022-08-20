@@ -3,8 +3,10 @@ import compression from "compression";
 import express from "express";
 import "express-async-errors";
 import path from "path";
+import authRouter from "./auth.js";
 import errorHandler from "./errorHandler.js";
 import schema from "./schema.js";
+import session from "./session.js";
 import uiRouter from "./ui.js";
 
 const isProd = process.env.NODE_ENV === "production";
@@ -17,6 +19,10 @@ const getApp = async () => {
   if (isProd) {
     app.use(express.static(path.resolve("dist/client/")));
   }
+
+  app.use(session);
+
+  app.use(authRouter);
 
   const graphQLServer = createServer({ schema });
 

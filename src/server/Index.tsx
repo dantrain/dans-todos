@@ -40,6 +40,12 @@ const Index = ({ content, manifest, context }: IndexProps) => {
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         {isProd && <script src="/registerSW.js" />}
         <title>{context.title}</title>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `function onGoogleLibraryLoad() { window.__GOOGLE_LOADED__ = true; }`,
+          }}
+        />
+        <script src="https://accounts.google.com/gsi/client" async defer />
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />

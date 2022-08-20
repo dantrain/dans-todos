@@ -18,6 +18,7 @@ import {
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import tw from "twin.macro";
 import { Context } from "../App";
+import signOut from "../utils/signOut";
 import Progress from "./Progress";
 
 const AppBar = () => {
@@ -28,8 +29,7 @@ const AppBar = () => {
   });
 
   const handleSignOut = useCallback(() => {
-    // TODO: Add this back
-    // signOut({ destroySession: true, disableAuto: true });
+    signOut({ destroySession: true, disableAuto: true });
   }, []);
 
   const [installPrompt, setInstallPrompt] =

@@ -38,6 +38,14 @@ uiRouter.get("/*", async (req, res, next) => {
   const url = req.originalUrl;
   const context: AppContext = {};
 
+  if (req.session?.userid) {
+    context.signedIn = true;
+    context.name = req.session.name;
+    context.avatar = req.session.avatar;
+  } else if (req.path !== "/signin") {
+    return res.redirect("/signin");
+  }
+
   try {
     let render: (url: string, context: AppContext) => string;
 
