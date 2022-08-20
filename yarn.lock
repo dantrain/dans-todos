@@ -1219,6 +1219,18 @@
   dependencies:
     lru-cache "^6.0.0"
 
+"@graphql-authz/core@1.2.1", "@graphql-authz/core@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@graphql-authz/core/-/core-1.2.1.tgz#b6e81c49b369d72ffdc8394d20cbc57a1d43a799"
+  integrity sha512-OSpYHmYGSN1FWQ9aoa/FIOlX0Gntph1DZfKBBOxKryYSKnVcAcm6X2mjr6kTnEWQ8BAzQDLWuD74AIsJNHqsCA==
+
+"@graphql-authz/envelop-plugin@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@graphql-authz/envelop-plugin/-/envelop-plugin-1.0.3.tgz#7075b8b86302cb3b442df5ac5fef2d890321f4ae"
+  integrity sha512-s3MHzuL7pZOCxGyy5ATD70Cb3KRp8xAIXkg73eZmcL7L/FSFHKXFan0rq9NheoxR2db3hjpChLmwIihKLsVH5Q==
+  dependencies:
+    "@graphql-authz/core" "1.2.1"
+
 "@graphql-tools/merge@8.3.0":
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-8.3.0.tgz#d3a8ba10942f8598788c3e03f97cc1d0c0b055f8"
@@ -1485,6 +1497,11 @@
   version "3.13.0"
   resolved "https://registry.yarnpkg.com/@pothos/core/-/core-3.13.0.tgz#2329f3d643cee8e585842257627e172dee5569e0"
   integrity sha512-1jm5OI8Rva1UtlbJDFApIS6NrPnQiNlsf3fxBaLqzfXDdk8eFKXfW8wi6Pa9SIZ5AGagjGGVwZBkWFWjq3D5Fw==
+
+"@pothos/plugin-authz@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@pothos/plugin-authz/-/plugin-authz-3.3.0.tgz#a05b5ef43cbcd2dac30366928bb5509cd7a6acc2"
+  integrity sha512-nUBlb3JVRzoxGUqggEqXD8vahiDwrHWr8wduRoUW5Sl1JW7Mjv1RZrQ4wUOxIHR+/eCRi1lrhV/MDW59tq2tqQ==
 
 "@pothos/plugin-prisma@^3.14.0":
   version "3.14.0"

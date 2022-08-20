@@ -1,4 +1,5 @@
 import SchemaBuilder from "@pothos/core";
+import AuthzPlugin from "@pothos/plugin-authz";
 import PrismaPlugin from "@pothos/plugin-prisma";
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
 import RelayPlugin, { decodeGlobalID } from "@pothos/plugin-relay";
@@ -7,6 +8,7 @@ import { lexicographicSortSchema, printSchema } from "graphql";
 import { isNil, omitBy } from "lodash-es";
 import { Context } from "./context";
 import prisma from "./prismaClient.js";
+import * as rules from "./rules.js";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -14,8 +16,9 @@ const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
   DefaultEdgesNullability: false;
   Context: Context;
+  AuthZRules: keyof typeof rules;
 }>({
-  plugins: [PrismaPlugin, RelayPlugin],
+  plugins: [AuthzPlugin, PrismaPlugin, RelayPlugin],
   prisma: {
     client: prisma,
   },
@@ -109,6 +112,7 @@ builder.mutationField("createOneTodo", (t) =>
 builder.mutationField("updateOneTodo", (t) =>
   t.field({
     type: Todo,
+    authz: { rules: ["IsTodoOwner"] },
     args: {
       id: t.arg.id({ required: true }),
       text: t.arg.string(),
@@ -140,6 +144,7 @@ builder.mutationField("updateManyTodo", (t) =>
 builder.mutationField("deleteOneTodo", (t) =>
   t.field({
     type: Todo,
+    authz: { rules: ["IsTodoOwner"] },
     args: { id: t.arg.id({ required: true }) },
     resolve: (_parent, args) =>
       prisma.todo.delete({
