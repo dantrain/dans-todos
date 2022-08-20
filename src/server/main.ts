@@ -1,7 +1,9 @@
 import { createServer } from "@graphql-yoga/node";
 import compression from "compression";
 import express from "express";
+import "express-async-errors";
 import path from "path";
+import errorHandler from "./errorHandler.js";
 import schema from "./schema.js";
 import uiRouter from "./ui.js";
 
@@ -21,6 +23,8 @@ const getApp = async () => {
   app.use("/graphql", graphQLServer);
 
   app.use(uiRouter);
+
+  app.use(errorHandler);
 
   return app;
 };
