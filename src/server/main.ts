@@ -9,6 +9,7 @@ import errorHandler from "./errorHandler.js";
 import schema from "./schema.js";
 import session from "./session.js";
 import uiRouter from "./ui.js";
+import plugins from "./yogaPlugins.js";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -25,7 +26,7 @@ const getApp = async () => {
 
   app.use(authRouter);
 
-  const graphQLServer = createServer({ schema, context });
+  const graphQLServer = createServer({ schema, context, plugins });
 
   app.use("/graphql", graphQLServer);
 
