@@ -37,6 +37,7 @@
     "express-session": "^1.17.3",
     "google-auth-library": "^8.3.0",
     "graphql": "^16.5.0",
+    "helmet": "^5.1.1",
     "lodash-es": "^4.17.21",
     "material-ui-popup-state": "^4.0.2",
     "pubsub-js": "^1.9.4",

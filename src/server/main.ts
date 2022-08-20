@@ -2,6 +2,7 @@ import { createServer, GraphQLYogaError } from "@graphql-yoga/node";
 import compression from "compression";
 import express from "express";
 import "express-async-errors";
+import helmet from "helmet";
 import path from "path";
 import authRouter from "./auth.js";
 import context from "./context.js";
@@ -15,6 +16,16 @@ const isProd = process.env.NODE_ENV === "production";
 
 const getApp = async () => {
   const app = express();
+
+  if (isProd) {
+    app.use(
+      helmet({
+        referrerPolicy: { policy: "origin" },
+        contentSecurityPolicy: false,
+        crossOriginEmbedderPolicy: false,
+      })
+    );
+  }
 
   app.use(compression());
 
