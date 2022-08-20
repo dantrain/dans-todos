@@ -3,6 +3,7 @@ import { LinearProgress } from "@mui/material";
 import PubSub from "pubsub-js";
 import React, { useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import "twin.macro";
 
 const Progress = () => {
   const [noInFlight, setNoInFlight] = useState(0);

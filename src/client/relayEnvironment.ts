@@ -1,3 +1,4 @@
+import PubSub from "pubsub-js";
 import {
   Environment,
   Network,
@@ -6,8 +7,11 @@ import {
   Store,
   Variables,
 } from "relay-runtime";
+import { AuthenticationError, NetworkError } from "./utils/errors";
 
 async function fetchFn(params: RequestParameters, variables: Variables) {
+  PubSub.publish("FETCH_START");
+
   try {
     let response: Response;
 
@@ -23,18 +27,28 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
         }),
       });
     } catch (err) {
-      throw new Error(err instanceof Error ? err.message : "");
+      throw new NetworkError(err instanceof Error ? err.message : "");
     }
 
     const data = await response.json();
 
     if (!response.ok) {
+      if (data.errors[0].extensions.code === "UNAUTHENTICATED") {
+        // TODO: Add this back
+        // signOut();
+        throw new AuthenticationError(data.errors[0].message);
+      }
+
       throw new Error(data.errors[0].message || "Something went wrong");
     }
 
+    PubSub.publish("FETCH_SUCCESS");
     return data;
   } catch (err) {
+    PubSub.publish("FETCH_FAIL", err);
     throw err;
+  } finally {
+    PubSub.publish("FETCH_END");
   }
 }
 

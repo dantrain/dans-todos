@@ -6,7 +6,7 @@
 - [x] Pothos/GraphQL Yoga
 - [x] Relay
 - [x] PWA/Service Worker
-- [ ] Router/startTransition
+- [x] Router/startTransition
 - [ ] Code splitting
 - [ ] ESLint/Prettier
 - [ ] Deploy to Fly.io
