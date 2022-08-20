@@ -1,9 +1,17 @@
-import { colors, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  colors,
+  createTheme,
+  CssBaseline,
+  Grow,
+  ThemeProvider,
+} from "@mui/material";
+import { SnackbarProvider } from "notistack";
 import { createContext } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { RelayEnvironmentProvider } from "react-relay";
 import { Route, Routes } from "react-router-dom";
 import Error from "./components/Error";
+import ErrorSnackbar from "./components/ErrorSnackbar";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import SignIn from "./pages/SignIn/SignIn";
@@ -43,15 +51,23 @@ function App({ context = defaultContext }: { context?: AppContext }) {
         <ErrorBoundary FallbackComponent={Error}>
           <RelayEnvironmentProvider environment={relayEnvironment}>
             <CssBaseline />
-            <Routes>
-              <Route path="/signin" element={<SignIn />} />
+            <SnackbarProvider
+              maxSnack={3}
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+              autoHideDuration={3000}
+              TransitionComponent={Grow}
+            >
+              <ErrorSnackbar />
+              <Routes>
+                <Route path="/signin" element={<SignIn />} />
 
-              <Route path="/" element={<Home />} />
-              <Route path="/active" element={<Home />} />
-              <Route path="/completed" element={<Home />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/active" element={<Home />} />
+                <Route path="/completed" element={<Home />} />
 
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </SnackbarProvider>
           </RelayEnvironmentProvider>
         </ErrorBoundary>
       </ThemeProvider>

@@ -33,7 +33,7 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
 
     const data = await response.json();
 
-    if (!response.ok) {
+    if (!response.ok || data?.errors?.length) {
       if (data.errors[0].extensions.code === "UNAUTHENTICATED") {
         signOut();
         throw new AuthenticationError(data.errors[0].message);
