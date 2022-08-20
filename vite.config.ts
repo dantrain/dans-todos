@@ -52,9 +52,10 @@ export default defineConfig(({ command }) => ({
     rollupOptions: {
       input: "/src/entry-client.tsx",
     },
+    chunkSizeWarningLimit: 800,
   },
   esbuild: {
     logOverride: { "this-is-undefined-in-esm": "silent" },
   },
-  ssr: command === "build" ? { noExternal: /^react-relay$/ } : {},
+  ssr: command === "build" ? { noExternal: /(relay|react-use)/ } : {},
 }));

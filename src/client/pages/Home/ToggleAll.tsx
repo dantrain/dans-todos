@@ -1,4 +1,4 @@
-import { DoneAll as DoneAllIcon } from "@mui/icons-material";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import { css, IconButton, Tooltip, useTheme } from "@mui/material";
 import { useCallback } from "react";
 import { graphql, useFragment, useMutation } from "react-relay/hooks";

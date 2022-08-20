@@ -1,5 +1,5 @@
 import { ClassNames } from "@emotion/react";
-import { Add as AddIcon } from "@mui/icons-material";
+import AddIcon from "@mui/icons-material/Add";
 import { Fab, InputBase, Tooltip } from "@mui/material";
 import {
   ChangeEvent,
