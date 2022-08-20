@@ -12,6 +12,8 @@ import relayEnvironment from "./relayEnvironment";
 export type AppContext = {
   statusCode?: number;
   title?: string;
+  name?: string;
+  avatar?: string;
 };
 
 declare global {
