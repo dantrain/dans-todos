@@ -2,15 +2,13 @@ import SchemaBuilder from "@pothos/core";
 import PrismaPlugin from "@pothos/plugin-prisma";
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
 import RelayPlugin, { decodeGlobalID } from "@pothos/plugin-relay";
-import { PrismaClient } from "@prisma/client";
 import { writeFileSync } from "fs";
 import { lexicographicSortSchema, printSchema } from "graphql";
 import { isNil, omitBy } from "lodash-es";
 import { Context } from "./context";
+import prisma from "./prismaClient.js";
 
 const isProd = process.env.NODE_ENV === "production";
-
-const prisma = new PrismaClient({});
 
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
@@ -131,8 +129,11 @@ builder.mutationField("updateManyTodo", (t) =>
   t.field({
     type: AffectedRowsOutput,
     args: { completed: t.arg.boolean() },
-    resolve: (_parent, args) =>
-      prisma.todo.updateMany({ data: omitBy(args, isNil) }),
+    resolve: (_parent, args, context) =>
+      prisma.todo.updateMany({
+        where: { userid: context.userid },
+        data: omitBy(args, isNil),
+      }),
   })
 );
 
@@ -150,8 +151,10 @@ builder.mutationField("deleteOneTodo", (t) =>
 builder.mutationField("deleteManyCompletedTodo", (t) =>
   t.field({
     type: AffectedRowsOutput,
-    resolve: () =>
-      prisma.todo.deleteMany({ where: { completed: { equals: true } } }),
+    resolve: (_parent, _args, context) =>
+      prisma.todo.deleteMany({
+        where: { AND: [{ userid: context.userid }, { completed: true }] },
+      }),
   })
 );
 

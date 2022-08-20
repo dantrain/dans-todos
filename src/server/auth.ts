@@ -2,12 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { OAuth2Client } from "google-auth-library";
 import logger from "./logger.js";
+import prisma from "./prismaClient.js";
 
 const CLIENT_ID = process.env.VITE_CLIENT_ID;
 
 const authClient = new OAuth2Client(CLIENT_ID);
-const prisma = new PrismaClient();
-
 const authRouter = express.Router();
 
 authRouter.post(

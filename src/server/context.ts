@@ -1,14 +1,10 @@
-import { GraphQLYogaError } from "@graphql-yoga/node";
+import { GraphQLYogaError, YogaInitialContext } from "@graphql-yoga/node";
 
-export type Context = {
+export interface Context extends YogaInitialContext {
   userid: string;
-};
+}
 
-const context = ({
-  req,
-}: {
-  req: { session?: { userid?: string } };
-}): Context => {
+const context = ({ req }: { req: { session?: { userid?: string } } }) => {
   const userid = req.session?.userid;
 
   if (!userid)
