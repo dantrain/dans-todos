@@ -1,10 +1,10 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import google from "google-one-tap";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
     __GOOGLE_LOADED__: boolean;
-    gapi: typeof gapi;
-    google: any;
+    google: typeof google;
   }
 }
 
@@ -50,8 +50,11 @@ const GoogleSignIn = () => {
         },
       });
 
-      window.google.accounts.id.prompt((notification: any) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+      window.google.accounts.id.prompt((notification) => {
+        if (
+          (notification.isNotDisplayed() || notification.isSkippedMoment()) &&
+          ref.current
+        ) {
           window.google.accounts.id.renderButton(ref.current, {
             theme: "outline",
             size: "large",

@@ -35,7 +35,7 @@ const ClearCompleted = ({ disabled }: { disabled: boolean }) => {
           .filter((node) => node && node.getValue("completed")) ?? [];
 
       completedNodes?.forEach((node) => {
-        ConnectionHandler.deleteNode(connection, node!.getDataID());
+        node && ConnectionHandler.deleteNode(connection, node.getDataID());
       });
 
       connection.setValue(

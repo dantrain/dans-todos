@@ -1,4 +1,4 @@
-import { createServer, GraphQLYogaError } from "@graphql-yoga/node";
+import { createServer } from "@graphql-yoga/node";
 import compression from "compression";
 import express from "express";
 import "express-async-errors";

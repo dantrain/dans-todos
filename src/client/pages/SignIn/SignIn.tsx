@@ -36,7 +36,7 @@ const SignIn = () => {
         </div>
         <div tw="mb-16 text-white">
           <Typography variant="h4" component="h1">
-            Dan's Todos
+            Dan&apos;s Todos
           </Typography>
         </div>
         <ErrorBoundary FallbackComponent={Error}>

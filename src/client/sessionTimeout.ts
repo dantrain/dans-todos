@@ -2,7 +2,7 @@ import PubSub from "pubsub-js";
 import signOut from "./utils/signOut.js";
 
 if (window.__CONTEXT__.signedIn) {
-  const MAX_AGE = +import.meta.env.VITE_SESSION_MAX_AGE!;
+  const MAX_AGE = +import.meta.env.VITE_SESSION_MAX_AGE;
   const MAX_WAIT = Math.min(MAX_AGE + 1000, 43200000);
   const supportsRequestIdleCallback = "requestIdleCallback" in window;
 

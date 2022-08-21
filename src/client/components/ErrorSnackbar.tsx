@@ -1,6 +1,6 @@
 import { useSnackbar } from "notistack";
 import PubSub from "pubsub-js";
-import React, { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import { AuthenticationError, NetworkError } from "../utils/errors";
 
 const ErrorSnackbar = () => {

@@ -9,6 +9,6 @@
 - [x] Router/startTransition
 - [x] Code splitting
 - [x] AuthZ
-- [ ] ESLint/Prettier
+- [x] ESLint/Prettier
 - [ ] Deploy to Fly.io
 - [ ] Pagination/Virtualization

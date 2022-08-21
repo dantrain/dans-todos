@@ -18,7 +18,7 @@ const Error = ({ error }: FallbackProps) => {
   if (error instanceof NetworkError) {
     return (
       <Alert severity="warning">
-        <AlertTitle>Can't connect</AlertTitle>
+        <AlertTitle>Can&apos;t connect</AlertTitle>
         Maybe check your internets?
       </Alert>
     );

@@ -112,7 +112,7 @@ const TodoListItem = ({ todo }: { todo: TodoListItemFragment$key }) => {
     ) => {
       const connectionRecord = getConnectionRecord(store);
 
-      ConnectionHandler.deleteNode(connectionRecord, id!);
+      ConnectionHandler.deleteNode(connectionRecord, id);
 
       connectionRecord.setValue(
         +(connectionRecord.getValue("totalCount") || 0) - 1,

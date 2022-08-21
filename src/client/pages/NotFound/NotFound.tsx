@@ -13,10 +13,10 @@ const NotFound = () => {
   return (
     <Page>
       <Alert severity="error">
-        <AlertTitle>404'd!!</AlertTitle>
-        Were you just making up names of files or what? I mean, I've seen some
-        pretend file names in my day, but come on! It's like you're not even
-        trying.
+        <AlertTitle>404&apos;d!!</AlertTitle>
+        Were you just making up names of files or what? I mean, I&apos;ve seen
+        some pretend file names in my day, but come on! It&apos;s like
+        you&apos;re not even trying.
       </Alert>
     </Page>
   );

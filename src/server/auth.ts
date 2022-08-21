@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { OAuth2Client } from "google-auth-library";
 import logger from "./logger.js";

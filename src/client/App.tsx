@@ -31,7 +31,7 @@ declare global {
   }
 }
 
-let defaultContext: AppContext =
+const defaultContext: AppContext =
   typeof window !== "undefined" && window.__CONTEXT__ ? window.__CONTEXT__ : {};
 
 export const Context = createContext<AppContext>(defaultContext);

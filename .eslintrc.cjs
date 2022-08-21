@@ -17,5 +17,16 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "react-hooks", "@typescript-eslint", "prettier"],
-  rules: {},
+  rules: {
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
 };
