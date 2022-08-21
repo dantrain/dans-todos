@@ -8,6 +8,7 @@
 - [x] PWA/Service Worker
 - [x] Router/startTransition
 - [x] Code splitting
-- [ ] AuthZ
+- [x] AuthZ
 - [ ] ESLint/Prettier
 - [ ] Deploy to Fly.io
+- [ ] Pagination/Virtualization
