@@ -1,6 +1,7 @@
 import serialize from "serialize-javascript";
 import type { AppContext } from "../client/App";
 
+const CLIENT_ID = process.env.VITE_CLIENT_ID;
 const isProd = process.env.NODE_ENV === "production";
 
 type IndexProps = {
@@ -22,6 +23,7 @@ const Index = ({ content, manifest, context }: IndexProps) => {
           name="viewport"
           content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
+        <meta name="google-signin-client_id" content={CLIENT_ID} />
         <meta name="theme-color" content="#115293" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta

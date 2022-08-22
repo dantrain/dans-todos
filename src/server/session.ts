@@ -14,6 +14,7 @@ const RedisStore = connectRedis(expressSession);
 
 const redisClient = redis.createClient({
   url: process.env.REDIS_URL,
+  family: "IPv6",
 });
 
 const session = expressSession({

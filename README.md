@@ -10,5 +10,7 @@
 - [x] Code splitting
 - [x] AuthZ
 - [x] ESLint/Prettier
-- [ ] Deploy to Fly.io
+- [x] Deploy to Fly.io
+- [ ] GitHub/Actions
+- [ ] Domain switch
 - [ ] Pagination/Virtualization

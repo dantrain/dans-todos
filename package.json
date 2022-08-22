@@ -12,7 +12,7 @@
     "start:db": "docker run --name vite-db --rm --env POSTGRES_PASSWORD=d1rONeFo0KL8ZwC8 -p 5432:5432 postgres:14",
     "start:redis": "docker run --name vite-redis --rm -v redis.conf:/usr/local/etc/redis/redis.conf -p 6379:6379 redis:7 redis-server /usr/local/etc/redis/redis.conf",
     "start:dev-server": "NODE_NO_WARNINGS=1 nodemon --esm --delay 500ms --ignore client/ src/index.ts",
-    "build": "yarn run generate && tsc && vite build --outDir dist/client --manifest && vite build --outDir dist/server --ssr src/index.ts --target node16 && sed -i '' 's/e.registerRoute(new e.NavigationRoute(e.createHandlerBoundToURL(\"index.html\"))),//' dist/client/sw.js",
+    "build": "yarn run generate && tsc && vite build --outDir dist/client --manifest && vite build --outDir dist/server --ssr src/index.ts --target node16 && sed -i'.bak' -e 's/e.registerRoute(new e.NavigationRoute(e.createHandlerBoundToURL(\"index.html\"))),//' dist/client/sw.js",
     "generate:prisma": "prisma generate",
     "generate:relay": "relay-compiler",
     "generate": "yarn run generate:prisma && yarn run generate:relay",
