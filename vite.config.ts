@@ -7,7 +7,28 @@ export default defineConfig(({ command }) => ({
   plugins: [
     VitePWA({
       manifest: {
+        short_name: "Dan's Todos",
+        name: "Dan's Todos",
+        icons: [
+          {
+            src: "/android-chrome-192x192.png",
+            type: "image/png",
+            sizes: "192x192",
+          },
+          {
+            src: "/android-chrome-512x512.png",
+            type: "image/png",
+            sizes: "512x512",
+          },
+          {
+            src: "/maskable_icon.png",
+            type: "image/png",
+            purpose: "maskable",
+            sizes: "731x731",
+          },
+        ],
         theme_color: "#115293",
+        background_color: "#fafafa",
       },
       injectRegister: "script",
       workbox: {
