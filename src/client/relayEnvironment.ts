@@ -1,4 +1,5 @@
 import PubSub from "pubsub-js";
+import { Environment as EnvironmentType } from "react-relay";
 import {
   Environment,
   Network,
@@ -55,4 +56,4 @@ async function fetchFn(params: RequestParameters, variables: Variables) {
 export default new Environment({
   network: Network.create(fetchFn),
   store: new Store(new RecordSource()),
-});
+}) as EnvironmentType;
