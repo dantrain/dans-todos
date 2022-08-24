@@ -1,4 +1,4 @@
-### Todo
+# Dan's Todos
 
 - [x] SSR
 - [x] Suspense test
@@ -11,6 +11,7 @@
 - [x] AuthZ
 - [x] ESLint/Prettier
 - [x] Deploy to Fly.io
-- [ ] GitHub/Actions
+- [x] GitHub
+- [ ] GitHub Actions
 - [ ] Domain switch
 - [ ] Pagination/Virtualization

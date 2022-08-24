@@ -1,7 +1,9 @@
 {
-  "name": "vite-test",
+  "name": "dans-todos",
+  "version": "2.0.0",
+  "author": "Dan Train",
+  "license": "UNLICENSED",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "prisma": {
     "seed": "ts-node --esm prisma/seed.ts"
@@ -19,6 +21,7 @@
     "migrate:prod": "yarn run zx scripts/migrate-prod.mjs",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.ts,.tsx src",
+    "type-check": "tsc --noEmit",
     "prettify": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}'",
     "postinstall": "yarn run generate:prisma"
   },
