@@ -25,6 +25,7 @@
     "prettify": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}'",
     "clean": "rimraf dist src/**/__generated__/*",
     "report": "source-map-explorer dist/client/assets/*.js --no-border-checks",
+    "pwa-assets": "pwa-asset-generator logo.svg public/ -b \"#1975d1\"",
     "postinstall": "yarn run generate:prisma"
   },
   "dependencies": {
@@ -95,6 +96,7 @@
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "prisma": "^4.2.1",
+    "pwa-asset-generator": "^6.1.1",
     "relay-compiler": "^14.1.0",
     "relay-compiler-language-typescript": "^15.0.1",
     "rimraf": "^3.0.2",

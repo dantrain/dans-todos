@@ -1,3 +1,4 @@
+import { appleDeviceSpecsForLaunchImages } from "pwa-asset-generator";
 import serialize from "serialize-javascript";
 import type { AppContext } from "../client/App";
 
@@ -42,7 +43,7 @@ const Index = ({ content, manifest, context }: IndexProps) => {
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/apple-touch-icon.png"
+          href="/apple-icon-180.png"
         />
         <link
           rel="icon"
@@ -58,67 +59,48 @@ const Index = ({ content, manifest, context }: IndexProps) => {
         />
         {isProd && <link rel="manifest" href="/manifest.webmanifest" />}
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1976d2" />
-        <link
-          href="/iphone5_splash.png"
-          media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/iphone6_splash.png"
-          media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/iphoneplus_splash.png"
-          media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/iphonex_splash.png"
-          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/iphonexr_splash.png"
-          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/iphonexsmax_splash.png"
-          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/ipad_splash.png"
-          media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/ipadpro1_splash.png"
-          media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/ipadpro3_splash.png"
-          media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/ipadpro2_splash.png"
-          media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        {isProd && <script src="/registerSW.js" />}
-        <title>{context.title}</title>
+        {appleDeviceSpecsForLaunchImages.map((spec) => {
+          return (
+            <>
+              <link
+                key={`apple-splash-${spec.portrait.width}-${spec.portrait.height}`}
+                rel="apple-touch-startup-image"
+                href={`apple-splash-${spec.portrait.width}-${spec.portrait.height}.png`}
+                media={`(device-width: ${
+                  spec.portrait.width / spec.scaleFactor
+                }px) and (device-height: ${
+                  spec.portrait.height / spec.scaleFactor
+                }px) and (-webkit-device-pixel-ratio: ${
+                  spec.scaleFactor
+                }) and (orientation: portrait)`}
+              />
+              <link
+                key={`apple-splash-${spec.portrait.width}-${spec.portrait.height}`}
+                rel="apple-touch-startup-image"
+                href={`apple-splash-${spec.portrait.width}-${spec.portrait.height}.png`}
+                media={`(device-width: ${
+                  spec.portrait.height / spec.scaleFactor
+                }px) and (device-height: ${
+                  spec.portrait.width / spec.scaleFactor
+                }px) and (-webkit-device-pixel-ratio: ${
+                  spec.scaleFactor
+                }) and (orientation: landscape)`}
+              />
+            </>
+          );
+        })}
+        {isProd && <script src="/registerSW.js" />}{" "}
+        <title>{context.title}</title>{" "}
         <script
           dangerouslySetInnerHTML={{
             __html: `function onGoogleLibraryLoad() { window.__GOOGLE_LOADED__ = true; }`,
           }}
-        />
-        <script src="https://accounts.google.com/gsi/client" async defer />
-      </head>
+        />{" "}
+        <script src="https://accounts.google.com/gsi/client" async defer />{" "}
+      </head>{" "}
       <body>
-        <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
+        {" "}
+        <div id="root" dangerouslySetInnerHTML={{ __html: content }} />{" "}
         <script
           type="module"
           src={

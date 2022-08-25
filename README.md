@@ -14,5 +14,5 @@
 - [x] GitHub
 - [x] GitHub Actions
 - [x] Domain switch
-- [ ] PWA asset generation
+- [x] PWA asset generation
 - [ ] Pagination/Virtualization

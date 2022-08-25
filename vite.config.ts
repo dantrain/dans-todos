@@ -11,12 +11,12 @@ export default defineConfig(({ command }) => ({
         name: "Dan's Todos",
         icons: [
           {
-            src: "/android-chrome-192x192.png",
+            src: "/manifest-icon-192.maskable.png",
             type: "image/png",
             sizes: "192x192",
           },
           {
-            src: "/android-chrome-512x512.png",
+            src: "/manifest-icon-512.maskable.png",
             type: "image/png",
             sizes: "512x512",
           },
