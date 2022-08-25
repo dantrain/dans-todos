@@ -12,6 +12,6 @@
 - [x] ESLint/Prettier
 - [x] Deploy to Fly.io
 - [x] GitHub
-- [ ] GitHub Actions
+- [x] GitHub Actions
 - [ ] Domain switch
 - [ ] Pagination/Virtualization
