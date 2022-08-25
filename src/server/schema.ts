@@ -64,7 +64,10 @@ builder.prismaNode("User", {
       {
         fields: (t) => ({
           completedCount: t.int({
-            resolve: () => prisma.todo.count({ where: { completed: true } }),
+            resolve: (_parent, _args, { userid }) =>
+              prisma.todo.count({
+                where: { AND: [{ userid }, { completed: true }] },
+              }),
           }),
         }),
       }
@@ -87,11 +90,8 @@ builder.queryType({
   fields: (t) => ({
     viewer: t.prismaField({
       type: "User",
-      resolve: async (query, _parent, _args, context) =>
-        prisma.user.findUniqueOrThrow({
-          ...query,
-          where: { id: context.userid },
-        }),
+      resolve: async (query, _parent, _args, { userid }) =>
+        prisma.user.findUniqueOrThrow({ ...query, where: { id: userid } }),
     }),
   }),
 });
@@ -102,10 +102,8 @@ builder.mutationField("createOneTodo", (t) =>
   t.field({
     type: Todo,
     args: { text: t.arg.string({ required: true }) },
-    resolve: (_parent, args, context) =>
-      prisma.todo.create({
-        data: { userid: context.userid, text: args.text },
-      }),
+    resolve: (_parent, args, { userid }) =>
+      prisma.todo.create({ data: { userid, text: args.text } }),
   })
 );
 
@@ -133,11 +131,8 @@ builder.mutationField("updateManyTodo", (t) =>
   t.field({
     type: AffectedRowsOutput,
     args: { completed: t.arg.boolean() },
-    resolve: (_parent, args, context) =>
-      prisma.todo.updateMany({
-        where: { userid: context.userid },
-        data: omitBy(args, isNil),
-      }),
+    resolve: (_parent, args, { userid }) =>
+      prisma.todo.updateMany({ where: { userid }, data: omitBy(args, isNil) }),
   })
 );
 
@@ -156,9 +151,9 @@ builder.mutationField("deleteOneTodo", (t) =>
 builder.mutationField("deleteManyCompletedTodo", (t) =>
   t.field({
     type: AffectedRowsOutput,
-    resolve: (_parent, _args, context) =>
+    resolve: (_parent, _args, { userid }) =>
       prisma.todo.deleteMany({
-        where: { AND: [{ userid: context.userid }, { completed: true }] },
+        where: { AND: [{ userid }, { completed: true }] },
       }),
   })
 );
