@@ -13,5 +13,6 @@
 - [x] Deploy to Fly.io
 - [x] GitHub
 - [x] GitHub Actions
-- [ ] Domain switch
+- [x] Domain switch
+- [ ] PWA asset generation
 - [ ] Pagination/Virtualization
