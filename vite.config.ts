@@ -12,19 +12,27 @@ export default defineConfig(({ command }) => ({
         icons: [
           {
             src: "/manifest-icon-192.maskable.png",
-            type: "image/png",
             sizes: "192x192",
+            type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "/manifest-icon-192.maskable.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "maskable",
           },
           {
             src: "/manifest-icon-512.maskable.png",
-            type: "image/png",
             sizes: "512x512",
+            type: "image/png",
+            purpose: "any",
           },
           {
-            src: "/maskable_icon.png",
+            src: "/manifest-icon-512.maskable.png",
+            sizes: "512x512",
             type: "image/png",
             purpose: "maskable",
-            sizes: "731x731",
           },
         ],
         theme_color: "#115293",

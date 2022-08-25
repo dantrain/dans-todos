@@ -25,7 +25,7 @@
     "prettify": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}'",
     "clean": "rimraf dist src/**/__generated__/*",
     "report": "source-map-explorer dist/client/assets/*.js --no-border-checks",
-    "pwa-assets": "pwa-asset-generator logo.svg public/ -b \"#1975d1\"",
+    "pwa-assets": "pwa-asset-generator logo.svg public/ -b \"#1975d1\" -t png",
     "postinstall": "yarn run generate:prisma"
   },
   "dependencies": {
