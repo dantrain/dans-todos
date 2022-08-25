@@ -56,7 +56,7 @@ const Index = ({ content, manifest, context }: IndexProps) => {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link rel="manifest" href="/manifest.webmanifest" />
+        {isProd && <link rel="manifest" href="/manifest.webmanifest" />}
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1976d2" />
         <link
           href="/iphone5_splash.png"
