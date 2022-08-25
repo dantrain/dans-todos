@@ -1,4 +1,5 @@
 import { appleDeviceSpecsForLaunchImages } from "pwa-asset-generator";
+import React from "react";
 import serialize from "serialize-javascript";
 import type { AppContext } from "../client/App";
 
