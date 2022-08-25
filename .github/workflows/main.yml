@@ -17,7 +17,7 @@ jobs:
         with:
           cache: "yarn"
       - run: yarn install --frozen-lockfile
-      - run: yarn generate
+      - run: yarn generate:relay
       - run: yarn type-check
       - run: yarn lint
 
