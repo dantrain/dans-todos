@@ -5,6 +5,7 @@ import {
   ChangeEvent,
   KeyboardEvent,
   useCallback,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -99,6 +100,14 @@ const TodoInput = () => {
 
     saveText(text);
   }, [saveText, text]);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (rippling) {
+      timeout = setTimeout(() => setRippling(false), 300);
+    }
+    return () => clearTimeout(timeout);
+  }, [rippling]);
 
   return (
     <div tw="flex w-full">
