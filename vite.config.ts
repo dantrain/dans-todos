@@ -74,6 +74,7 @@ export default defineConfig(({ command }) => ({
       input: "/src/entry-client.tsx",
     },
     chunkSizeWarningLimit: 800,
+    sourcemap: true,
   },
   esbuild: {
     logOverride: { "this-is-undefined-in-esm": "silent" },
