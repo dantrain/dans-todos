@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "yarn run zx scripts/dev.mjs",
     "start": "NODE_ENV=production node dist/server/index.js",
+    "start:prod": "yarn run zx scripts/local-prod.mjs",
     "start:db": "docker run --name vite-db --rm --env POSTGRES_PASSWORD=d1rONeFo0KL8ZwC8 -p 5432:5432 postgres:14",
     "start:redis": "docker run --name vite-redis --rm -v redis.conf:/usr/local/etc/redis/redis.conf -p 6379:6379 redis:7 redis-server /usr/local/etc/redis/redis.conf",
     "start:dev-server": "NODE_NO_WARNINGS=1 nodemon --esm --delay 500ms --ignore client/ src/index.ts",
@@ -69,6 +70,7 @@
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.18.10",
     "@emotion/babel-plugin-jsx-pragmatic": "^0.2.0",
+    "@playwright/test": "^1.25.1",
     "@types/compression": "^1.7.2",
     "@types/connect-redis": "^0.0.18",
     "@types/express": "^4.17.13",
