@@ -15,7 +15,7 @@
 - [x] GitHub Actions
 - [x] Domain switch
 - [x] PWA asset generation
+- [x] E2E tests
 - [ ] UI error handler
-- [ ] E2E tests
 - [ ] Pagination/Virtualization
 - [ ] Storybook
