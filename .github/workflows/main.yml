@@ -7,9 +7,18 @@ on:
 
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  PORT: 3000
+  REDIS_URL: "redis://default:tT0DnQpmQKKcTTZ6@localhost:6379"
+  DATABASE_URL: "postgresql://postgres:d1rONeFo0KL8ZwC8@localhost:5432/postgres"
+  VITE_CLIENT_ID: "368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com"
+  CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+  SESSION_SECRETS: ${{ secrets.SESSION_SECRETS }}
+  VITE_SESSION_MAX_AGE: "1800000"
 
 jobs:
   verify:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,9 +26,17 @@ jobs:
         with:
           cache: "yarn"
       - run: yarn install --frozen-lockfile
-      - run: yarn generate:relay
       - run: yarn type-check
       - run: yarn lint
+      - run: yarn build
+      - run: npx playwright install --with-deps
+      - run: yarn playwright test
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
   deploy:
     needs: verify
