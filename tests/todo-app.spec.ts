@@ -3,29 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-test.beforeEach(async ({ page, request }) => {
-  const googleResponse = await request.post(
-    "https://www.googleapis.com/oauth2/v4/token",
-    {
-      data: {
-        grant_type: "refresh_token",
-        client_id: process.env.VITE_CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET,
-        refresh_token: process.env.REFRESH_TOKEN,
-      },
-    }
-  );
-
-  expect(googleResponse.ok()).toBeTruthy;
-  const data = await googleResponse.json();
-  expect(data.id_token).toBeDefined();
-
-  const appResponse = await page.request.post("/signin", {
-    form: { credential: data.id_token },
-  });
-
-  expect(appResponse.ok()).toBeTruthy;
-
+test.beforeEach(async ({ page }) => {
   await prisma.todo.deleteMany();
   await page.goto("/");
 });
