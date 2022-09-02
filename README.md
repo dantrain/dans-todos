@@ -16,6 +16,6 @@
 - [x] Domain switch
 - [x] PWA asset generation
 - [x] E2E tests
+- [ ] Envful
 - [ ] UI error handler
-- [ ] Pagination/Virtualization
-- [ ] Storybook
+- [ ] Readme

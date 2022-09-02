@@ -34,7 +34,9 @@ const config: PlaywrightTestConfig = {
   // Limit the number of failures on CI to save resources
   maxFailures: process.env.CI ? 5 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+  reporter: process.env.CI
+    ? [["github"], ["list"], ["html"]]
+    : [["list"], ["html"]],
   globalSetup: "./playwright-setup.ts",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
