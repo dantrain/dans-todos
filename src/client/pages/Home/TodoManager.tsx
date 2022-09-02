@@ -17,7 +17,7 @@ export const [TodosConnectionContext, TodosConnectionProvider] =
 const query = graphql`
   query TodoManagerQuery($filter: Filter) {
     viewer {
-      todos(first: 50, filter: $filter) {
+      todos(filter: $filter) {
         __id
         edges {
           node {

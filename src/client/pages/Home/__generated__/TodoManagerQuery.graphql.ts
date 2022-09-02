@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a25481978026bdfdc27434f90ec83f4>>
+ * @generated SignedSource<<2e90180483e20415b2806fa3e887636b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,11 +46,6 @@ v1 = [
     "kind": "Variable",
     "name": "filter",
     "variableName": "filter"
-  },
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 50
   }
 ],
 v2 = {
@@ -228,16 +223,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7a1e7dcb7fb00168ec00f904d278e456",
+    "cacheID": "1ce752349750d63b246b33942dd9056c",
     "id": null,
     "metadata": {},
     "name": "TodoManagerQuery",
     "operationKind": "query",
-    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    todos(first: 50, filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n        }\n      }\n      ...ToggleAllFragment\n      ...TodoFooterFragment\n    }\n    id\n  }\n}\n\nfragment TodoEditInputFragment on Todo {\n  id\n  text\n  completed\n}\n\nfragment TodoFooterFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  completed\n  ...TodoEditInputFragment\n}\n\nfragment ToggleAllFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n"
+    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    todos(filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n        }\n      }\n      ...ToggleAllFragment\n      ...TodoFooterFragment\n    }\n    id\n  }\n}\n\nfragment TodoEditInputFragment on Todo {\n  id\n  text\n  completed\n}\n\nfragment TodoFooterFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  completed\n  ...TodoEditInputFragment\n}\n\nfragment ToggleAllFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f72a34d82fab99330bbedf08a4c8c282";
+(node as any).hash = "cd4283c9ebb9846abc5c65f16645966b";
 
 export default node;
