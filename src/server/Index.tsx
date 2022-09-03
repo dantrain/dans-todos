@@ -1,5 +1,5 @@
 import { appleDeviceSpecsForLaunchImages } from "pwa-asset-generator";
-import React from "react";
+import React, { Fragment } from "react";
 import serialize from "serialize-javascript";
 import type { AppContext } from "../client/App";
 
@@ -60,9 +60,9 @@ const Index = ({ content, manifest, context }: IndexProps) => {
         />
         {isProd && <link rel="manifest" href="/manifest.webmanifest" />}
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1976d2" />
-        {appleDeviceSpecsForLaunchImages.map((spec) => {
+        {appleDeviceSpecsForLaunchImages.map((spec, i) => {
           return (
-            <>
+            <Fragment key={i}>
               <link
                 key={`apple-splash-${spec.portrait.width}-${spec.portrait.height}`}
                 rel="apple-touch-startup-image"
@@ -87,7 +87,7 @@ const Index = ({ content, manifest, context }: IndexProps) => {
                   spec.scaleFactor
                 }) and (orientation: landscape)`}
               />
-            </>
+            </Fragment>
           );
         })}
         {isProd && <script src="/registerSW.js" />}{" "}

@@ -18,6 +18,7 @@ module.exports = {
   },
   plugins: ["react", "react-hooks", "@typescript-eslint", "prettier"],
   rules: {
+    "react/no-unknown-property": [2, { ignore: ["tw", "css"] }],
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/ban-ts-comment": "off",
