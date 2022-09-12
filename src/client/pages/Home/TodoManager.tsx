@@ -1,5 +1,4 @@
 import { CardHeader, Divider, List } from "@mui/material";
-import React from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 import { createConnectionContext } from "../../utils/connectionContext";
 import TodoFooter from "./TodoFooter";

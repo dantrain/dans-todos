@@ -1,6 +1,6 @@
 import { Global } from "@emotion/react";
 import { Container } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { css } from "twin.macro";
 import AppBar from "./AppBar";

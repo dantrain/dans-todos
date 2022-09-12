@@ -1,4 +1,5 @@
-import React, {
+import {
+  Context,
   createContext,
   MutableRefObject,
   ReactNode,
@@ -45,7 +46,7 @@ export const createConnectionContext = () => {
 };
 
 export const useConnectionContext = (
-  context: React.Context<ConnectionContextValue>
+  context: Context<ConnectionContextValue>
 ) => {
   const { connectionId, connectionSetRef } =
     useContext<ConnectionContextValue>(context);

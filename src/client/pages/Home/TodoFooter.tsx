@@ -1,5 +1,4 @@
 import { ButtonGroup, css, Divider, Toolbar, Typography } from "@mui/material";
-import React from "react";
 import { graphql, useFragment } from "react-relay/hooks";
 import tw from "twin.macro";
 import ClearCompleted from "./ClearCompleted";

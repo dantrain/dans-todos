@@ -1,6 +1,5 @@
 import { Global } from "@emotion/react";
 import { Typography, useTheme } from "@mui/material";
-import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { css } from "twin.macro";
 import Error from "../../components/Error";

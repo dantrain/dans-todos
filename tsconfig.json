@@ -21,7 +21,7 @@
   "references": [{ "path": "./tsconfig.node.json" }],
   "ts-node": {
     "compilerOptions": {
-      "jsxImportSource": "react"
+      "jsxImportSource": "@emotion/react"
     }
   }
 }

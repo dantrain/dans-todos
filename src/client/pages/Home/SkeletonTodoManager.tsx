@@ -10,7 +10,6 @@ import {
   Skeleton,
   Toolbar,
 } from "@mui/material";
-import React from "react";
 import tw from "twin.macro";
 import hasTouchScreen from "../../utils/hasTouchScreen";
 

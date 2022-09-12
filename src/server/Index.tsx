@@ -1,5 +1,5 @@
 import { appleDeviceSpecsForLaunchImages } from "pwa-asset-generator";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import serialize from "serialize-javascript";
 import type { AppContext } from "../client/App";
 

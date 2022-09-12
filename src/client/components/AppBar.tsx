@@ -15,7 +15,7 @@ import {
   bindTrigger,
   usePopupState,
 } from "material-ui-popup-state/hooks";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import tw from "twin.macro";
 import { Context } from "../App";
 import signOut from "../utils/signOut";

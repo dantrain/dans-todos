@@ -56,23 +56,13 @@ export default defineConfig(({ command }) => ({
       },
     }),
     react({
+      jsxImportSource: "@emotion/react",
       babel: {
         plugins: [
           "relay",
+          "@emotion/babel-plugin",
+          "babel-plugin-twin",
           "babel-plugin-macros",
-          [
-            "@emotion/babel-plugin-jsx-pragmatic",
-            {
-              export: "jsx",
-              import: "__cssprop",
-              module: "@emotion/react",
-            },
-          ],
-          [
-            "@babel/plugin-transform-react-jsx",
-            { pragma: "__cssprop" },
-            "twin.macro",
-          ],
         ],
       },
     }),
