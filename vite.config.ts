@@ -58,12 +58,7 @@ export default defineConfig(({ command }) => ({
     react({
       jsxImportSource: "@emotion/react",
       babel: {
-        plugins: [
-          "relay",
-          "@emotion/babel-plugin",
-          "babel-plugin-twin",
-          "babel-plugin-macros",
-        ],
+        plugins: ["relay", "@emotion/babel-plugin", "babel-plugin-macros"],
       },
     }),
   ],
