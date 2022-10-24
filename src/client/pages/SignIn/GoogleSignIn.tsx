@@ -48,6 +48,9 @@ const GoogleSignIn = () => {
         callback: ({ credential }: { credential: string }) => {
           signIn(credential);
         },
+        // Opt out of one tap on ITP browsers
+        // see https://developers.google.com/identity/gsi/web/guides/itp
+        itp_support: false,
       });
 
       window.google.accounts.id.prompt((notification) => {
