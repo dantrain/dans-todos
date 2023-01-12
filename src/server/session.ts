@@ -1,6 +1,7 @@
 import connectRedis from "connect-redis";
 import expressSession from "express-session";
 import redis from "redis";
+import logger from "./logger.js";
 
 declare module "express-session" {
   interface Session {
@@ -16,6 +17,8 @@ const redisClient = redis.createClient({
   url: process.env.REDIS_URL,
   family: "IPv6",
 });
+
+redisClient.on("error", (err) => logger.error("Redis error:", err));
 
 const session = expressSession({
   store: new RedisStore({ client: redisClient }),
