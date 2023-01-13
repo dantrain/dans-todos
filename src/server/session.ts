@@ -20,6 +20,12 @@ const redisClient = redis.createClient({
 
 redisClient.on("error", (err) => logger.error("Redis error:", err));
 
+setInterval(() => {
+  redisClient.ping((err) => {
+    if (err) logger.error("Redis keepalive error:", err);
+  });
+}, 60_000);
+
 const session = expressSession({
   store: new RedisStore({ client: redisClient }),
   name: "danstodos.sid",
