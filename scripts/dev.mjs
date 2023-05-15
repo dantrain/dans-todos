@@ -1,4 +1,8 @@
 #!/usr/bin/env zx
+import opn from "better-opn";
+import "dotenv/config";
+
+const PORT = process.env.PORT;
 
 $`yarn start:db`;
 $`yarn start:redis`;
@@ -13,3 +17,7 @@ $`yarn start:dev-server`;
 await $`wait-on ./src/server/__generated__/schema.graphql`;
 
 $`relay-compiler --watch`;
+
+await $`wait-on http://localhost:${PORT}`;
+
+opn(`http://localhost:${PORT}`);
