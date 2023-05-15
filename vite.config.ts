@@ -72,5 +72,8 @@ export default defineConfig(({ command }) => ({
   esbuild: {
     logOverride: { "this-is-undefined-in-esm": "silent" },
   },
-  ssr: command === "build" ? { noExternal: /(relay|react-use)/ } : {},
+  ssr:
+    command === "build"
+      ? { noExternal: /(relay|react-use|react-error-boundary)/ }
+      : {},
 }));

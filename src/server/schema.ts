@@ -1,11 +1,11 @@
 import SchemaBuilder from "@pothos/core";
 import AuthzPlugin from "@pothos/plugin-authz";
 import PrismaPlugin from "@pothos/plugin-prisma";
-import type PrismaTypes from "@pothos/plugin-prisma/generated";
 import RelayPlugin, { decodeGlobalID } from "@pothos/plugin-relay";
 import { writeFileSync } from "fs";
 import { lexicographicSortSchema, printSchema } from "graphql";
 import { isNil, omitBy } from "lodash-es";
+import type PrismaTypes from "./__generated__/pothos-types";
 import { Context } from "./context";
 import prisma from "./prismaClient.js";
 import * as rules from "./rules.js";
