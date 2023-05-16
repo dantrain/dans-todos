@@ -19,5 +19,5 @@
 - [x] Envful
 - [x] Try @pothos/plugin-prisma-utils
 - [x] Playwright DX
-- [ ] UI error handler
+- [x] UI error handler
 - [ ] Readme
