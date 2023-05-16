@@ -1,10 +1,12 @@
-import express from "express";
+import express, { ErrorRequestHandler } from "express";
 import fs from "fs";
 import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createServer as createViteServer, ViteDevServer } from "vite";
 import type { AppContext } from "../client/App.js";
+import ErrorPage from "../client/components/Error.js";
 import Index from "./Index.js";
+import logger from "./logger.js";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -90,5 +92,25 @@ uiRouter.get("/*", async (req, res, next) => {
     next(e);
   }
 });
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+uiRouter.use(((err, _req, res, _next) => {
+  logger.error(err.stack);
+
+  const content = renderToStaticMarkup(<ErrorPage error={err} />);
+
+  const markup = renderToStaticMarkup(
+    <Index
+      content={content}
+      manifest={manifest}
+      context={{ title: "Something broke!", statusCode: 500 }}
+    />
+  );
+
+  res
+    .status(500)
+    .set({ "Content-Type": "text/html" })
+    .send(`<!DOCTYPE html>\n${markup}`);
+}) as ErrorRequestHandler);
 
 export default uiRouter;

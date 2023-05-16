@@ -1,10 +1,9 @@
 import { Alert, AlertTitle } from "@mui/material";
 import { useEffect } from "react";
-import { FallbackProps } from "react-error-boundary";
-import { AuthenticationError, NetworkError } from "../utils/errors";
-import signOut from "../utils/signOut";
+import { AuthenticationError, NetworkError } from "../utils/errors.js";
+import signOut from "../utils/signOut.js";
 
-const Error = ({ error }: FallbackProps) => {
+const Error = ({ error }: { error: any }) => {
   useEffect(() => {
     if (error instanceof AuthenticationError) {
       signOut();
@@ -17,7 +16,7 @@ const Error = ({ error }: FallbackProps) => {
 
   if (error instanceof NetworkError) {
     return (
-      <Alert severity="warning">
+      <Alert severity="warning" style={{ maxWidth: 550, margin: "0 auto" }}>
         <AlertTitle>Can&apos;t connect</AlertTitle>
         Maybe check your internets?
       </Alert>
@@ -25,7 +24,7 @@ const Error = ({ error }: FallbackProps) => {
   }
 
   return (
-    <Alert severity="error">
+    <Alert severity="error" style={{ maxWidth: 550, margin: "0 auto" }}>
       <AlertTitle>Error</AlertTitle>
       {error?.message}
     </Alert>
