@@ -9,8 +9,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.UserOrderByWithRelationInput;
         WhereUnique: Prisma.UserWhereUniqueInput;
         Where: Prisma.UserWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.UserCreateInput;
+        Update: Prisma.UserUpdateInput;
         RelationName: "todos";
         ListRelations: "todos";
         Relations: {
@@ -28,8 +28,8 @@ export default interface PrismaTypes {
         OrderBy: Prisma.TodoOrderByWithRelationInput;
         WhereUnique: Prisma.TodoWhereUniqueInput;
         Where: Prisma.TodoWhereInput;
-        Create: {};
-        Update: {};
+        Create: Prisma.TodoCreateInput;
+        Update: Prisma.TodoUpdateInput;
         RelationName: "user";
         ListRelations: never;
         Relations: {

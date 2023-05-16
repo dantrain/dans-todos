@@ -1,6 +1,7 @@
 import SchemaBuilder from "@pothos/core";
 import AuthzPlugin from "@pothos/plugin-authz";
 import PrismaPlugin from "@pothos/plugin-prisma";
+import PrismaUtils from "@pothos/plugin-prisma-utils";
 import RelayPlugin, { decodeGlobalID } from "@pothos/plugin-relay";
 import { writeFileSync } from "fs";
 import { lexicographicSortSchema, printSchema } from "graphql";
@@ -18,7 +19,7 @@ const builder = new SchemaBuilder<{
   Context: Context;
   AuthZRules: keyof typeof rules;
 }>({
-  plugins: [AuthzPlugin, PrismaPlugin, RelayPlugin],
+  plugins: [AuthzPlugin, PrismaPlugin, PrismaUtils, RelayPlugin],
   prisma: {
     client: prisma,
   },
@@ -35,8 +36,10 @@ const AffectedRowsOutput = builder
   .objectRef<{ count: number }>("AffectedRowsOutput")
   .implement({ fields: (t) => ({ count: t.exposeInt("count") }) });
 
-const Filter = builder.enumType("Filter", {
-  values: ["all", "active", "completed"],
+const TodoWhere = builder.prismaWhere("Todo", {
+  fields: {
+    completed: "Boolean",
+  },
 });
 
 builder.prismaNode("User", {
@@ -47,19 +50,8 @@ builder.prismaNode("User", {
       {
         cursor: "id",
         totalCount: true,
-        args: {
-          filter: t.arg({ type: Filter, defaultValue: "all" }),
-        },
-        query: ({ filter }) => ({
-          where: {
-            completed:
-              filter === "completed"
-                ? true
-                : filter === "active"
-                ? false
-                : undefined,
-          },
-        }),
+        args: { where: t.arg({ type: TodoWhere }) },
+        query: ({ where }) => ({ where: where ?? undefined }),
       },
       {
         fields: (t) => ({

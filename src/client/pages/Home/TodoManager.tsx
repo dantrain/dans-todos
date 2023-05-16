@@ -1,22 +1,20 @@
 import { CardHeader, Divider, List } from "@mui/material";
 import { graphql, useLazyLoadQuery } from "react-relay";
 import { createConnectionContext } from "../../utils/connectionContext";
+import { Filter } from "./Home";
 import TodoFooter from "./TodoFooter";
 import TodoInput from "./TodoInput";
 import TodoListItem from "./TodoListItem";
 import ToggleAll from "./ToggleAll";
-import {
-  Filter,
-  TodoManagerQuery,
-} from "./__generated__/TodoManagerQuery.graphql";
+import { TodoManagerQuery } from "./__generated__/TodoManagerQuery.graphql";
 
 export const [TodosConnectionContext, TodosConnectionProvider] =
   createConnectionContext();
 
 const query = graphql`
-  query TodoManagerQuery($filter: Filter) {
+  query TodoManagerQuery($where: TodoFilter) {
     viewer {
-      todos(filter: $filter) {
+      todos(where: $where) {
         __id
         edges {
           node {
@@ -32,9 +30,16 @@ const query = graphql`
 `;
 
 const TodoManager = ({ filter }: { filter: Filter }) => {
+  const where =
+    filter === "active"
+      ? { completed: false }
+      : filter === "completed"
+      ? { completed: true }
+      : null;
+
   const {
     viewer: { todos },
-  } = useLazyLoadQuery<TodoManagerQuery>(query, { filter });
+  } = useLazyLoadQuery<TodoManagerQuery>(query, { where });
 
   return (
     <TodosConnectionProvider connectionId={todos.__id}>

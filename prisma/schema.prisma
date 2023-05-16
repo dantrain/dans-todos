@@ -6,6 +6,7 @@ generator pothos {
   provider     = "prisma-pothos-types"
   clientOutput = "@prisma/client"
   output       = "../src/server/__generated__/pothos-types.ts"
+  prismaUtils  = true
 }
 
 datasource db {

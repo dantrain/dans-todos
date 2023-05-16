@@ -6,13 +6,14 @@ import Suspense from "../../components/Suspense";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import preloadComponent from "../../utils/preloadComponent";
 import SkeletonTodoManager from "./SkeletonTodoManager";
-import { Filter } from "./__generated__/TodoManagerQuery.graphql";
 
 const TodoManager = preloadComponent(import("./TodoManager"));
 
+export type Filter = "active" | "completed" | "all";
+
 const Home = () => {
   const { pathname } = useLocation();
-  const filter = (pathname.replace("/", "").toLowerCase() || "all") as Filter;
+  const filter = (pathname.replace("/", "").toLowerCase() as Filter) || "all";
 
   useDocumentTitle(filter !== "all" ? capitalize(filter) : "");
 

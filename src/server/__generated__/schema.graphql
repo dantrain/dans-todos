@@ -2,12 +2,6 @@ type AffectedRowsOutput {
   count: Int!
 }
 
-enum Filter {
-  active
-  all
-  completed
-}
-
 type Mutation {
   createOneTodo(text: String!): Todo!
   deleteManyCompletedTodo: AffectedRowsOutput!
@@ -40,9 +34,13 @@ type Todo implements Node {
   text: String!
 }
 
+input TodoFilter {
+  completed: Boolean
+}
+
 type User implements Node {
   id: ID!
-  todos(after: String, before: String, filter: Filter = all, first: Int, last: Int): UserTodosConnection!
+  todos(after: String, before: String, first: Int, last: Int, where: TodoFilter): UserTodosConnection!
 }
 
 type UserTodosConnection {
