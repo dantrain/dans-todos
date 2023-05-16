@@ -28,6 +28,7 @@
     "start:redis": "docker run --name vite-redis --rm -v redis.conf:/usr/local/etc/redis/redis.conf -p 6379:6379 redis:7 redis-server /usr/local/etc/redis/redis.conf",
     "start": "NODE_ENV=production node dist/server/index.js",
     "test": "yarn playwright test --project='chromium'",
+    "test:ui": "yarn playwright test --ui",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
