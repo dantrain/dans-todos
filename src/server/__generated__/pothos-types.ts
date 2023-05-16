@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { Prisma, User, Todo } from "@prisma/client";
 export default interface PrismaTypes {
     User: {
@@ -8,12 +9,14 @@ export default interface PrismaTypes {
         OrderBy: Prisma.UserOrderByWithRelationInput;
         WhereUnique: Prisma.UserWhereUniqueInput;
         Where: Prisma.UserWhereInput;
+        Create: {};
+        Update: {};
         RelationName: "todos";
         ListRelations: "todos";
         Relations: {
             todos: {
                 Shape: Todo[];
-                Types: PrismaTypes["Todo"];
+                Name: "Todo";
             };
         };
     };
@@ -25,12 +28,14 @@ export default interface PrismaTypes {
         OrderBy: Prisma.TodoOrderByWithRelationInput;
         WhereUnique: Prisma.TodoWhereUniqueInput;
         Where: Prisma.TodoWhereInput;
+        Create: {};
+        Update: {};
         RelationName: "user";
         ListRelations: never;
         Relations: {
             user: {
                 Shape: User;
-                Types: PrismaTypes["User"];
+                Name: "User";
             };
         };
     };
