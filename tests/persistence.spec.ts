@@ -18,6 +18,8 @@ test("should persist its data", async ({ todoPage, page }) => {
   await expect(todoPage.listItemCheckboxes.nth(0)).toBeChecked();
   await expect(todoPage.listItemCheckboxes.nth(1)).not.toBeChecked();
 
+  await todoPage.waitForApi();
+
   // Ensure there is 1 completed item.
   expect(
     await todoPage.prisma.todo.count({ where: { completed: true } })

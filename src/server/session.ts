@@ -1,6 +1,6 @@
-import connectRedis from "connect-redis";
+import RedisStore from "connect-redis";
 import expressSession from "express-session";
-import redis from "redis";
+import { createClient } from "redis";
 import logger from "./logger.js";
 
 declare module "express-session" {
@@ -11,23 +11,21 @@ declare module "express-session" {
   }
 }
 
-const RedisStore = connectRedis(expressSession);
-
-const redisClient = redis.createClient({
+const client = createClient({
   url: process.env.REDIS_URL,
-  family: "IPv6",
+  socket: { family: 6 },
+  pingInterval: 60_000,
 });
 
-redisClient.on("error", (err) => logger.error("Redis error:", err));
+client
+  .on("error", (err) => logger.error("Redis error:", err))
+  .connect()
+  .catch((err) => logger.error("Redis connection error:", err));
 
-setInterval(() => {
-  redisClient.ping((err) => {
-    if (err) logger.error("Redis keepalive error:", err);
-  });
-}, 60_000);
+const store = new RedisStore({ client });
 
 const session = expressSession({
-  store: new RedisStore({ client: redisClient }),
+  store,
   name: "danstodos.sid",
   secret: process.env.SESSION_SECRETS!.split(" "),
   saveUninitialized: false,
