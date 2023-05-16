@@ -58,9 +58,9 @@ class TodoPage {
 export const test = base.extend<{ todoPage: TodoPage }>({
   todoPage: async ({ page }, use) => {
     const todoPage = new TodoPage(page);
+    await todoPage.prisma.todo.deleteMany();
     await todoPage.goto();
     await use(todoPage);
-    await todoPage.prisma.todo.deleteMany();
   },
 });
 

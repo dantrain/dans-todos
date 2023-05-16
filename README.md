@@ -16,8 +16,8 @@
 - [x] Domain switch
 - [x] PWA asset generation
 - [x] E2E tests
+- [x] Envful
 - [ ] Try [@pothos/plugin-prisma-utils](https://github.com/hayes/pothos/tree/main/packages/plugin-prisma-utils)
 - [ ] Playwright DX
-- [ ] Envful
 - [ ] UI error handler
 - [ ] Readme

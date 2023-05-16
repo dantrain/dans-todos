@@ -18,13 +18,14 @@ test("should persist its data", async ({ todoPage, page }) => {
   await expect(todoPage.listItemCheckboxes.nth(0)).toBeChecked();
   await expect(todoPage.listItemCheckboxes.nth(1)).not.toBeChecked();
 
+  // Now reload.
+  await page.reload();
+
   // Ensure there is 1 completed item.
   expect(
     await todoPage.prisma.todo.count({ where: { completed: true } })
   ).toEqual(1);
 
-  // Now reload.
-  await page.reload();
   await expect(todoPage.listItems).toHaveText([
     todoPage.TODO_ITEMS[0],
     todoPage.TODO_ITEMS[1],
