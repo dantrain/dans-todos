@@ -24,6 +24,9 @@ jobs:
   verify:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -34,11 +37,11 @@ jobs:
       - run: yarn lint
       - run: yarn build
       - run: npx playwright install --with-deps
-      - run: yarn playwright test
+      - run: yarn playwright test --shard=${{ matrix.shard }}/${{ strategy.job-total }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
           path: playwright-report/
           retention-days: 30
 
