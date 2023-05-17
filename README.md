@@ -1,23 +1,16 @@
 # Dan's Todos
 
-- [x] SSR
-- [x] Suspense test
-- [x] Emotion/Tailwind/twin.macro
-- [x] Pothos/GraphQL Yoga
-- [x] Relay
-- [x] PWA/Service Worker
-- [x] Router/startTransition
-- [x] Code splitting
-- [x] AuthZ
-- [x] ESLint/Prettier
-- [x] Deploy to Fly.io
-- [x] GitHub
-- [x] GitHub Actions
-- [x] Domain switch
-- [x] PWA asset generation
-- [x] E2E tests
-- [x] Envful
-- [x] Try @pothos/plugin-prisma-utils
-- [x] Playwright DX
-- [x] UI error handler
-- [ ] Readme
+TodoMVC rides again.
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/) v16+
+- [Yarn](https://classic.yarnpkg.com/lang/en/)
+- [Docker](https://www.docker.com/products/docker-desktop/)
+
+## Getting started
+
+- Clone the repo.
+- Copy the `.env.example` file into a new `.env` file in the root directory, and add the missing environment variables.
+- Run `yarn` in the root directory to install the dependencies.
+- Run `yarn dev` to run the development server.
