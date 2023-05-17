@@ -2,7 +2,24 @@
 
 TodoMVC rides again.
 
-### Prerequisites
+## Tech stack
+
+- [React](https://reactjs.org/)
+- [Relay](https://relay.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Emotion](https://emotion.sh/docs/introduction)
+- [Tailwind](https://tailwindcss.com/)
+- [Twin](https://github.com/ben-rogerson/twin.macro)
+- [MUI](https://mui.com/)
+- [Express](https://expressjs.com/)
+- [GraphQL Yoga](https://the-guild.dev/graphql/yoga-server)
+- [Prisma](https://www.prisma.io/)
+- [Pothos](https://pothos-graphql.dev/)
+- [Redis](https://github.com/redis/node-redis)
+- [Vite](https://vitejs.dev/)
+- [Playwright](https://playwright.dev/)
+
+## Prerequisites
 
 - [Node.js](https://nodejs.org/en/) v16+
 - [Yarn](https://classic.yarnpkg.com/lang/en/)
