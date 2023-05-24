@@ -14,13 +14,16 @@ declare module "express-session" {
 const client = createClient({
   url: process.env.REDIS_URL,
   socket: { family: 6 },
-  pingInterval: 60_000,
 });
 
 client
   .on("error", (err) => logger.error("Redis error:", err))
   .connect()
   .catch((err) => logger.error("Redis connection error:", err));
+
+setInterval(() => {
+  client.ping();
+}, 60_000);
 
 const store = new RedisStore({ client });
 
