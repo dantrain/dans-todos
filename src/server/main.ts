@@ -7,7 +7,7 @@ import path from "path";
 import authRouter from "./auth.js";
 import context from "./context.js";
 import errorHandler from "./errorHandler.js";
-import schema from "./schema.js";
+import schema from "./graphqlSchema.js";
 import session from "./session.js";
 import uiRouter from "./ui.js";
 import plugins from "./yogaPlugins.js";
