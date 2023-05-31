@@ -1,15 +1,3 @@
-type AffectedRowsOutput {
-  count: Int!
-}
-
-type Mutation {
-  createOneTodo(text: String!): Todo!
-  deleteManyCompletedTodo: AffectedRowsOutput!
-  deleteOneTodo(id: ID!): Todo!
-  updateManyTodo(completed: Boolean): AffectedRowsOutput!
-  updateOneTodo(completed: Boolean, id: ID!, text: String): Todo!
-}
-
 interface Node {
   id: ID!
 }
@@ -29,18 +17,14 @@ type Query {
 
 type Todo implements Node {
   completed: Boolean!
-  createdat: String!
+  createdAt: String!
   id: ID!
   text: String!
 }
 
-input TodoFilter {
-  completed: Boolean
-}
-
 type User implements Node {
   id: ID!
-  todos(after: String, before: String, first: Int, last: Int, where: TodoFilter): UserTodosConnection!
+  todos(after: String, before: String, first: Int, last: Int): UserTodosConnection!
 }
 
 type UserTodosConnection {

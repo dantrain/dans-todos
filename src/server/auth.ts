@@ -34,12 +34,12 @@ authRouter.post(
 
     logger.info(`User signed in: ${userid}`);
 
-    const user = await prisma.user.findUnique({ where: { id: userid } });
+    // const user = await prisma.user.findUnique({ where: { id: userid } });
 
-    if (!user) {
-      logger.info(`Creating new user ${userid}`);
-      await prisma.user.create({ data: { id: userid } });
-    }
+    // if (!user) {
+    //   logger.info(`Creating new user ${userid}`);
+    //   await prisma.user.create({ data: { id: userid } });
+    // }
 
     if (req.session && payload) {
       req.session.userid = userid;

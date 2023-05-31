@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import logger from "./server/logger.js";
 import getApp from "./server/main.js";
 

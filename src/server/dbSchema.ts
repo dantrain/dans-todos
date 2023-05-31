@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { InferModel, relations } from "drizzle-orm";
 import { boolean, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -8,6 +8,8 @@ export const users = pgTable("users", {
 export const usersRelations = relations(users, ({ many }) => ({
   todos: many(todos),
 }));
+
+export type User = InferModel<typeof users>;
 
 export const todos = pgTable("todos", {
   id: serial("id").primaryKey(),
@@ -22,3 +24,5 @@ export const todos = pgTable("todos", {
 export const todosRelations = relations(todos, ({ one }) => ({
   user: one(users, { fields: [todos.userId], references: [users.id] }),
 }));
+
+export type Todo = InferModel<typeof todos>;
