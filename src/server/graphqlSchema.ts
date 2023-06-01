@@ -36,12 +36,19 @@ const AffectedRowsOutput = builder
   .objectRef<{ count: number }>("AffectedRowsOutput")
   .implement({ fields: (t) => ({ count: t.exposeInt("count") }) });
 
+const Filter = builder.enumType("Filter", {
+  values: ["all", "active", "completed"],
+});
+
 builder.node("User", {
   id: { resolve: (_) => _.id },
   fields: (t) => ({
     todos: t.connection(
       {
         type: Todo,
+        args: {
+          filter: t.arg({ type: Filter, defaultValue: "all" }),
+        },
         resolve: ({ id }, args) =>
           resolveCursorConnection(
             { args, toCursor: (todo) => todo.id.toString() },
@@ -49,7 +56,19 @@ builder.node("User", {
               db
                 .select()
                 .from(todos)
-                .where(and(eq(todos.userId, id), gt(todos.id, +(after ?? 0))))
+                .where(
+                  and(
+                    eq(todos.userId, id),
+                    gt(todos.id, +(after ?? 0)),
+                    ...[
+                      args.filter === "active"
+                        ? eq(todos.completed, false)
+                        : args.filter === "completed"
+                        ? eq(todos.completed, true)
+                        : undefined,
+                    ]
+                  )
+                )
                 .orderBy(asc(todos.id))
                 .limit(limit)
           ),

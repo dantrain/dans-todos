@@ -11,5 +11,5 @@ test("should display the current number of todo items", async ({
   await todoPage.input.press("Enter");
   await expect(todoPage.count).toContainText("2");
 
-  await expect(await todoPage.prisma.todo.count()).toEqual(2);
+  await expect(await todoPage.getTodoCount()).toEqual(2);
 });

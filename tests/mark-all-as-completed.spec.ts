@@ -2,11 +2,11 @@ import { expect, test } from "./fixtures/todo-fixture.js";
 
 test.beforeEach(async ({ todoPage }) => {
   await todoPage.createDefaultTodos();
-  await expect(await todoPage.prisma.todo.count()).toEqual(3);
+  await expect(await todoPage.getTodoCount()).toEqual(3);
 });
 
 test.afterEach(async ({ todoPage }) => {
-  await expect(await todoPage.prisma.todo.count()).toEqual(3);
+  await expect(await todoPage.getTodoCount()).toEqual(3);
 });
 
 test("should allow me to mark all items as completed", async ({ todoPage }) => {
@@ -17,9 +17,7 @@ test("should allow me to mark all items as completed", async ({ todoPage }) => {
     await expect(todoPage.listItemCheckboxes.nth(i)).toBeChecked();
   }
 
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(3);
+  expect(await todoPage.getTodoCount("completed")).toEqual(3);
 });
 
 test("should allow me to clear the complete state of all items", async ({
@@ -42,9 +40,7 @@ test("complete all checkbox should update state when items are completed / clear
     "color",
     "rgba(0, 0, 0, 0.87)"
   );
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(3);
+  expect(await todoPage.getTodoCount("completed")).toEqual(3);
 
   // Uncheck first todo.
   const firstTodoCheckbox = todoPage.listItemCheckboxes.nth(0);
@@ -56,9 +52,7 @@ test("complete all checkbox should update state when items are completed / clear
   );
 
   await Promise.all([todoPage.waitForApi(), firstTodoCheckbox.check()]);
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(3);
+  expect(await todoPage.getTodoCount("completed")).toEqual(3);
 
   await expect(todoPage.toggleIncomplete).toHaveCSS(
     "color",

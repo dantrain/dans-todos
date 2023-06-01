@@ -13,7 +13,7 @@ test("should allow me to add todo items", async ({ todoPage }) => {
     todoPage.TODO_ITEMS[0],
     todoPage.TODO_ITEMS[1],
   ]);
-  expect(await todoPage.prisma.todo.count()).toEqual(2);
+  expect(await todoPage.getTodoCount()).toEqual(2);
 });
 
 test("should clear text input field when an item is added", async ({
@@ -24,7 +24,7 @@ test("should clear text input field when an item is added", async ({
 
   await expect(todoPage.input).toBeEmpty();
 
-  expect(await todoPage.prisma.todo.count()).toEqual(1);
+  expect(await todoPage.getTodoCount()).toEqual(1);
 });
 
 test("should append new items to the bottom of the list", async ({
@@ -35,7 +35,7 @@ test("should append new items to the bottom of the list", async ({
   await expect(todoPage.count).toHaveText("3 items left");
 
   await expect(todoPage.listItems).toHaveText(todoPage.TODO_ITEMS);
-  expect(await todoPage.prisma.todo.count()).toEqual(3);
+  expect(await todoPage.getTodoCount()).toEqual(3);
 });
 
 test("should show todo list and footer when items added", async ({
@@ -46,5 +46,5 @@ test("should show todo list and footer when items added", async ({
 
   await expect(todoPage.list).toBeVisible();
   await expect(todoPage.footer).toBeVisible();
-  expect(await todoPage.prisma.todo.count()).toEqual(1);
+  expect(await todoPage.getTodoCount()).toEqual(1);
 });

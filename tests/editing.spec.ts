@@ -1,8 +1,9 @@
+import { todos } from "../src/server/dbSchema.js";
 import { expect, test } from "./fixtures/todo-fixture.js";
 
 test.beforeEach(async ({ todoPage }) => {
   await todoPage.createDefaultTodos();
-  await expect(await todoPage.prisma.todo.count()).toEqual(3);
+  await expect(await todoPage.getTodoCount()).toEqual(3);
 });
 
 test("should save edits on blur", async ({ todoPage }) => {
@@ -27,7 +28,7 @@ test("should save edits on blur", async ({ todoPage }) => {
   ]);
 
   expect(
-    await todoPage.prisma.todo.findMany({ select: { text: true } })
+    await todoPage.db.select({ text: todos.text }).from(todos)
   ).toContainEqual({
     text: "Buy some sausages",
   });
@@ -51,7 +52,7 @@ test("should trim entered text", async ({ todoPage }) => {
   ]);
 
   expect(
-    await todoPage.prisma.todo.findMany({ select: { text: true } })
+    await todoPage.db.select({ text: todos.text }).from(todos)
   ).toContainEqual({
     text: "Buy some sausages",
   });

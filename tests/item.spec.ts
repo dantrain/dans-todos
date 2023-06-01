@@ -1,3 +1,4 @@
+import { todos } from "../src/server/dbSchema.js";
 import { expect, test } from "./fixtures/todo-fixture.js";
 
 test("should allow me to mark items as complete", async ({ todoPage }) => {
@@ -28,9 +29,7 @@ test("should allow me to un-mark items as complete", async ({ todoPage }) => {
   ]);
   await expect(todoPage.listItemCheckboxes.nth(0)).toBeChecked();
   await expect(todoPage.listItemCheckboxes.nth(1)).not.toBeChecked();
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(1);
+  expect(await todoPage.getTodoCount("completed")).toEqual(1);
 
   await Promise.all([
     todoPage.waitForApi(),
@@ -38,9 +37,7 @@ test("should allow me to un-mark items as complete", async ({ todoPage }) => {
   ]);
   await expect(todoPage.listItemCheckboxes.nth(0)).not.toBeChecked();
   await expect(todoPage.listItemCheckboxes.nth(1)).not.toBeChecked();
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(0);
+  expect(await todoPage.getTodoCount("completed")).toEqual(0);
 });
 
 test("should allow me to edit an item", async ({ todoPage }) => {
@@ -64,7 +61,7 @@ test("should allow me to edit an item", async ({ todoPage }) => {
   ]);
 
   expect(
-    await todoPage.prisma.todo.findMany({ select: { text: true } })
+    await todoPage.db.select({ text: todos.text }).from(todos)
   ).toContainEqual({
     text: "Buy some sausages",
   });

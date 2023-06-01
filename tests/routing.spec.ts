@@ -9,9 +9,7 @@ test("should allow me to display active items", async ({ todoPage, page }) => {
     todoPage.waitForApi(),
     todoPage.listItemCheckboxes.nth(1).check(),
   ]);
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(1);
+  expect(await todoPage.getTodoCount("completed")).toEqual(1);
 
   await page.locator("a >> text=Active").click();
   await expect(todoPage.listItems).toHaveCount(2);
@@ -26,9 +24,7 @@ test("should respect the back button", async ({ todoPage, page }) => {
     todoPage.waitForApi(),
     todoPage.listItemCheckboxes.nth(1).check(),
   ]);
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(1);
+  expect(await todoPage.getTodoCount("completed")).toEqual(1);
 
   await test.step("Showing all items", async () => {
     await page.locator("a >> text=All").click();
@@ -58,9 +54,7 @@ test("should allow me to display completed items", async ({
     todoPage.waitForApi(),
     todoPage.listItemCheckboxes.nth(1).check(),
   ]);
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(1);
+  expect(await todoPage.getTodoCount("completed")).toEqual(1);
   await page.locator("a >> text=Completed").click();
   await expect(todoPage.listItems).toHaveCount(1);
 });
@@ -70,9 +64,7 @@ test("should allow me to display all items", async ({ todoPage, page }) => {
     todoPage.waitForApi(),
     todoPage.listItemCheckboxes.nth(1).check(),
   ]);
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(1);
+  expect(await todoPage.getTodoCount("completed")).toEqual(1);
   await page.locator("a >> text=Active").click();
   await page.locator("a >> text=Completed").click();
   await page.locator("a >> text=All").click();

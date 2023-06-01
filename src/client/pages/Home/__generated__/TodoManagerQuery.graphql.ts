@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46769233fb45399ddcfb7ef7321495da>>
+ * @generated SignedSource<<2e90180483e20415b2806fa3e887636b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,9 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TodoFilter = {
-  completed?: boolean | null;
-};
+export type Filter = "active" | "all" | "completed" | "%future added value";
 export type TodoManagerQuery$variables = {
-  where?: TodoFilter | null;
+  filter?: Filter | null;
 };
 export type TodoManagerQuery$data = {
   readonly viewer: {
@@ -40,14 +38,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "where"
+    "name": "filter"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "where",
-    "variableName": "where"
+    "name": "filter",
+    "variableName": "filter"
   }
 ],
 v2 = {
@@ -225,16 +223,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "943f3dbb9f17d746d3e58c193797175a",
+    "cacheID": "1ce752349750d63b246b33942dd9056c",
     "id": null,
     "metadata": {},
     "name": "TodoManagerQuery",
     "operationKind": "query",
-    "text": "query TodoManagerQuery(\n  $where: TodoFilter\n) {\n  viewer {\n    todos(where: $where) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n        }\n      }\n      ...ToggleAllFragment\n      ...TodoFooterFragment\n    }\n    id\n  }\n}\n\nfragment TodoEditInputFragment on Todo {\n  id\n  text\n  completed\n}\n\nfragment TodoFooterFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  completed\n  ...TodoEditInputFragment\n}\n\nfragment ToggleAllFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n"
+    "text": "query TodoManagerQuery(\n  $filter: Filter\n) {\n  viewer {\n    todos(filter: $filter) {\n      edges {\n        node {\n          id\n          ...TodoListItemFragment\n        }\n      }\n      ...ToggleAllFragment\n      ...TodoFooterFragment\n    }\n    id\n  }\n}\n\nfragment TodoEditInputFragment on Todo {\n  id\n  text\n  completed\n}\n\nfragment TodoFooterFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n\nfragment TodoListItemFragment on Todo {\n  id\n  completed\n  ...TodoEditInputFragment\n}\n\nfragment ToggleAllFragment on UserTodosConnection {\n  totalCount\n  completedCount\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f09124ec23052e65de9f4ef75b7dda42";
+(node as any).hash = "cd4283c9ebb9846abc5c65f16645966b";
 
 export default node;

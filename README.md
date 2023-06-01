@@ -13,7 +13,7 @@ TodoMVC rides again.
 - [MUI](https://mui.com/)
 - [Express](https://expressjs.com/)
 - [GraphQL Yoga](https://the-guild.dev/graphql/yoga-server)
-- [Prisma](https://www.prisma.io/)
+- [Drizzle](https://orm.drizzle.team/)
 - [Pothos](https://pothos-graphql.dev/)
 - [Redis](https://github.com/redis/node-redis)
 - [Vite](https://vitejs.dev/)

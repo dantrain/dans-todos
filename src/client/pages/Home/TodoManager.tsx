@@ -12,9 +12,9 @@ export const [TodosConnectionContext, TodosConnectionProvider] =
   createConnectionContext();
 
 const query = graphql`
-  query TodoManagerQuery($where: TodoFilter) {
+  query TodoManagerQuery($filter: Filter) {
     viewer {
-      todos(where: $where) {
+      todos(filter: $filter) {
         __id
         edges {
           node {
@@ -30,16 +30,9 @@ const query = graphql`
 `;
 
 const TodoManager = ({ filter }: { filter: Filter }) => {
-  const where =
-    filter === "active"
-      ? { completed: false }
-      : filter === "completed"
-      ? { completed: true }
-      : null;
-
   const {
     viewer: { todos },
-  } = useLazyLoadQuery<TodoManagerQuery>(query, { where });
+  } = useLazyLoadQuery<TodoManagerQuery>(query, { filter });
 
   return (
     <TodosConnectionProvider connectionId={todos.__id}>

@@ -1,12 +1,17 @@
 import type { Locator, Page } from "@playwright/test";
 import { test as base } from "@playwright/test";
-import { PrismaClient } from "@prisma/client";
+import { eq, sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import type { Filter } from "../../src/client/pages/Home/Home.js";
+import { todos } from "../../src/server/dbSchema.js";
 
-const prisma = new PrismaClient();
+const client = postgres(process.env.DATABASE_URL!);
+const db = drizzle(client);
 
 class TodoPage {
   readonly page: Page;
-  readonly prisma: PrismaClient;
+  readonly db: typeof db;
 
   readonly TODO_ITEMS = [
     "Buy some cheese",
@@ -26,7 +31,7 @@ class TodoPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.prisma = prisma;
+    this.db = db;
 
     this.input = page.locator('[placeholder="What needs to be done?"]');
     this.toggleComplete = page.locator('[aria-label="Mark all complete"]');
@@ -53,12 +58,27 @@ class TodoPage {
       await Promise.all([this.waitForApi(), this.input.press("Enter")]);
     }
   }
+
+  async getTodoCount(filter?: Filter) {
+    const [{ count }] = await this.db
+      .select({ count: sql<number>`count(*)` })
+      .from(todos)
+      .where(
+        filter === "active"
+          ? eq(todos.completed, false)
+          : filter === "completed"
+          ? eq(todos.completed, true)
+          : undefined
+      );
+
+    return +count;
+  }
 }
 
 export const test = base.extend<{ todoPage: TodoPage }>({
   todoPage: async ({ page }, use) => {
     const todoPage = new TodoPage(page);
-    await todoPage.prisma.todo.deleteMany();
+    await todoPage.db.delete(todos);
     await todoPage.goto();
     await use(todoPage);
   },

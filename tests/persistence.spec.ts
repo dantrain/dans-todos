@@ -22,9 +22,7 @@ test("should persist its data", async ({ todoPage, page }) => {
   await page.reload();
 
   // Ensure there is 1 completed item.
-  expect(
-    await todoPage.prisma.todo.count({ where: { completed: true } })
-  ).toEqual(1);
+  expect(await todoPage.getTodoCount("completed")).toEqual(1);
 
   await expect(todoPage.listItems).toHaveText([
     todoPage.TODO_ITEMS[0],

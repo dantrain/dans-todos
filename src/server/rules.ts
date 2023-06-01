@@ -10,7 +10,7 @@ export const IsTodoOwner = preExecRule()(
     const [todo] = await db
       .select()
       .from(todos)
-      .where(eq(todos.id, +decodeGlobalID(fieldArgs.id as string)));
+      .where(eq(todos.id, +decodeGlobalID(fieldArgs.id as string).id));
 
     return todo?.userId === context.userid;
   }
