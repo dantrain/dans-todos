@@ -8,7 +8,7 @@ if (PROD_DATABASE_PASSWORD) {
 
   await $`wait-on tcp:5432`;
 
-  await $`DATABASE_URL=postgresql://postgres:${PROD_DATABASE_PASSWORD}@localhost:5432/postgres yarn prisma migrate deploy`;
+  await $`DATABASE_URL=postgresql://postgres:${PROD_DATABASE_PASSWORD}@localhost:5432/postgres ts-node --esm ./scripts/migrate.ts`;
 
   // Kill process listening on port 5432
   $`lsof -t -i tcp:5432 | xargs kill`;

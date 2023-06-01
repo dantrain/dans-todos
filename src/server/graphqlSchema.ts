@@ -10,14 +10,14 @@ import { writeFileSync } from "fs";
 import { lexicographicSortSchema, printSchema } from "graphql";
 import { isNil, omitBy } from "lodash-es";
 import { Context } from "./context";
-import { Todo, User, todos, users } from "./dbSchema.js";
+import { Objects, todos, users } from "./dbSchema.js";
 import db from "./drizzleClient.js";
 import * as rules from "./rules.js";
 
 const isProd = process.env.NODE_ENV === "production";
 
 const builder = new SchemaBuilder<{
-  Objects: { User: User; Todo: Todo };
+  Objects: Objects;
   DefaultEdgesNullability: false;
   Context: Context;
   AuthZRules: keyof typeof rules;

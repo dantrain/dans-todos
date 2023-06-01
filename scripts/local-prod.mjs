@@ -6,6 +6,6 @@ $`yarn start:redis`;
 await $`wait-on tcp:5432`;
 await sleep(500);
 
-await $`yarn prisma migrate reset --force --skip-seed`;
+await $`ts-node --esm ./scripts/migrate.ts`;
 
 $`yarn start`;
