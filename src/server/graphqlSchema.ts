@@ -6,19 +6,15 @@ import RelayPlugin, {
   resolveCursorConnection,
 } from "@pothos/plugin-relay";
 import { and, asc, eq, gt, sql } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/postgres-js";
 import { writeFileSync } from "fs";
 import { lexicographicSortSchema, printSchema } from "graphql";
-import postgres from "postgres";
+import { isNil, omitBy } from "lodash-es";
 import { Context } from "./context";
-import type { Todo, User } from "./dbSchema.js";
-import * as dbSchema from "./dbSchema.js";
+import { Todo, User, todos, users } from "./dbSchema.js";
+import db from "./drizzleClient.js";
 import * as rules from "./rules.js";
 
 const isProd = process.env.NODE_ENV === "production";
-
-const client = postgres(process.env.DATABASE_URL!, { max: 1 });
-const db = drizzle(client, { schema: dbSchema, logger: true });
 
 const builder = new SchemaBuilder<{
   Objects: { User: User; Todo: Todo };
@@ -36,9 +32,9 @@ const builder = new SchemaBuilder<{
   },
 });
 
-// const AffectedRowsOutput = builder
-//   .objectRef<{ count: number }>("AffectedRowsOutput")
-//   .implement({ fields: (t) => ({ count: t.exposeInt("count") }) });
+const AffectedRowsOutput = builder
+  .objectRef<{ count: number }>("AffectedRowsOutput")
+  .implement({ fields: (t) => ({ count: t.exposeInt("count") }) });
 
 builder.node("User", {
   id: { resolve: (_) => _.id },
@@ -52,14 +48,9 @@ builder.node("User", {
             ({ after, limit }: ResolveCursorConnectionArgs) =>
               db
                 .select()
-                .from(dbSchema.todos)
-                .where(
-                  and(
-                    eq(dbSchema.todos.userId, id),
-                    gt(dbSchema.todos.id, +(after ?? 0))
-                  )
-                )
-                .orderBy(asc(dbSchema.todos.id))
+                .from(todos)
+                .where(and(eq(todos.userId, id), gt(todos.id, +(after ?? 0))))
+                .orderBy(asc(todos.id))
                 .limit(limit)
           ),
       },
@@ -67,27 +58,24 @@ builder.node("User", {
         fields: (t) => ({
           totalCount: t.int({
             resolve: async (_parent, _args, { userid }) => {
-              const result = await db
+              const [{ count }] = await db
                 .select({ count: sql<number>`count(*)` })
-                .from(dbSchema.todos)
-                .where(eq(dbSchema.todos.userId, userid));
+                .from(todos)
+                .where(eq(todos.userId, userid));
 
-              return result[0].count;
+              return count;
             },
           }),
           completedCount: t.int({
             resolve: async (_parent, _args, { userid }) => {
-              const result = await db
+              const [{ count }] = await db
                 .select({ count: sql<number>`count(*)` })
-                .from(dbSchema.todos)
+                .from(todos)
                 .where(
-                  and(
-                    eq(dbSchema.todos.userId, userid),
-                    eq(dbSchema.todos.completed, true)
-                  )
+                  and(eq(todos.userId, userid), eq(todos.completed, true))
                 );
 
-              return result[0].count;
+              return count;
             },
           }),
         }),
@@ -112,79 +100,103 @@ builder.queryType({
     viewer: t.field({
       type: "User",
       resolve: async (_parent, _args, { userid }) => {
-        const result = await db
+        const [result] = await db
           .select()
-          .from(dbSchema.users)
-          .where(eq(dbSchema.users.id, userid))
+          .from(users)
+          .where(eq(users.id, userid))
           .limit(1);
 
-        return result[0];
+        return result;
       },
     }),
   }),
 });
 
-// builder.mutationType({});
+builder.mutationType({});
 
-// builder.mutationField("createOneTodo", (t) =>
-//   t.field({
-//     type: Todo,
-//     args: { text: t.arg.string({ required: true }) },
-//     resolve: (_parent, args, { userid }) =>
-//       prisma.todo.create({ data: { userid, text: args.text } }),
-//   })
-// );
+builder.mutationField("createOneTodo", (t) =>
+  t.field({
+    type: Todo,
+    args: { text: t.arg.string({ required: true }) },
+    resolve: async (_parent, args, { userid }) => {
+      const [result] = await db
+        .insert(todos)
+        .values({ userId: userid, text: args.text })
+        .returning();
 
-// builder.mutationField("updateOneTodo", (t) =>
-//   t.field({
-//     type: Todo,
-//     authz: { rules: ["IsTodoOwner"] },
-//     args: {
-//       id: t.arg.id({ required: true }),
-//       text: t.arg.string(),
-//       completed: t.arg.boolean(),
-//     },
-//     resolve: (_parent, args) => {
-//       const { id, ...rest } = args;
+      return result;
+    },
+  })
+);
 
-//       return prisma.todo.update({
-//         where: { id: +decodeGlobalID(id as string).id },
-//         data: omitBy(rest, isNil),
-//       });
-//     },
-//   })
-// );
+builder.mutationField("updateOneTodo", (t) =>
+  t.field({
+    type: Todo,
+    authz: { rules: ["IsTodoOwner"] },
+    args: {
+      id: t.arg.id({ required: true }),
+      text: t.arg.string(),
+      completed: t.arg.boolean(),
+    },
+    resolve: async (_parent, args) => {
+      const { id, ...rest } = args;
 
-// builder.mutationField("updateManyTodo", (t) =>
-//   t.field({
-//     type: AffectedRowsOutput,
-//     args: { completed: t.arg.boolean() },
-//     resolve: (_parent, args, { userid }) =>
-//       prisma.todo.updateMany({ where: { userid }, data: omitBy(args, isNil) }),
-//   })
-// );
+      const [result] = await db
+        .update(todos)
+        .set(omitBy(rest, isNil))
+        .where(eq(todos.id, +decodeGlobalID(id as string).id))
+        .returning();
 
-// builder.mutationField("deleteOneTodo", (t) =>
-//   t.field({
-//     type: Todo,
-//     authz: { rules: ["IsTodoOwner"] },
-//     args: { id: t.arg.id({ required: true }) },
-//     resolve: (_parent, args) =>
-//       prisma.todo.delete({
-//         where: { id: +decodeGlobalID(args.id as string).id },
-//       }),
-//   })
-// );
+      return result;
+    },
+  })
+);
 
-// builder.mutationField("deleteManyCompletedTodo", (t) =>
-//   t.field({
-//     type: AffectedRowsOutput,
-//     resolve: (_parent, _args, { userid }) =>
-//       prisma.todo.deleteMany({
-//         where: { AND: [{ userid }, { completed: true }] },
-//       }),
-//   })
-// );
+builder.mutationField("updateManyTodo", (t) =>
+  t.field({
+    type: AffectedRowsOutput,
+    args: { completed: t.arg.boolean() },
+    resolve: async (_parent, args, { userid }) => {
+      const result = await db
+        .update(todos)
+        .set(omitBy(args, isNil))
+        .where(eq(todos.userId, userid))
+        .returning({ updatedId: todos.id });
+
+      return { count: result.length };
+    },
+  })
+);
+
+builder.mutationField("deleteOneTodo", (t) =>
+  t.field({
+    type: Todo,
+    authz: { rules: ["IsTodoOwner"] },
+    args: { id: t.arg.id({ required: true }) },
+    resolve: async (_parent, args) => {
+      const [result] = await db
+        .delete(todos)
+        .where(eq(todos.id, +decodeGlobalID(args.id as string).id))
+        .returning();
+
+      return result;
+    },
+  })
+);
+
+builder.mutationField("deleteManyCompletedTodo", (t) =>
+  t.field({
+    type: AffectedRowsOutput,
+    resolve: async (_parent, _args, { userid }) => {
+      const result = await db
+        .delete(todos)
+        .where(and(eq(todos.userId, userid), eq(todos.completed, true)))
+        .returning();
+
+      return { count: result.length };
+    },
+  })
+);
 
 const schema = builder.toSchema({});
 

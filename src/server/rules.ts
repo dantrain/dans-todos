@@ -1,14 +1,17 @@
 import { preExecRule } from "@graphql-authz/core";
 import { decodeGlobalID } from "@pothos/plugin-relay";
+import { eq } from "drizzle-orm";
 import { Context } from "./context.js";
-import prisma from "./prismaClient.js";
+import { todos } from "./dbSchema.js";
+import db from "./drizzleClient.js";
 
 export const IsTodoOwner = preExecRule()(
   async (context: Context, fieldArgs) => {
-    const todo = await prisma.todo.findUnique({
-      where: { id: +decodeGlobalID(fieldArgs.id as string).id || undefined },
-    });
+    const [todo] = await db
+      .select()
+      .from(todos)
+      .where(eq(todos.id, +decodeGlobalID(fieldArgs.id as string)));
 
-    return todo?.userid === context.userid;
+    return todo?.userId === context.userid;
   }
 );

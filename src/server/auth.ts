@@ -1,7 +1,9 @@
+import { eq } from "drizzle-orm";
 import express from "express";
 import { OAuth2Client } from "google-auth-library";
+import { users } from "./dbSchema.js";
+import db from "./drizzleClient.js";
 import logger from "./logger.js";
-import prisma from "./prismaClient.js";
 
 const CLIENT_ID = process.env.VITE_CLIENT_ID;
 
@@ -34,12 +36,12 @@ authRouter.post(
 
     logger.info(`User signed in: ${userid}`);
 
-    // const user = await prisma.user.findUnique({ where: { id: userid } });
+    const [user] = await db.select().from(users).where(eq(users.id, userid));
 
-    // if (!user) {
-    //   logger.info(`Creating new user ${userid}`);
-    //   await prisma.user.create({ data: { id: userid } });
-    // }
+    if (!user) {
+      logger.info(`Creating new user ${userid}`);
+      await db.insert(users).values({ id: userid });
+    }
 
     if (req.session && payload) {
       req.session.userid = userid;

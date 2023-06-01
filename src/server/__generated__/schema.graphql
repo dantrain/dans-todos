@@ -1,3 +1,15 @@
+type AffectedRowsOutput {
+  count: Int!
+}
+
+type Mutation {
+  createOneTodo(text: String!): Todo!
+  deleteManyCompletedTodo: AffectedRowsOutput!
+  deleteOneTodo(id: ID!): Todo!
+  updateManyTodo(completed: Boolean): AffectedRowsOutput!
+  updateOneTodo(completed: Boolean, id: ID!, text: String): Todo!
+}
+
 interface Node {
   id: ID!
 }
