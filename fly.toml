@@ -1,48 +1,47 @@
-# fly.toml file generated for dans-todos on 2022-08-22T14:15:47+01:00
+# fly.toml app configuration file generated for dans-todos on 2023-06-30T20:12:52+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = "dans-todos"
+primary_region = "lhr"
 kill_signal = "SIGINT"
-kill_timeout = 5
-processes = []
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
 
 [build]
   builder = "heroku/buildpacks:20"
-
-[build.args]
-  VITE_SESSION_MAX_AGE="604800000"
-  VITE_CLIENT_ID="368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com"
+  [build.args]
+    VITE_CLIENT_ID = "368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com"
+    VITE_SESSION_MAX_AGE = "604800000"
 
 [env]
   PORT = "8080"
-  VITE_SESSION_MAX_AGE="604800000"
-  VITE_CLIENT_ID="368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com"
-
-[experimental]
-  allowed_public_ports = []
-  auto_rollback = true
+  VITE_CLIENT_ID = "368363262826-i6ngmdb856kpnjnj3huu2bpnaoiisf3h.apps.googleusercontent.com"
+  VITE_SESSION_MAX_AGE = "604800000"
 
 [[services]]
-  http_checks = []
+  protocol = "tcp"
   internal_port = 8080
   processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
   [services.concurrency]
+    type = "connections"
     hard_limit = 25
     soft_limit = 20
-    type = "connections"
-
-  [[services.ports]]
-    force_https = true
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
 
   [[services.tcp_checks]]
-    grace_period = "1s"
     interval = "15s"
-    restart_limit = 0
     timeout = "2s"
+    grace_period = "1s"
+    restart_limit = 0
