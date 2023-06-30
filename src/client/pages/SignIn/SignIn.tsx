@@ -26,11 +26,10 @@ const SignIn = () => {
         styles={css`
           body {
             background-color: ${theme.palette.primary.main};
-            overflow: hidden;
           }
         `}
       />
-      <main tw="flex flex-col justify-center items-center h-screen max-h-[700px]">
+      <main tw="flex flex-col justify-center items-center h-[100dvh] max-h-[700px]">
         <div tw="mt-16 mb-6 h-[100px] w-[100px] text-white">
           <Logo />
         </div>
