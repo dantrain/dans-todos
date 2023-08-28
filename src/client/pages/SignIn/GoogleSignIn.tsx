@@ -50,8 +50,7 @@ const GoogleSignIn = () => {
         },
         // Opt out of one tap on ITP browsers
         // see https://developers.google.com/identity/gsi/web/guides/itp
-        // itp_support: false,
-
+        itp_support: false,
         // Enable FedCM
         // see https://developers.google.com/identity/gsi/web/guides/fedcm-migration#migrate_your_web_app
         // @ts-ignore
