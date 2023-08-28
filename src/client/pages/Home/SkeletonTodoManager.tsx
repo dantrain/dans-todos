@@ -57,7 +57,8 @@ const SkeletonTodoManager = () => {
         <Skeleton width={90} height={34} animation="wave" />
         <div
           css={[
-            tw`inline-flex order-first justify-center pt-1 pb-4 -mx-6 mb-2 sm:flex-initial sm:order-none sm:border-none sm:m-auto sm:p-0`,
+            tw`inline-flex order-first justify-center pt-1 pb-4 -mx-6 mb-2`,
+            tw`sm:(flex-initial order-none border-none m-auto p-0)`,
             css`
               flex: 1 0 100%;
               border-bottom: 1px solid rgba(0, 0, 0, 0.12);

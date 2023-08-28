@@ -1,9 +1,9 @@
 import { ButtonGroup, css, Divider, Toolbar, Typography } from "@mui/material";
 import { graphql, useFragment } from "react-relay/hooks";
 import tw from "twin.macro";
+import { TodoFooterFragment$key } from "./__generated__/TodoFooterFragment.graphql";
 import ClearCompleted from "./ClearCompleted";
 import FilterLink from "./FilterLink";
-import { TodoFooterFragment$key } from "./__generated__/TodoFooterFragment.graphql";
 
 const fragment = graphql`
   fragment TodoFooterFragment on UserTodosConnection {
@@ -27,7 +27,8 @@ const TodoFooter = ({ todos }: { todos: TodoFooterFragment$key }) => {
           color="primary"
           size="small"
           css={[
-            tw`justify-center order-first pt-1 pb-4 mb-2 -mx-6 sm:flex-initial sm:order-none sm:border-none sm:m-auto sm:p-0`,
+            tw`justify-center order-first pt-1 pb-4 mb-2 -mx-6`,
+            tw`sm:(flex-initial order-none border-none m-auto p-0)`,
             css`
               flex: 1 0 100%;
               border-bottom: 1px solid rgba(0, 0, 0, 0.12);
